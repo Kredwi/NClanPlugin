@@ -10,15 +10,21 @@ public class FileClansDB implements ClanDB {
 
     private final Map<Integer, Clan> clans = new HashMap<>();
 
-    public void create(int id, @NonNull UUID ownerId, @NonNull String name) {
-        clans.put(id, Clan.of(id, ownerId, name));
+    public @NonNull Clan create(@NonNull UUID ownerId, @NonNull String name) {
+        int id = clans.size();
+        return clans.put(id, Clan.of(id, ownerId, name));
     }
 
-    public Optional<Clan> get(int id) {
+    @Override
+    public void remove(int clanId) {
+        this.clans.remove(clanId);
+    }
+
+    public @NonNull Optional<Clan> get(int id) {
         return Optional.of(clans.get(id));
     }
 
-    public Collection<Clan> getClans() {
+    public @NonNull Collection<Clan> getClans() {
         return clans.values();
     }
 

@@ -52,7 +52,7 @@ public record FileClan(File datafolder) {
                 json.append(line);
             }
         } catch (IOException e) {
-            NClanPlugin.LOG.error("Error of reading clan file", e);
+            NClanPlugin.log.error("Error of reading clan file", e);
         }
         return json.toString();
     }
@@ -66,7 +66,7 @@ public record FileClan(File datafolder) {
             writer.write(fileContent);
 
         } catch (IOException e) {
-            NClanPlugin.LOG.error("Error of writing clan file", e);
+            NClanPlugin.log.error("Error of writing clan file", e);
         }
     }
 

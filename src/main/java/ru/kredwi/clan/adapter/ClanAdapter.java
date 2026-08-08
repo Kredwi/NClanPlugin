@@ -28,7 +28,8 @@ public class ClanAdapter implements JsonDeserializer<Clan>, JsonSerializer<Clan>
         ClanStats clanStats = ctx.deserialize(obj.get("stats"), ClanStats.class);
         ClanSettings settings = ctx.deserialize(obj.get("settings"), ClanSettings.class);
         Map<UUID, Role> members = ctx.deserialize(obj.get("members"),
-                new TypeToken<Map<UUID, Role>>(){}.getType());
+                new TypeToken<Map<UUID, Role>>() {
+                }.getType());
         return Clan.of(id, ownerId, name, clanStats, settings, members);
     }
 

@@ -10,9 +10,18 @@ import java.util.UUID;
 public interface ClanDB {
 
     void enable(@NonNull Collection<Clan> clans);
+
     void disable();
 
-    void create(int id, UUID ownerId, String name);
+    @NonNull
+    Clan create(@NonNull UUID ownerId, @NonNull String name);
+
+    void remove(int clanId);
+
+    @NonNull
     Optional<Clan> get(int id);
+
+    @NonNull
+    Collection<Clan> getClans();
 
 }

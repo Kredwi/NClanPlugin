@@ -17,8 +17,12 @@ public class ClanService {
 
     private final ClanDB clansDB;
 
-    public void create(int id, UUID ownerId, String name) {
-        this.clansDB.create(id, ownerId, name);
+    public Clan create(UUID ownerId, String name) {
+        return this.clansDB.create(ownerId, name);
+    }
+
+    public void remove(int clanId) {
+        this.clansDB.remove(clanId);
     }
 
     public Optional<Clan> get(int id) {
@@ -30,7 +34,15 @@ public class ClanService {
                 .map(Clan::getStats);
     }
 
-    public Optional<Set<Pair<UUID, Role>>> getPlayers(int id) {
+    public Optional<Clan> getClanWithUUID(UUID uuid) {
+        return clansDB.getClans()
+                .stream()
+                .filter(c -> c.getOwnerId().equals(uuid) || c.getMembers()
+                        .containsKey(uuid))
+                .findFirst();
+    }
+
+    public Optional<Set<Pair<UUID, Role>>> getMembers(int id) {
         return this.clansDB.get(id)
                 .map(Clan::getMembers)
                 .map(e -> e.entrySet().stream()
