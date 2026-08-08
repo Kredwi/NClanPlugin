@@ -5,6 +5,7 @@ import cn.nukkit.Server;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import ru.kredwi.clan.Role;
+import ru.kredwi.clan.model.Member;
 import ru.kredwi.clan.service.ClanService;
 import ru.kredwi.clan.service.RequestService;
 
@@ -40,9 +41,16 @@ public class CommandRequestHandler {
             return;
         }
 
+        Member member = new Member(
+                requestedPlayerInstance.get().getName(),
+                requestedPlayerInstance.get().getUniqueId(),
+                Role.DEFAULT,
+                System.currentTimeMillis()
+        );
+
         clanForRequestor.get()
                 .getMembers()
-                .put(requested, Role.DEFAULT);
+                .put(requested, member);
         sendAcceptMessages(requestorPlayerInstance.get(), requestedPlayerInstance.get());
     }
 

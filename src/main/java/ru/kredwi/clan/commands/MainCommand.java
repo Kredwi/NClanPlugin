@@ -6,6 +6,9 @@ import cn.nukkit.command.CommandSender;
 import com.google.common.collect.Lists;
 import ru.kredwi.clan.api.command.SubCommand;
 import ru.kredwi.clan.commands.sub.*;
+import ru.kredwi.clan.commands.sub.admin.SetBalance;
+import ru.kredwi.clan.commands.sub.admin.SetExp;
+import ru.kredwi.clan.commands.sub.owner.*;
 import ru.kredwi.clan.commands.sub.request.Accept;
 import ru.kredwi.clan.commands.sub.request.CommandRequestHandler;
 import ru.kredwi.clan.commands.sub.request.Deny;
@@ -19,15 +22,27 @@ import java.util.Optional;
 
 public class MainCommand implements CommandExecutor {
 
-    private Map<String, SubCommand> subCommands;
+    private final Map<String, SubCommand> subCommands;
 
     public MainCommand(ClanService clanService, RequestService requestService) {
         this.subCommands = new HashMap<>();
         subCommands.put("help", new Help());
+        subCommands.put("info", new Info(clanService));
         subCommands.put("create", new Create(clanService));
         subCommands.put("remove", new Remove(clanService));
         subCommands.put("members", new Members(clanService));
         subCommands.put("kick", new Kick(clanService));
+        subCommands.put("leave", new Leave(clanService));
+        subCommands.put("list", new List(clanService));
+        subCommands.put("stats", new Stats(clanService));
+        subCommands.put("settings", new Settings(clanService));
+
+        subCommands.put("disband", new Disband(clanService));
+        subCommands.put("sethome", new SetHome(clanService));
+        subCommands.put("home", new ClanHome(clanService));
+
+        subCommands.put("setexp", new SetExp(clanService));
+        subCommands.put("setbalance", new SetBalance(clanService));
 
         CommandRequestHandler crh = new CommandRequestHandler(clanService, requestService);
 

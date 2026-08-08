@@ -1,6 +1,7 @@
-package ru.kredwi.clan.commands.sub;
+package ru.kredwi.clan.commands.sub.owner;
 
 import cn.nukkit.IPlayer;
+import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.permission.Permission;
@@ -28,12 +29,23 @@ public class Kick extends OwnerCommand {
         // idk how to fix this deprecated error from bukkit
         IPlayer playerToKick = Server.getInstance().getOfflinePlayer(args.get(0));
         if (playerToKick == null) {
-            sender.sendMessage("Player with " + args.get(0) + "name is not found");
+            sender.sendMessage("Player with " + args.get(0) + " name is not found");
+            return;
+        }
+
+        if (playerToKick.getUniqueId().equals(clan.getOwnerId())) {
+            sender.sendMessage("Owner cannot be kicked from a clan");
+            return;
+        }
+
+        if (playerToKick.getUniqueId().equals(((Player) sender).getUniqueId())) {
+            sender.sendMessage("You cannot be kick yourself");
             return;
         }
 
         clan.getMembers()
                 .remove(playerToKick.getUniqueId());
+        sender.sendMessage("Player successfully kicked");
     }
 
     @Override

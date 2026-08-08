@@ -2,10 +2,10 @@ package ru.kredwi.clan.adapter;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
-import ru.kredwi.clan.Role;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.ClanSettings;
 import ru.kredwi.clan.model.ClanStats;
+import ru.kredwi.clan.model.Member;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -27,8 +27,8 @@ public class ClanAdapter implements JsonDeserializer<Clan>, JsonSerializer<Clan>
 
         ClanStats clanStats = ctx.deserialize(obj.get("stats"), ClanStats.class);
         ClanSettings settings = ctx.deserialize(obj.get("settings"), ClanSettings.class);
-        Map<UUID, Role> members = ctx.deserialize(obj.get("members"),
-                new TypeToken<Map<UUID, Role>>() {
+        Map<UUID, Member> members = ctx.deserialize(obj.get("members"),
+                new TypeToken<Map<UUID, Member>>() {
                 }.getType());
         return Clan.of(id, ownerId, name, clanStats, settings, members);
     }

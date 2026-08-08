@@ -12,7 +12,9 @@ public class FileClansDB implements ClanDB {
 
     public @NonNull Clan create(@NonNull UUID ownerId, @NonNull String name) {
         int id = clans.size();
-        return clans.put(id, Clan.of(id, ownerId, name));
+        Clan clan = Clan.of(id, ownerId, name);
+        clans.put(id, clan);
+        return clan;
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class Create implements SubCommand {
 
-    private final Pattern allowedName = Pattern.compile("[a-z]");
+    private final Pattern allowedName = Pattern.compile("[a-zA-Z]+");
     private final ClanService clanService;
 
     @Override

@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.jspecify.annotations.NonNull;
-import ru.kredwi.clan.Role;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +23,7 @@ public class Clan {
     private ClanSettings settings;
     // owner cannot be enumerated in members
     @NonNull
-    private Map<UUID, Role> members;
+    private Map<UUID, Member> members;
 
     @NonNull
     public static Clan of(int id, UUID ownerId, String name) {
@@ -32,7 +31,7 @@ public class Clan {
     }
 
     @NonNull
-    public static Clan of(int id, UUID ownerId, String name, ClanStats clanStats, ClanSettings settings, Map<UUID, Role> members) {
+    public static Clan of(int id, UUID ownerId, String name, ClanStats clanStats, ClanSettings settings, Map<UUID, Member> members) {
         return new Clan(id, ownerId, name, clanStats, settings, members);
     }
 }

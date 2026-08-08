@@ -40,6 +40,7 @@ public class Members implements SubCommand {
                 .map(server::getOfflinePlayer)
                 .map(IPlayer::getName)
                 .collect(Collectors.joining("\n"));
+
         sender.sendMessage("Member of clan " + clan.get().getName() + "\n" + message);
     }
 

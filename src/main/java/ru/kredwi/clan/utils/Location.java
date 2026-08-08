@@ -1,5 +1,5 @@
 package ru.kredwi.clan.utils;
 
-public record Location(int x, int y, int z, int yaw) {
+public record Location(double x, double y, double z, double yaw) {
 
 }
