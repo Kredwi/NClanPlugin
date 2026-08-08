@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "ownerId": "550e8400-e29b-41d4-a716-446655440000",
+    "name": "DragonSlayers",
+    "stats": {
+      "exp": 1250
+    },
+    "settings": {
+      "clanHome": {
+        "x": 100,
+        "y": 64,
+        "z": -200,
+        "yaw": 90
+      },
+      "pvp": true
+    },
+    "members": {
+      "550e8400-e29b-41d4-a716-446655440000": "OWNER",
+      "6c84fb90-12c4-11e6-acc6-2b6c0c6c6e4a": "ADMIN",
+      "6c84fb90-12c4-11e6-acc6-2b6c0c6c6e4b": "MEMBER"
+    }
+  },
+  {
+    "id": 2,
+    "ownerId": "6c84fb90-12c4-11e6-acc6-2b6c0c6c6e4a",
+    "name": "ShadowAssassins",
+    "stats": {
+      "exp": 340
+    },
+    "settings": {
+      "clanHome": null,
+      "pvp": false
+    },
+    "members": {
+      "6c84fb90-12c4-11e6-acc6-2b6c0c6c6e4a": "OWNER",
+      "550e8400-e29b-41d4-a716-446655440000": "MEMBER"
+    }
+  }
+]
