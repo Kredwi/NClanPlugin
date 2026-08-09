@@ -15,6 +15,7 @@ import ru.kredwi.clan.commands.sub.request.Deny;
 import ru.kredwi.clan.commands.sub.request.Invite;
 import ru.kredwi.clan.service.ClanService;
 import ru.kredwi.clan.service.RequestService;
+import ru.kredwi.clan.shop.ClanShop;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class MainCommand implements CommandExecutor {
 
     private final Map<String, SubCommand> subCommands;
 
-    public MainCommand(ClanService clanService, RequestService requestService) {
+    public MainCommand(ClanService clanService, RequestService requestService, ClanShop clanShop) {
         this.subCommands = new HashMap<>();
         subCommands.put("help", new Help());
         subCommands.put("info", new Info(clanService));
@@ -43,6 +44,8 @@ public class MainCommand implements CommandExecutor {
 
         subCommands.put("setexp", new SetExp(clanService));
         subCommands.put("setbalance", new SetBalance(clanService));
+        subCommands.put("chat", new Chat(clanService));
+        subCommands.put("market", new Market(clanShop, clanService));
 
         CommandRequestHandler crh = new CommandRequestHandler(clanService, requestService);
 

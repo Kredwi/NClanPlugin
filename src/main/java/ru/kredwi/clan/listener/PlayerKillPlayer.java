@@ -18,13 +18,12 @@ public class PlayerKillPlayer implements Listener {
     @EventHandler
     public void onKill(PlayerDeathEvent e) {
         Player player = e.getEntity();
-        if (player.getLastDamageCause() instanceof EntityDamageByEntityEvent event) {
-            if (event.getDamager() instanceof Player damagerPlayer) {
-                UUID damagerId = damagerPlayer.getUniqueId();
-                UUID victimId = player.getUniqueId();
+        if (player.getLastDamageCause() instanceof EntityDamageByEntityEvent event
+                && event.getDamager() instanceof Player damagerPlayer) {
+            UUID damagerId = damagerPlayer.getUniqueId();
+            UUID victimId = player.getUniqueId();
 
-                clanService.onPlayerKill(damagerId, victimId);
-            }
+            clanService.onPlayerKill(damagerId, victimId);
         }
     }
 

@@ -1,7 +1,6 @@
 package ru.kredwi.clan.listener;
 
 import cn.nukkit.Player;
-import cn.nukkit.entity.Entity;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.EventPriority;
 import cn.nukkit.event.Listener;
@@ -18,10 +17,8 @@ public class PlayerDamageEvent implements Listener {
             priority = EventPriority.LOW
     )
     public void onDamage(EntityDamageByEntityEvent e) {
-        Entity damager = e.getDamager();
-        Entity entity = e.getEntity();
-
-        if ((damager instanceof Player damagerPlayer && entity instanceof Player damagerEntity)) {
+        if ((e.getDamager() instanceof Player damagerPlayer
+                && e.getEntity() instanceof Player damagerEntity)) {
             var damagerClan = clanService.getClanWithUUID(damagerPlayer.getUniqueId());
             var entityClan = clanService.getClanWithUUID(damagerEntity.getUniqueId());
 
