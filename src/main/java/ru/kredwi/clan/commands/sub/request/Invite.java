@@ -21,8 +21,21 @@ public class Invite extends OwnerCommand {
         this.commandRequestHandler = commandRequestHandler;
     }
 
+    private boolean isClanHasSpots(Clan clan) {
+        int allowedPlayers = commandRequestHandler.getClanService()
+                .getLevel(clan.getStats().getExp()).getMembers();
+        int clanMembers = clan.getMembers().size();
+
+        return allowedPlayers < (clanMembers + 1);
+    }
+
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull CommandSender sender, @NonNull List<String> args) {
+        if (isClanHasSpots(clan)) {
+            sender.sendMessage("You clan does have spots");
+            return;
+        }
+
         if (args.isEmpty()) {
             sender.sendMessage("Please provide player name for request");
             return;

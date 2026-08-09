@@ -21,7 +21,7 @@ public class Clan {
     private ClanStats stats;
     @NonNull
     private ClanSettings settings;
-    // owner cannot be enumerated in members
+
     @NonNull
     private Map<UUID, Member> members;
 

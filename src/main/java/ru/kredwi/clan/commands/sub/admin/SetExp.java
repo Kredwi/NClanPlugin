@@ -29,10 +29,12 @@ public class SetExp extends AdminCommand {
             return;
         }
 
-        clan.getStats()
-                .setExp(newExp);
-
+        int initExp = clan.getStats().getExp();
+        clan.getStats().setExp(newExp);
+        int finExp = clan.getStats().getExp();
         sender.sendMessage("Experience successfully changed");
+
+        clanService.onChangeExp(clan, initExp, finExp);
     }
 
 }

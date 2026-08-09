@@ -63,13 +63,13 @@ public class MainCommand implements CommandExecutor {
 
         list.remove(0); // remove first argument
 
-        Optional.of(subCommands.get(strings[0]))
-                .ifPresent(e -> {
+        Optional.ofNullable(subCommands.get(strings[0]))
+                .ifPresentOrElse(e -> {
                     if (commandSender.hasPermission(e.getPermission()))
                         e.onCommand(commandSender, list);
                     else
                         commandSender.sendMessage("You cannot be has permissions");
-                });
+                }, () -> commandSender.sendMessage("Sub command not found use /help"));
 
         return true;
     }

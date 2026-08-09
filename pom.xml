@@ -12,7 +12,7 @@
         <!--        Plugin settings-->
         <plugin.main-class>ru.kredwi.clan.NClanPlugin</plugin.main-class>
 
-        <!--        Version of depedency-->
+        <!--        Version of dependency-->
         <lombok.version>1.18.46</lombok.version>
     </properties>
 
@@ -44,6 +44,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.nukkitx</groupId>
+            <artifactId>fakeinventories</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
@@ -65,6 +70,7 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>*.yml</include>
+                    <include>*.json</include>
                 </includes>
             </resource>
         </resources>

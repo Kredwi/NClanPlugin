@@ -12,6 +12,9 @@ public class FileClansDB implements ClanDB {
 
     public @NonNull Clan create(@NonNull UUID ownerId, @NonNull String name) {
         int id = clans.size();
+        if (clans.get(id) != null) {
+            id = clans.size() * 23;
+        }
         Clan clan = Clan.of(id, ownerId, name);
         clans.put(id, clan);
         return clan;
@@ -23,7 +26,7 @@ public class FileClansDB implements ClanDB {
     }
 
     public @NonNull Optional<Clan> get(int id) {
-        return Optional.of(clans.get(id));
+        return Optional.ofNullable(clans.get(id));
     }
 
     public @NonNull Collection<Clan> getClans() {

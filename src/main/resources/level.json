@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Default",
+    "exp": 0,
+    "members": 5
+  },
+  {
+    "name": "Menion",
+    "exp": 1,
+    "members": 10
+  }
+]

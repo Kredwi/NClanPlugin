@@ -1,18 +1,18 @@
 package ru.kredwi.clan.commands.sub;
 
-import cn.nukkit.IPlayer;
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.permission.Permission;
 import lombok.AllArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
+import ru.kredwi.clan.model.Member;
 import ru.kredwi.clan.permission.Permissions;
 import ru.kredwi.clan.service.ClanService;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class Members implements SubCommand {
@@ -33,15 +33,14 @@ public class Members implements SubCommand {
             sender.sendMessage("You cannot be has any clan");
             return;
         }
-
-        Server server = Server.getInstance();
-        String message = clan.get().getMembers().keySet()
+        var members = new ArrayList<>(clan.get().getMembers().values())
                 .stream()
-                .map(server::getOfflinePlayer)
-                .map(IPlayer::getName)
-                .collect(Collectors.joining("\n"));
+                .sorted(Comparator.comparingInt(m -> ((Member) m).getMemberStats().getKills()).reversed())
+                .map(Member::getDisplayName)
+                .toList();
 
-        sender.sendMessage("Member of clan " + clan.get().getName() + "\n" + message);
+        sender.sendMessage("Member of clan " + clan.get().getName() + "\n" +
+                String.join("\n", members.subList(0, Math.min(members.size(), 10))));
     }
 
     @Override

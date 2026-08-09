@@ -5,41 +5,55 @@ import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Logger;
 import ru.kredwi.clan.commands.MainCommand;
 import ru.kredwi.clan.io.FileClan;
+import ru.kredwi.clan.io.LevelFile;
 import ru.kredwi.clan.io.db.FileClansDB;
 import ru.kredwi.clan.listener.PlayerDamageEvent;
 import ru.kredwi.clan.listener.PlayerKillPlayer;
 import ru.kredwi.clan.listener.PlayerQuitEvent;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.LevelService;
 import ru.kredwi.clan.service.RequestService;
 
 public class NClanPlugin extends PluginBase {
 
     public static Logger log;
 
-    private FileClan file;
+    private LevelFile levelFile;
+    private FileClan clanFile;
     private FileClansDB db;
     private ClanService clanService;
+    private LevelService levelService;
     private RequestService requestService;
 
     @Override
     public void onLoad() {
         log = getLogger(); // override to plugin logger
-        this.file = new FileClan(getDataFolder());
+        this.clanFile = new FileClan(getDataFolder());
+        this.levelFile = new LevelFile(getDataFolder());
         this.db = new FileClansDB();
-        this.clanService = new ClanService(db);
+        this.levelService = new LevelService();
+        this.clanService = new ClanService(levelService, db);
         this.requestService = new RequestService(clanService);
     }
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        var clans = this.file.read();
+        var levels = this.levelFile.read();
+        levelService.setLevels(levels);
+        log.debug(levelService.getLevels().size() + " levels successfully loaded");
+
+        var clans = this.clanFile.read();
         if (clans.isEmpty())
-            log.debug("Clans is empty");
+            log.debug("Clans not loaded. Clans is empty");
+        log.debug(clans.size() + " clans successfully loaded");
+
         this.db.enable(clans);
+        log.debug("File database successfully loaded");
 
         MainCommand command = new MainCommand(clanService, requestService);
         ((PluginCommand<?>) getCommand("clan")).setExecutor(command);
+        log.debug("Command successfully registered");
 
         getServer().getPluginManager()
                 .registerEvents(new PlayerDamageEvent(clanService), this);
@@ -47,11 +61,13 @@ public class NClanPlugin extends PluginBase {
                 .registerEvents(new PlayerQuitEvent(requestService), this);
         getServer().getPluginManager()
                 .registerEvents(new PlayerKillPlayer(clanService), this);
+        log.debug("Plugin events successfully registered");
+
     }
 
     @Override
     public void onDisable() {
-        this.file.write(db.getClans());
+        this.clanFile.write(db.getClans());
         this.requestService.clear();
         this.db.disable();
     }

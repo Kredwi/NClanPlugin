@@ -21,6 +21,7 @@ public class Member {
     @NonNull
     private Role role = Role.DEFAULT;
     private long joinAt = System.currentTimeMillis();
+    private MemberStats memberStats;
 }
 
 
