@@ -7,6 +7,7 @@ import ru.kredwi.clan.adapter.ClanAdapter;
 import ru.kredwi.clan.model.Clan;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,7 +18,7 @@ public record FileClan(File datafolder) {
 
     public void write(Collection<Clan> clans) {
         if (!datafolder.exists())
-            datafolder.mkdirs();
+            datafolder.getParentFile().mkdirs();
 
         String json = ClanAdapter.GSON.toJson(clans);
         writeFile(CLAN_FILE, json);
@@ -25,7 +26,7 @@ public record FileClan(File datafolder) {
 
     public Collection<Clan> read() {
         if (!datafolder.exists())
-            datafolder.mkdirs();
+            datafolder.getParentFile().mkdirs();
 
 
         String json = readFile(CLAN_FILE);
@@ -60,7 +61,11 @@ public record FileClan(File datafolder) {
     private void writeFile(String fileName, String fileContent) {
         File dbFile = new File(datafolder, fileName);
 
-        dbFile.delete();
+        try {
+            Files.delete(dbFile.toPath());
+        } catch (IOException e) {
+            NClanPlugin.log.error("Error of delete file clan file", e);
+        }
 
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dbFile)))) {
             writer.write(fileContent);

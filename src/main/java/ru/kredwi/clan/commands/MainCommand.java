@@ -45,6 +45,8 @@ public class MainCommand implements CommandExecutor {
         subCommands.put("setexp", new SetExp(clanService));
         subCommands.put("setbalance", new SetBalance(clanService));
         subCommands.put("chat", new Chat(clanService));
+        subCommands.put("demote", new Demote(clanService));
+        subCommands.put("remote", new Remote(clanService));
         subCommands.put("market", new Market(clanShop, clanService));
 
         CommandRequestHandler crh = new CommandRequestHandler(clanService, requestService);
