@@ -25,6 +25,6 @@ public class ClanHome extends MemberCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.BASE_PERMISSION;
+        return Permissions.PERMISSION_CLAN_HOME.getPermission();
     }
 }

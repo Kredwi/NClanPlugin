@@ -6,14 +6,18 @@ import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.ClanSettings;
 import ru.kredwi.clan.model.ClanStats;
 import ru.kredwi.clan.model.Member;
+import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.role.Role;
 
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class ClanAdapter implements JsonDeserializer<Clan>, JsonSerializer<Clan> {
     public static final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(Clan.class, new ClanAdapter())
+            .registerTypeAdapter(Permissions.class, new PermissionAdapter())
             .setPrettyPrinting()
             .serializeNulls()
             .create();
@@ -30,7 +34,10 @@ public class ClanAdapter implements JsonDeserializer<Clan>, JsonSerializer<Clan>
         Map<UUID, Member> members = ctx.deserialize(obj.get("members"),
                 new TypeToken<Map<UUID, Member>>() {
                 }.getType());
-        return Clan.of(id, ownerId, name, clanStats, settings, members);
+
+        List<Role> roles = ctx.deserialize(obj.get("roles"), new TypeToken<List<Role>>(){}.getType());
+
+        return Clan.of(id, ownerId, name, clanStats, settings, members, roles);
     }
 
     @Override
@@ -42,6 +49,7 @@ public class ClanAdapter implements JsonDeserializer<Clan>, JsonSerializer<Clan>
         jsonObject.add("settings", obj.serialize(clan.getSettings()));
         jsonObject.add("stats", obj.serialize(clan.getStats()));
         jsonObject.add("members", obj.serialize(clan.getMembers()));
+        jsonObject.add("roles", obj.serialize(clan.getRoles()));
 
         return jsonObject;
     }

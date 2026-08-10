@@ -23,6 +23,6 @@ public class Accept implements SubCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.USE_PERMISSION;
+        return Permissions.PERMISSION_CLAN_ACCEPT.getPermission();
     }
 }

@@ -24,6 +24,6 @@ public class Info extends MemberCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.USE_PERMISSION;
+        return Permissions.PERMISSION_CLAN_INFO.getPermission();
     }
 }

@@ -61,7 +61,7 @@ public record LevelFile(File levelFile) {
     }
 
     private void writeDefaultWrite(File file) {
-        String fileContent = gson.toJson(List.of(new Level("default", 0, 0)));
+        String fileContent = gson.toJson(List.of(new Level("default", 0, 5, 5)));
 
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)))) {
 

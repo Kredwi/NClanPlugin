@@ -4,7 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.Server;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import ru.kredwi.clan.Role;
+import ru.kredwi.clan.DefaultRoles;
 import ru.kredwi.clan.model.Member;
 import ru.kredwi.clan.model.MemberStats;
 import ru.kredwi.clan.service.ClanService;
@@ -45,7 +45,7 @@ public class CommandRequestHandler {
         Member member = new Member(
                 requestedPlayerInstance.get().getName(),
                 requestedPlayerInstance.get().getUniqueId(),
-                Role.DEFAULT,
+                DefaultRoles.MEMBER,
                 System.currentTimeMillis(),
                 new MemberStats()
         );

@@ -13,6 +13,7 @@ import ru.kredwi.clan.commands.sub.request.Accept;
 import ru.kredwi.clan.commands.sub.request.CommandRequestHandler;
 import ru.kredwi.clan.commands.sub.request.Deny;
 import ru.kredwi.clan.commands.sub.request.Invite;
+import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
 import ru.kredwi.clan.service.RequestService;
 import ru.kredwi.clan.shop.ClanShop;
@@ -36,11 +37,12 @@ public class MainCommand implements CommandExecutor {
         subCommands.put("leave", new Leave(clanService));
         subCommands.put("list", new List(clanService));
         subCommands.put("stats", new Stats(clanService));
-        subCommands.put("settings", new Settings(clanService));
 
         subCommands.put("disband", new Disband(clanService));
         subCommands.put("sethome", new SetHome(clanService));
+        subCommands.put("delhome", new DelHome(clanService));
         subCommands.put("home", new ClanHome(clanService));
+        subCommands.put("role", new RoleCMD(clanService));
 
         subCommands.put("setexp", new SetExp(clanService));
         subCommands.put("setbalance", new SetBalance(clanService));

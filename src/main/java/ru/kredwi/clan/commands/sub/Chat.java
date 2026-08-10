@@ -35,11 +35,11 @@ public class Chat extends MemberCommand {
                         .getPlayer(playerId)
                         .ifPresent(pl -> pl.sendMessage(MessageFormat.format(messageTemplate,
                                 pl.getName(), messageText,
-                                clanMember.getRole().name()))));
+                                clanMember.getRole().getName()))));
     }
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.BASE_PERMISSION;
+        return Permissions.PERMISSION_CLAN_CHAT.getPermission();
     }
 }

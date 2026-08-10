@@ -8,7 +8,7 @@ import com.google.common.cache.CacheBuilder;
 import it.unimi.dsi.fastutil.Pair;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
-import ru.kredwi.clan.Role;
+import ru.kredwi.clan.DefaultRoles;
 import ru.kredwi.clan.api.db.ClanDB;
 import ru.kredwi.clan.model.*;
 
@@ -43,7 +43,7 @@ public class ClanService {
                 // member id
                 ownerId,
                 // member role
-                Role.OWNER,
+                DefaultRoles.OWNER,
                 // member join time
                 System.currentTimeMillis(),
                 // initial member stats,

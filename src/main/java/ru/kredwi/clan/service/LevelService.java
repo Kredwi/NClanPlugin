@@ -20,7 +20,7 @@ public class LevelService {
 
     public LevelService() {
         // default (override in config file)
-        levels.put(DEFAULT_EXP_COUNT, new Level("default", DEFAULT_EXP_COUNT, 10));
+        levels.put(DEFAULT_EXP_COUNT, new Level("default", DEFAULT_EXP_COUNT, 10, 5));
     }
 
     public LevelService(@NonNull Map<Integer, Level> levels) {

@@ -36,7 +36,7 @@ public class PlayerStatsForm extends Form {
                         "§7▸ §fName: §e§l" + member.getDisplayName(),
                         "§7▸ §fKills: §c⚔ " + stats.getKills(),
                         "§7▸ §fOnline: " + player.isOnline(),
-                        "§7▸ §fGroup: " + member.getRole().name(),
+                        "§7▸ §fGroup: " + member.getRole().getName(),
                         "§7▸ §fLast played: §e⏰ " + player.getLastPlayed(),
                         "",
                         "§8" + "▬".repeat(30))

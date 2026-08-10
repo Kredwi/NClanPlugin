@@ -1,12 +1,10 @@
 package ru.kredwi.clan.commands.wrapper;
 
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.permission.Permission;
 import lombok.AllArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
 import ru.kredwi.clan.model.Clan;
-import ru.kredwi.clan.permission.Permissions;
 import ru.kredwi.clan.service.ClanService;
 
 import java.util.List;
@@ -31,10 +29,5 @@ public abstract class AdminCommand implements SubCommand {
         }
 
         this.onCommand(clan.get(), sender, args.subList(1, args.size()));
-    }
-
-    @Override
-    public @NonNull Permission getPermission() {
-        return Permissions.ADMIN_PERMISSION;
     }
 }

@@ -12,5 +12,6 @@ public class Level {
     private String name;
     private int exp;
     private int members;
+    private int roles;
 
 }

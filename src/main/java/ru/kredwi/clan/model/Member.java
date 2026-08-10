@@ -5,7 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
-import ru.kredwi.clan.Role;
+import ru.kredwi.clan.DefaultRoles;
+import ru.kredwi.clan.role.Role;
 
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class Member {
     @NonNull
     private UUID id;
     @NonNull
-    private Role role = Role.DEFAULT;
+    private Role role = DefaultRoles.MEMBER;
     private long joinAt = System.currentTimeMillis();
     private MemberStats memberStats;
 }

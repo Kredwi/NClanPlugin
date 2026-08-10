@@ -28,6 +28,6 @@ public class SetHome extends OwnerCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.BASE_PERMISSION;
+        return Permissions.PERMISSION_CLAN_SETHOME.getPermission();
     }
 }

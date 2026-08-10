@@ -61,6 +61,6 @@ public class Invite extends OwnerCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.USE_PERMISSION;
+        return Permissions.PERMISSION_CLAN_INVITE.getPermission();
     }
 }

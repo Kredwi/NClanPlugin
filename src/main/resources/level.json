@@ -2,11 +2,13 @@
   {
     "name": "Default",
     "exp": 0,
-    "members": 5
+    "members": 5,
+    "roles": 3
   },
   {
     "name": "Menion",
     "exp": 1,
-    "members": 10
+    "members": 10,
+    "roles": 8
   }
 ]

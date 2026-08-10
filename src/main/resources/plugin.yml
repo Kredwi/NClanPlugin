@@ -6,13 +6,74 @@ main: ${plugin.main-class}
 commands:
   clan:
     description: clan command
+    permission: clan.use
 permissions:
+  clan.create:
+    description: Allows to create a clan
+    default: true
   clan.use:
-    description: base for use
+    description: Allows to /clan command
     default: true
-  clan.base:
-    description: base
+  clan.help:
+    description: Allows to view help
     default: true
-  clan.admin:
-    description: base
+  clan.info:
+    description: Allows to view clan info
+    default: true
+  clan.list:
+    description: Allows to list clans
+    default: true
+  clan.members:
+    description: Allows to view clan members
+    default: true
+  clan.leave:
+    description: Allows to leave clan
+    default: true
+  clan.accept:
+    description: Allows to accept clan invitation
+    default: true
+  clan.deny:
+    description: Allows to deny clan invitation
+    default: true
+  clan.chat:
+    description: Allows to use clan chat
+    default: true
+  clan.home:
+    description: Allows to teleport to clan home
+    default: true
+  clan.market:
+    description: Allows to use clan shop
+    default: true
+  clan.stats:
+    description: Allows to view player stats
+    default: true
+  clan.remove:
+    description: Allows to remove clan
+    default: true
+  clan.kick:
+    description: Allows to kick members
+    default: true
+  clan.demote:
+    description: Allows to demote members
+    default: true
+  clan.remote:
+    description: Allows to promote members
+    default: true
+  clan.disband:
+    description: Allows to disband clan
+    default: true
+  clan.sethome:
+    description: Allows to set clan home
+    default: true
+  clan.settings:
+    description: Allows to change clan settings
+    default: true
+  clan.invite:
+    description: Allows to invite players
+    default: true
+  clan.setbalance:
+    description: Admin command to set clan balance
+    default: op
+  clan.setexp:
+    description: Admin command to set clan exp
     default: op

@@ -31,7 +31,13 @@ public abstract class MemberCommand implements SubCommand {
             return;
         }
 
+        var member = clan.get().getMembers().get(player.getUniqueId());
 
-        this.onCommand(clan.get(), (Player) sender, args);
+        if (member != null && !member.getRole().getPermissions().contains(this.getPermission())) {
+            sender.sendMessage("You cannot has permissions for use the command");
+            return;
+        }
+
+        this.onCommand(clan.get(), player, args);
     }
 }
