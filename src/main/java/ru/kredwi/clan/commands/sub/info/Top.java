@@ -27,7 +27,7 @@ public class Top implements SubCommand {
                 .stream()
                 .sorted(Comparator.comparingInt(e -> e.getStats().getExp()))
                 .map(clan ->
-                         messagesService.getMessage("clan.command.top.template", clan.getStats().getExp(), clan.getName()))
+                        messagesService.getMessage("clan.command.top.template", clan.getStats().getExp(), clan.getName()))
                 .collect(Collectors.joining("\n"));
         // next time fix [Clan] [Clan]
         messagesService.sendMessage(sender, "clan.command.top.lines", clans);
