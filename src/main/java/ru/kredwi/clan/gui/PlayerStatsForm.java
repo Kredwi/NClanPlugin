@@ -32,7 +32,7 @@ public class PlayerStatsForm extends Form {
                 messagesService.getMessage("clan.info.stats_body",
                         member.getDisplayName(),
                         stats.getKills(),
-                        player.isOnline(), // TODO override to "disable" "enable" or "yes" "no"
+                        messagesService.translateBoolean("boolean.online", player.isOnline()), // TODO override to "disable" "enable" or "yes" "no"
                         member.getRole().getName(),
                         player.getLastPlayed()));
 

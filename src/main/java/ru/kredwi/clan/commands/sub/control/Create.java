@@ -66,7 +66,7 @@ public class Create implements SubCommand {
         }
 
         if (economyProvider.isEnabled()) {
-            if (!(economyProvider.myMoney(player.getUniqueId()) > configProvider.getClanCreatePrice())) {
+            if (!(economyProvider.myMoney(player.getUniqueId()) >= configProvider.getClanCreatePrice())) {
                 messagesService.sendMessage(sender, "clan.error.not_enough_money_create", configProvider.getClanCreatePrice());
                 return;
             } else

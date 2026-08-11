@@ -6,6 +6,7 @@ import ru.kredwi.clan.provider.ConfigProvider;
 import ru.kredwi.clan.provider.MessagesProvider;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -52,6 +53,14 @@ public class MessagesService {
         }
 
         messages1.forEach(msg -> sender.sendMessage(format(configProvider.getMessagePrefix() + msg, args)));
+    }
+
+    public String translateBoolean(String ctx, boolean bool) {
+        String key = ctx + "." + bool;
+
+        return String.join("\n",
+                Optional.ofNullable(messages.get(key))
+                        .orElseGet(() -> List.of(String.valueOf(bool))));
     }
 
 }

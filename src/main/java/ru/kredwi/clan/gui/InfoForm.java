@@ -8,6 +8,7 @@ import ru.kredwi.clan.model.ClanSettings;
 import ru.kredwi.clan.model.ClanStats;
 import ru.kredwi.clan.model.Level;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.LevelService;
 import ru.kredwi.clan.service.MessagesService;
 
 public class InfoForm extends Form {
@@ -19,13 +20,15 @@ public class InfoForm extends Form {
         ClanStats clanStats = clan.getStats();
         ClanSettings clanSettings = clan.getSettings();
         Level level = clanService.getLevel(clanStats.getExp());
-
         this.form = new FormWindowSimple(
                 messagesService.getMessage("clan.form.info.title", clan.getName()),
                 messagesService.getMessage("clan.form.info.body",
-                        clan.getName(), clanSettings.isPvp(),
+                        clan.getName(),
+                        messagesService.translateBoolean("boolean.status", clanSettings.isPvp()),
                         clanStats.getBalance(), clanStats.getExp(),
-                        clan.getMembers().size(), level.getMembers()
+                        clan.getMembers().size(), level.getMembers(),
+                        level.getName(),
+                        messagesService.translateBoolean("boolean.none", clanSettings.getClanHome().isPresent())
                 ));
     }
 

@@ -1,4 +1,24 @@
 {
+  "boolean.status.true": [
+    "§a✔ enable"
+  ],
+  "boolean.status.false": [
+    "§c✘ disable"
+  ],
+
+  "boolean.online.true": [
+    "§a✔ online"
+  ],
+  "boolean.online.false": [
+    "§c✘ offline"
+  ],
+  "boolean.none.true": [
+    "§a✔ yes"
+  ],
+  "boolean.none.false": [
+    "§c✘ none"
+  ],
+
   "clan.chat.template": [
     "§c{2} §6{0} §8=> §f{1}"
   ],
@@ -246,6 +266,8 @@
     "§7PvP mode: §f{1}",
     "§7Balance: §f{2}",
     "§7Exp: §f{3}",
+    "§7Level: §f{6}",
+    "§7Clan home: §f{7}",
     "§7Members: §f{4}§7/§f{5}",
     "§8▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
   ],
