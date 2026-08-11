@@ -23,10 +23,6 @@ public class ConfigProvider {
         return config.getDouble("default-clan-balance", 0.0);
     }
 
-    public String getShopCurrencySymbol() {
-        return config.getString("shop-currency-symbol", "$");
-    }
-
     public String getMessagePrefix() {
         return config.getString("message-prefix", "§6[Clan] §r");
     }

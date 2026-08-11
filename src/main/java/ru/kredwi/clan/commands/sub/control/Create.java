@@ -60,6 +60,11 @@ public class Create implements SubCommand {
             return;
         }
 
+        if (clanService.getClanWithName(args.get(0)).isPresent()) {
+            ms.sendMessage(sender, "clan.error.already_exists", args.get(0));
+            return;
+        }
+
         if (economyProvider.isEnabled()) {
             if (!(economyProvider.myMoney(player.getUniqueId()) > configProvider.getClanCreatePrice())) {
                 messagesService.sendMessage(sender, "clan.error.not_enough_money_create", configProvider.getClanCreatePrice());

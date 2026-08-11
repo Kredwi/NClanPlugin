@@ -88,12 +88,18 @@ public class ClanService {
                 .findFirst();
     }
 
-    public Optional<Clan> getClanWithName(String name) {
+    public Optional<Clan> getClanWithPlayerName(String name) {
         Server server = Server.getInstance();
         IPlayer player = server.getOfflinePlayer(name);
         if (player == null || player.getUniqueId() == null)
             return Optional.empty();
         return this.getClanWithUUID(player.getUniqueId());
+    }
+
+    public Optional<Clan> getClanWithName(String name) {
+        return clansDB.getClans().stream()
+                .filter(clan -> clan.getName().equalsIgnoreCase("name"))
+                .findFirst();
     }
 
     public Optional<Set<Pair<UUID, Member>>> getMembers(UUID id) {

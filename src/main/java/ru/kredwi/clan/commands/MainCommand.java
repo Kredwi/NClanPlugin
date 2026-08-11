@@ -51,6 +51,7 @@ public class MainCommand implements CommandExecutor {
         subCommands.put("leave", new Leave(messagesService, clanService));
         subCommands.put("list", new List(messagesService, clanService));
         subCommands.put("stats", new Stats(messagesService, clanService));
+        subCommands.put("top", new Top(messagesService, clanService));
 
         subCommands.put("disband", new Disband(messagesService, clanService));
         subCommands.put("sethome", new SetHome(messagesService, clanService));
@@ -80,22 +81,22 @@ public class MainCommand implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length == 0) {
             messagesService
-                    .sendMessage(commandSender, "clan.command.help.unknown");
+                    .sendMessage(commandSender, "clan.command.help.required_arguments");
             return true;
         }
 
-        var list = Lists.newArrayList(strings);
+        var subCmdArgs = Lists.newArrayList(strings);
 
-        list.remove(0); // remove first argument
+        subCmdArgs.remove(0); // remove first argument
 
         Optional.ofNullable(subCommands.get(strings[0]))
                 .ifPresentOrElse(e -> {
                     if (commandSender.hasPermission(e.getPermission()))
-                        e.onCommand(commandSender, list);
+                        e.onCommand(commandSender, subCmdArgs);
                     else
                         messagesService.sendMessage(commandSender, "clan.error.no_permission");
                 }, () ->
-                        messagesService.sendMessage(commandSender, "clan.command.help.required_arguments"));
+                        messagesService.sendMessage(commandSender, "clan.command.help.unknown"));
 
         return true;
     }

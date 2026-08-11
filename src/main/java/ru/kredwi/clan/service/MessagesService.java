@@ -31,6 +31,10 @@ public class MessagesService {
         this.messages = messagesFile.getMessages();
     }
 
+    public String getPrefix() {
+        return configProvider.getMessagePrefix();
+    }
+
     public String getMessage(String key, Object... args) {
         return Optional.ofNullable(messages.get(key))
                 .map(s -> s.stream()

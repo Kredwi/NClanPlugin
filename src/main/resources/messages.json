@@ -2,6 +2,15 @@
   "clan.chat.template": [
     "§c{2} §6{0} §8=> §f{1}"
   ],
+  "clan.command.top.template": [
+    "§f{0} §6{1} "
+  ],
+  "clan.command.top.lines": [
+    "§6§l======= Clan tops =======",
+    "{0}",
+    "§6§l======================="
+
+  ],
   "clan.command.help.lines": [
     "§6§l======= NClanPlugin =======",
     "§7/§6clan help §8- §fShow this help",
@@ -129,6 +138,9 @@
   ],
   "clan.error.not_enough_money_create": [
     "§cNot enough money. Required: §6{0}"
+  ],
+  "clan.error.already_exists": [
+    "§cClan with name {0} already exists"
   ],
   "clan.success.clan_created": [
     "§aClan successfully created with name §6{0}"

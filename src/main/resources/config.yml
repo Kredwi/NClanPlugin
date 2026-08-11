@@ -16,5 +16,4 @@ exp:
 default-clan-exp: 0
 default-clan-balance: 0.0
 
-shop-currency-symbol: "$"
 message-prefix: "§6[Clan] §r"
