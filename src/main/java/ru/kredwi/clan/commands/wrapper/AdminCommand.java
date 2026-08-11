@@ -8,11 +8,13 @@ import ru.kredwi.clan.api.command.SubCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.CommonPermissions;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 
 @AllArgsConstructor
 public abstract class AdminCommand implements SubCommand {
+    protected final MessagesService messagesService;
     protected final ClanService clanService;
 
     protected abstract void onCommand(@NonNull Clan clan, @NonNull CommandSender sender, @NonNull List<String> args);
@@ -20,13 +22,13 @@ public abstract class AdminCommand implements SubCommand {
     @Override
     public final void onCommand(@NonNull CommandSender sender, @NonNull List<String> args) {
         if (args.isEmpty()) {
-            sender.sendMessage("Please provide more arguments. /clan help");
+            messagesService.sendMessage(sender, "clan.error.more_arguments");
             return;
         }
 
         var clan = clanService.getClanWithName(args.get(0));
         if (clan.isEmpty()) {
-            sender.sendMessage("Clan with name " + args.get(0) + " is not found");
+            messagesService.sendMessage(sender, "clan.error.clan_not_found", args.get(0));
             return;
         }
 

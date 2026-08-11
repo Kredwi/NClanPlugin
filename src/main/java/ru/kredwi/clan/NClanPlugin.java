@@ -10,14 +10,17 @@ import ru.kredwi.clan.events.DamageEvent;
 import ru.kredwi.clan.io.ClanShopFile;
 import ru.kredwi.clan.io.FileClan;
 import ru.kredwi.clan.io.LevelFile;
+import ru.kredwi.clan.io.MessagesFile;
 import ru.kredwi.clan.io.db.FileClansDB;
 import ru.kredwi.clan.listener.FormListener;
 import ru.kredwi.clan.listener.PlayerDamageEvent;
 import ru.kredwi.clan.listener.PlayerKillPlayer;
 import ru.kredwi.clan.listener.PlayerQuitEvent;
 import ru.kredwi.clan.provider.ConfigProvider;
+import ru.kredwi.clan.provider.MessagesProvider;
 import ru.kredwi.clan.service.ClanService;
 import ru.kredwi.clan.service.LevelService;
+import ru.kredwi.clan.service.MessagesService;
 import ru.kredwi.clan.service.RequestService;
 import ru.kredwi.clan.shop.ClanShop;
 
@@ -37,26 +40,31 @@ public class NClanPlugin extends PluginBase {
     private RequestService requestService;
     private ClanShop clanShop;
     private ConfigProvider configProvider;
+    private MessagesService messagesService;
 
     @Override
     public void onLoad() {
         log = getLogger(); // override to plugin logger
+
+        saveDefaultConfig();
+        this.configProvider = new ConfigProvider(getConfig());
+        MessagesFile mf = new MessagesFile(getDataFolder());
+        this.messagesService = new MessagesService(configProvider, new MessagesProvider(mf));
+
+
         this.clanFile = new FileClan(getDataFolder());
         this.levelFile = new LevelFile(getDataFolder());
         this.clanShopFile = new ClanShopFile(getDataFolder());
         this.db = new FileClansDB();
 
         this.levelService = new LevelService(configProvider);
-        this.clanService = new ClanService(configProvider, levelService, db);
+        this.clanService = new ClanService(messagesService, configProvider, levelService, db);
         this.requestService = new RequestService(configProvider);
         this.clanShop = new ClanShop();
     }
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
-
-        this.configProvider = new ConfigProvider(null, getConfig());
 
         var levels = this.levelFile.read();
         levelService.setLevels(levels);
@@ -74,7 +82,7 @@ public class NClanPlugin extends PluginBase {
         this.clanShop.setItems(shopItems);
         log.debug(shopItems.size() + " shop items successfully loaded");
 
-        MainCommand command = new MainCommand(clanService, requestService, clanShop, configProvider);
+        MainCommand command = new MainCommand(messagesService, clanService, requestService, clanShop, configProvider);
         ((PluginCommand<?>) getCommand("clan")).setExecutor(command);
         log.debug("Command successfully registered");
 
@@ -87,7 +95,7 @@ public class NClanPlugin extends PluginBase {
                 new PlayerDamageEvent(clanService),
                 new PlayerQuitEvent(requestService),
                 new PlayerKillPlayer(new DamageEvent(configProvider, clanService)),
-                new FormListener(clanService, clanShop)
+                new FormListener(messagesService, clanService, clanShop)
         );
         events.forEach(e -> getServer().getPluginManager()
                 .registerEvents(e, this));

@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ClanService {
 
+    private final MessagesService messagesService;
     private final ConfigProvider config;
     private final LevelService levelService;
     private final ClanDB clansDB;
@@ -107,8 +108,10 @@ public class ClanService {
     public void onChangeExp(Clan clan, int initExp, int newExp) {
         Level initLevel = getLevel(initExp);
         Level finalLevel = getLevel(newExp);
-        String message = initExp < newExp ? "Clan level upgrade"
-                : "Clan level downgraded";
+        String message = initExp < newExp ? messagesService
+                .getMessage("clan.info.level_up")
+                : messagesService
+                .getMessage("clan.info.level_down");
         if (!initLevel.equals(finalLevel)) {
             clan.getMembers()
                     .forEach((memberId, __) ->

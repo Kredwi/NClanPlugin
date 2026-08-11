@@ -8,6 +8,7 @@ import ru.kredwi.clan.model.Member;
 import ru.kredwi.clan.model.MemberStats;
 import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 import ru.kredwi.clan.service.RequestService;
 
 import java.util.List;
@@ -24,6 +25,8 @@ public class RequestEvent {
     private final ClanService clanService;
     @Getter
     private final RequestService requestService;
+    @Getter
+    private final MessagesService messagesService;
 
     public void onAccept(UUID requested) {
         var reqData = requestService.getRequested(requested);
@@ -42,7 +45,7 @@ public class RequestEvent {
             return;
 
         if (requestorPlayerInstance.isEmpty()) {
-            requestedPlayerInstance.get().sendMessage("Request author is leave from game");
+            messagesService.sendMessage(requestedPlayerInstance.get(), "clan.request.author_left");
             return;
         }
         Role role;
@@ -67,8 +70,8 @@ public class RequestEvent {
     }
 
     private void sendAcceptMessages(Player requestor, Player requested) {
-        requestor.sendMessage("Player with name " + requested.getName() + " successfully accept your request");
-        requested.sendMessage("You successfully accept request to clan join");
+        messagesService.sendMessage(requestor, "clan.request.accept_success_sender", requested.getName());
+        messagesService.sendMessage(requested, "clan.request.accept_success_target");
     }
 
     public void onDeny(UUID requested) {
@@ -80,11 +83,11 @@ public class RequestEvent {
         var requestedPlayerInstance = server.getPlayer(reqData.get().requested());
         var requestorPlayerInstance = server.getPlayer(reqData.get().requestor());
 
-        sendDenyMessage(requestedPlayerInstance, "You successfully deny request");
-        sendDenyMessage(requestorPlayerInstance, "Player deny your request");
+        sendDenyMessage(requestedPlayerInstance, "clan.request.deny_success");
+        sendDenyMessage(requestorPlayerInstance, "clan.request.deny_target");
     }
 
-    private void sendDenyMessage(Optional<Player> player, String message) {
-        player.ifPresent(value -> value.sendMessage(message));
+    private void sendDenyMessage(Optional<Player> player, String key) {
+        player.ifPresent(value -> messagesService.sendMessage(value, key));
     }
 }

@@ -10,6 +10,7 @@ import ru.kredwi.clan.gui.PlayerStatsForm;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,13 +18,19 @@ import java.util.Optional;
 
 public class Stats extends MemberCommand {
 
-    public Stats(ClanService clanService) {
-        super(clanService);
+
+    public Stats(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
     }
 
     @Override
     public @NonNull Permission getPermission() {
         return ClanPermissions.PERMISSION_CLAN_STATS.getPermission();
+    }
+
+    @Override
+    public boolean requiredArguments() {
+        return false;
     }
 
     @Override
@@ -39,11 +46,11 @@ public class Stats extends MemberCommand {
                 .findFirst();
 
         if (clanMember.isEmpty()) {
-            player.sendMessage("Player cannot be found");
+            messagesService.sendMessage(player, "clan.error.player_not_found");
             return;
         }
 
-        new PlayerStatsForm(clan.getMembers().get(clanMember.get().getUniqueId()))
+        new PlayerStatsForm(messagesService, clan.getMembers().get(clanMember.get().getUniqueId()))
                 .showForm(player);
     }
 }

@@ -40,4 +40,9 @@ public class ClanShopFile extends CommonIOFile<ArrayList<ShopItem>> {
     protected String seserilize(@NonNull ArrayList<ShopItem> shopItems) {
         throw new UnsupportedOperationException("The file cannot be support write");
     }
+
+    @Override
+    public boolean rewrite() {
+        return false;
+    }
 }

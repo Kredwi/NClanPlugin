@@ -10,12 +10,19 @@ import java.util.function.Supplier;
 
 public abstract class CommonIOFile<T> {
 
+    public boolean rewrite() {
+        return true;
+    }
+
     public T read() {
         String json = readFile();
         return deserilize(json);
     }
 
     public void write(T t) {
+        if (getFile().exists() && !rewrite())
+            return;
+
         String json = seserilize(t);
         writeFile(json);
     }

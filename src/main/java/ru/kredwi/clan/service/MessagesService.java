@@ -1,38 +1,53 @@
 package ru.kredwi.clan.service;
 
 import cn.nukkit.command.CommandSender;
-import lombok.RequiredArgsConstructor;
+import ru.kredwi.clan.NClanPlugin;
 import ru.kredwi.clan.provider.ConfigProvider;
 import ru.kredwi.clan.provider.MessagesProvider;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.text.MessageFormat.format;
 
-@RequiredArgsConstructor
 public class MessagesService {
 
-    private ConfigProvider configProvider;
-    private MessagesProvider messagesFile;
+    private final ConfigProvider configProvider;
+    private final MessagesProvider messagesFile;
     private Map<String, List<String>> messages;
+
+    public MessagesService(ConfigProvider configProvider, MessagesProvider messagesFile) {
+        this.configProvider = configProvider;
+        this.messagesFile = messagesFile;
+
+        this.messages = messagesFile.getMessages();
+    }
 
     public void reload() {
         messagesFile.reload();
         this.messages = messagesFile.getMessages();
     }
 
-    public void sendMessage(CommandSender sender, String key, Object...args) {
+    public String getMessage(String key, Object... args) {
+        return Optional.ofNullable(messages.get(key))
+                .map(s -> s.stream()
+                        .map(message -> MessageFormat.format(message, args))
+                        .collect(Collectors.joining("\n")))
+                .orElse(key);
+    }
+
+    public void sendMessage(CommandSender sender, String key, Object... args) {
         List<String> messages1 = messages.get(key);
         if (messages1 == null || messages1.isEmpty()) {
+            NClanPlugin.log.warning("Message key \"" + key + "\" not found");
             sender.sendMessage(key);
             return;
         }
 
-        StringBuilder message = new StringBuilder();
-        messages1.forEach(msg -> message.append(format(configProvider.getMessagePrefix() + msg, args)));
-
-        sender.sendMessage(message.toString());
+        messages1.forEach(msg -> sender.sendMessage(format(configProvider.getMessagePrefix() + msg, args)));
     }
 
 }

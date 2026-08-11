@@ -2,27 +2,22 @@ package ru.kredwi.clan.commands.sub.info;
 
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.permission.Permission;
+import lombok.AllArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
 import ru.kredwi.clan.permission.ClanPermissions;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 
+@AllArgsConstructor
 public class Help implements SubCommand {
+
+    private MessagesService messagesService;
 
     @Override
     public void onCommand(@NonNull CommandSender sender, @NonNull List<String> args) {
-        sender.sendMessage("======= NClanPlugin =======");
-        sender.sendMessage("/clan help");
-        sender.sendMessage("/clan leave");
-        sender.sendMessage("/clan create <clan_name>");
-        sender.sendMessage("/clan remove");
-        sender.sendMessage("/clan members");
-        sender.sendMessage("/clan stats <player_name>");
-        sender.sendMessage("/clan kick <player_name>");
-        sender.sendMessage("/clan invite <player_name>");
-        sender.sendMessage("/clan accept");
-        sender.sendMessage("===========================");
+        messagesService.sendMessage(sender, "clan.command.help.lines");
     }
 
     @Override

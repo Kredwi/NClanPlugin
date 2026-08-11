@@ -8,12 +8,19 @@ import ru.kredwi.clan.gui.RoleManagerForm;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 
 public class RoleCMD extends MemberCommand {
-    public RoleCMD(ClanService clanService) {
-        super(clanService);
+
+    public RoleCMD(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
+    }
+
+    @Override
+    public boolean requiredArguments() {
+        return false;
     }
 
     @Override
@@ -23,6 +30,6 @@ public class RoleCMD extends MemberCommand {
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
-        new RoleManagerForm(clan).showForm(player);
+        new RoleManagerForm(messagesService, clan).showForm(player);
     }
 }

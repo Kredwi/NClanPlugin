@@ -8,17 +8,19 @@ import ru.kredwi.clan.api.command.SubCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class List implements SubCommand {
 
+    private MessagesService messagesService;
     private ClanService clanService;
 
     @Override
     public void onCommand(@NonNull CommandSender sender, java.util.@NonNull List<String> args) {
-        sender.sendMessage("All clans in the server \n" + clanService.getClans().stream()
+        messagesService.sendMessage(sender, "clan.info.clan_list", clanService.getClans().stream()
                 .map(Clan::getName)
                 .collect(Collectors.joining("\n")));
     }

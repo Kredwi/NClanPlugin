@@ -8,22 +8,29 @@ import ru.kredwi.clan.gui.InfoForm;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 
 public class Info extends MemberCommand {
-    public Info(ClanService clanService) {
-        super(clanService);
+
+    public Info(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
     }
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
-        new InfoForm(clanService, clan)
+        new InfoForm(messagesService, clanService, clan)
                 .showForm(player);
     }
 
     @Override
     public @NonNull Permission getPermission() {
         return ClanPermissions.PERMISSION_CLAN_INFO.getPermission();
+    }
+
+    @Override
+    public boolean requiredArguments() {
+        return false;
     }
 }

@@ -7,12 +7,19 @@ import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 
 public class ClanHome extends MemberCommand {
-    public ClanHome(ClanService clanService) {
-        super(clanService);
+
+    public ClanHome(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
+    }
+
+    @Override
+    public boolean requiredArguments() {
+        return false;
     }
 
     @Override
@@ -21,8 +28,7 @@ public class ClanHome extends MemberCommand {
                 .getClanHome()
                 .ifPresentOrElse(location ->
                                 player.teleport(new cn.nukkit.level.Location(location.x(), location.y(), location.z(), location.yaw())),
-                        () -> player.sendMessage("Clan home is not set"));
-        ;
+                        () -> messagesService.sendMessage(player, "clan.error.home_not_set"));
     }
 
     @Override

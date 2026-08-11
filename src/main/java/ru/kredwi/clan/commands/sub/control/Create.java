@@ -10,20 +10,22 @@ import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.provider.ConfigProvider;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 public class Create implements SubCommand {
 
+    private final MessagesService messagesService;
     private final ConfigProvider configProvider;
     private final ClanService clanService;
 
     @Override
     public void onCommand(@NonNull CommandSender sender, @NonNull List<String> args) {
-
+        var ms = messagesService;
         if (!sender.isPlayer()) {
-            sender.sendMessage("Command only for a player");
+            ms.sendMessage(sender, "clan.error.only_player");
             return;
         }
 
@@ -31,35 +33,38 @@ public class Create implements SubCommand {
 
         var clan = clanService.getClanWithUUID(player.getUniqueId());
         if (clan.isPresent()) {
-            sender.sendMessage("You already has clan");
+            ms.sendMessage(sender, "clan.error.already_in_clan");
             return;
         }
 
         if (args.isEmpty()) {
-            sender.sendMessage("Clan name cannot be empty. Usage /clan help");
+            ms.sendMessage(sender, "clan.error.clan_name_empty");
             return;
         }
 
         String clanName = args.get(0);
         if (!clanName.matches(configProvider.getClanNameAllowedPattern())) {
-            sender.sendMessage("Your clan name cannot allowed");
+            ms.sendMessage(sender, "clan.error.name_not_allowed");
+
             return;
         }
 
         if (clanName.length() > configProvider.getClanNameMaxLength()) {
-            sender.sendMessage("You clan name over bounds (please delete symbols)");
+            ms.sendMessage(sender, "clan.error.name_too_long");
+
             return;
         }
 
         if (clanName.length() < configProvider.getClanNameMinLength()) {
-            sender.sendMessage("You clan name over bounds (please add more symbols)");
+            ms.sendMessage(sender, "clan.error.name_too_short");
+
             return;
         }
 
         // TODO write prise for create clan
 
         Clan instanceOfClan = clanService.create(player.getUniqueId(), clanName);
-        sender.sendMessage("Clan successfully created with id " + instanceOfClan.getId());
+        ms.sendMessage(sender, "clan.success.clan_created", instanceOfClan.getName());
     }
 
     @Override

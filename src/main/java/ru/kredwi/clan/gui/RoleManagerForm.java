@@ -9,6 +9,7 @@ import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.role.Role;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +19,19 @@ public class RoleManagerForm extends FormWindowCustom {
     private final FormWindow form;
     private final List<Role> roles;
 
-    public RoleManagerForm(@NonNull Clan clan) {
-        super("Role Manager");
+    public RoleManagerForm(MessagesService messagesService, @NonNull Clan clan) {
+        super(messagesService.getMessage("clan.form.role.manager.title"));
 
         this.roles = new ArrayList<>(clan.getRoles());
 
         roles.forEach((r) -> {
             addElement(new ElementHeader(r.getName()));
-            addElement(new ElementInput("name", "role name", r.getName()));
-            addElement(new ElementInput("\npriority", "priority", String.valueOf(r.getPriority())));
-            addElement(new ElementLabel("\n\nPermissions"));
+            addElement(new ElementInput(messagesService.getMessage("clan.form.role.creator.name"),
+                    "role name", r.getName()));
+            addElement(new ElementInput("\n" + messagesService.getMessage("clan.form.role.creator.priority"),
+                    "priority", String.valueOf(r.getPriority())));
+            addElement(new ElementDivider());
+            addElement(new ElementLabel(messagesService.getMessage("clan.form.role.creator.permissions")));
 
             for (ClanPermissions perm : ClanPermissions.values()) {
                 addElement(new ElementToggle(perm.getPermission().getName(), r.getPermissions().contains(perm.getPermission())));

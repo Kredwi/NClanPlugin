@@ -7,20 +7,26 @@ import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 public abstract class MemberCommand implements SubCommand {
+    protected final MessagesService messagesService;
     protected final ClanService clanService;
 
     protected abstract void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args);
 
+    public boolean requiredArguments() {
+        return true;
+    }
+
     @Override
     public final void onCommand(@NonNull CommandSender sender, @NonNull List<String> args) {
-        if (!sender.isPlayer()) {
-            sender.sendMessage("Command only for a player");
+        if (requiredArguments() && args.isEmpty()) {
+            messagesService.sendMessage(sender, "clan.error.more_arguments");
             return;
         }
 
@@ -28,7 +34,7 @@ public abstract class MemberCommand implements SubCommand {
 
         var clan = clanService.getClanWithUUID(player.getUniqueId());
         if (clan.isEmpty()) {
-            sender.sendMessage("You cannot be has any clan");
+            messagesService.sendMessage(sender, "clan.error.no_clan");
             return;
         }
 
@@ -37,7 +43,7 @@ public abstract class MemberCommand implements SubCommand {
             if (member.getRole().getPermissions().contains(this.getPermission()))
                 this.onCommand(clan.get(), player, args);
             else
-                sender.sendMessage("You cannot has permissions for use the command");
+                messagesService.sendMessage(sender, "clan.error.no_permission_command");
         });
     }
 }

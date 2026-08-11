@@ -8,17 +8,24 @@ import ru.kredwi.clan.gui.RoleCreateForm;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 
 public class AddRole extends MemberCommand {
-    public AddRole(ClanService clanService) {
-        super(clanService);
+
+    public AddRole(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
     }
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
-        new RoleCreateForm(clan).showForm(player);
+        new RoleCreateForm(messagesService, clan).showForm(player);
+    }
+
+    @Override
+    public boolean requiredArguments() {
+        return false;
     }
 
     @Override

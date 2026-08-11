@@ -9,13 +9,15 @@ import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 
 public class Kick extends MemberCommand {
 
-    public Kick(ClanService clanService) {
-        super(clanService);
+
+    public Kick(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
     }
 
     @Override
@@ -26,29 +28,29 @@ public class Kick extends MemberCommand {
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player sender, @NonNull List<String> args) {
         if (args.isEmpty()) {
-            sender.sendMessage("Please provide player name");
+            messagesService.sendMessage(sender, "clan.error.provide_player_name");
             return;
         }
 
         // idk how to fix this deprecated error from bukkit
         IPlayer playerToKick = Server.getInstance().getOfflinePlayer(args.get(0));
         if (playerToKick == null) {
-            sender.sendMessage("Player with " + args.get(0) + " name is not found");
+            messagesService.sendMessage(sender, "clan.error.player_not_found_name", args.get(0));
             return;
         }
 
         if (playerToKick.getUniqueId().equals(clan.getOwnerId())) {
-            sender.sendMessage("Owner cannot be kicked from a clan");
+            messagesService.sendMessage(sender, "clan.error.cannot_kick_owner");
             return;
         }
 
         if (playerToKick.getUniqueId().equals(sender.getUniqueId())) {
-            sender.sendMessage("You cannot be kick yourself");
+            messagesService.sendMessage(sender, "clan.error.cannot_kick_self");
             return;
         }
 
         clan.getMembers()
                 .remove(playerToKick.getUniqueId());
-        sender.sendMessage("Player successfully kicked");
+        messagesService.sendMessage(sender, "clan.success.player_kicked");
     }
 }

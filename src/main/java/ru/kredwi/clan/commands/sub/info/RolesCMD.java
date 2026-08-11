@@ -9,6 +9,7 @@ import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.Comparator;
 import java.util.List;
@@ -16,28 +17,36 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class RolesCMD extends MemberCommand {
-    public RolesCMD(ClanService clanService) {
-        super(clanService);
+
+
+    public RolesCMD(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
+    }
+
+    @Override
+    public boolean requiredArguments() {
+        return false;
     }
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
         if (args.isEmpty())
-            player.sendMessage(String.format("Clan roles: \n" + clan.getRoles().stream()
-                    .sorted(Comparator.comparingInt(Role::getPriority))
-                    .map(role -> role.getPriority() + ". " + role.getName() + " permissions " + role.getPermissions().size())
-                    .collect(Collectors.joining("\n"))));
+            messagesService.sendMessage(player, "clan.info.roles_header",
+                    clan.getRoles().stream()
+                            .sorted(Comparator.comparingInt(Role::getPriority))
+                            .map(role -> messagesService.getMessage("clan.info.roles_line", role.getPriority(), role.getName(), role.getPermissions().size()))
+                            .collect(Collectors.joining("\n")));
         else {
             Optional<Role> role = clan.getRoles()
                     .stream()
                     .filter(role1 -> role1.getName().equalsIgnoreCase(args.get(0)))
                     .findFirst();
             if (role.isEmpty()) {
-                player.sendMessage("Role with name " + args.get(0) + " is not found");
+                messagesService.sendMessage(player, "clan.error.role_not_found", args.get(0));
                 return;
             }
 
-            new RoleViewerForm(role.get()).showForm(player);
+            new RoleViewerForm(messagesService, role.get()).showForm(player);
         }
 
     }

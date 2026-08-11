@@ -20,6 +20,7 @@ import ru.kredwi.clan.commands.sub.role.RoleCMD;
 import ru.kredwi.clan.events.RequestEvent;
 import ru.kredwi.clan.provider.ConfigProvider;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 import ru.kredwi.clan.service.RequestService;
 import ru.kredwi.clan.shop.ClanShop;
 
@@ -29,50 +30,55 @@ import java.util.Optional;
 
 public class MainCommand implements CommandExecutor {
 
+    private final MessagesService messagesService;
     private final Map<String, SubCommand> subCommands;
 
-    public MainCommand(ClanService clanService,
-                       RequestService requestService,
-                       ClanShop clanShop,
-                       ConfigProvider config) {
+    public MainCommand(
+            MessagesService messagesService,
+            ClanService clanService,
+            RequestService requestService,
+            ClanShop clanShop,
+            ConfigProvider config) {
+        this.messagesService = messagesService;
         this.subCommands = new HashMap<>();
-        subCommands.put("help", new Help());
-        subCommands.put("info", new Info(clanService));
-        subCommands.put("create", new Create(config, clanService));
-        subCommands.put("members", new Members(clanService));
-        subCommands.put("kick", new Kick(clanService));
-        subCommands.put("leave", new Leave(clanService));
-        subCommands.put("list", new List(clanService));
-        subCommands.put("stats", new Stats(clanService));
+        subCommands.put("help", new Help(messagesService));
+        subCommands.put("info", new Info(messagesService, clanService));
+        subCommands.put("create", new Create(messagesService, config, clanService));
+        subCommands.put("members", new Members(messagesService, clanService));
+        subCommands.put("kick", new Kick(messagesService, clanService));
+        subCommands.put("leave", new Leave(messagesService, clanService));
+        subCommands.put("list", new List(messagesService, clanService));
+        subCommands.put("stats", new Stats(messagesService, clanService));
 
-        subCommands.put("disband", new Disband(clanService));
-        subCommands.put("sethome", new SetHome(clanService));
-        subCommands.put("delhome", new DelHome(clanService));
-        subCommands.put("home", new ClanHome(clanService));
-        subCommands.put("roles", new RolesCMD(clanService));
-        subCommands.put("role", new RoleCMD(clanService));
-        subCommands.put("addrole", new AddRole(clanService));
+        subCommands.put("disband", new Disband(messagesService, clanService));
+        subCommands.put("sethome", new SetHome(messagesService, clanService));
+        subCommands.put("delhome", new DelHome(messagesService, clanService));
+        subCommands.put("home", new ClanHome(messagesService, clanService));
+        subCommands.put("roles", new RolesCMD(messagesService, clanService));
+        subCommands.put("role", new RoleCMD(messagesService, clanService));
+        subCommands.put("addrole", new AddRole(messagesService, clanService));
 
-        subCommands.put("setexp", new SetExp(clanService));
-        subCommands.put("setbalance", new SetBalance(clanService));
-        subCommands.put("chat", new Chat(clanService));
-        subCommands.put("demote", new Demote(clanService));
-        subCommands.put("remote", new Remote(clanService));
-        subCommands.put("market", new Market(clanShop, clanService));
-        subCommands.put("pvp", new PVP(clanService));
+        subCommands.put("setexp", new SetExp(messagesService, clanService));
+        subCommands.put("setbalance", new SetBalance(messagesService, clanService));
+        subCommands.put("chat", new Chat(messagesService, clanService));
+        subCommands.put("demote", new Demote(messagesService, clanService));
+        subCommands.put("remote", new Remote(messagesService, clanService));
+        subCommands.put("market", new Market(messagesService, clanService, clanShop));
+        subCommands.put("pvp", new PVP(messagesService, clanService));
 
-        RequestEvent crh = new RequestEvent(clanService, requestService);
+        RequestEvent crh = new RequestEvent(clanService, requestService, messagesService);
 
         subCommands.put("accept", new Accept(crh));
         subCommands.put("deny", new Deny(crh));
-        subCommands.put("invite", new Invite(crh));
+        subCommands.put("invite", new Invite(messagesService, crh));
 
     }
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length == 0) {
-            commandSender.sendMessage("Command required arguments. /clan help");
+            messagesService
+                    .sendMessage(commandSender, "clan.command.help.unknown");
             return true;
         }
 
@@ -85,8 +91,9 @@ public class MainCommand implements CommandExecutor {
                     if (commandSender.hasPermission(e.getPermission()))
                         e.onCommand(commandSender, list);
                     else
-                        commandSender.sendMessage("You cannot be has permissions");
-                }, () -> commandSender.sendMessage("Sub command not found use /help"));
+                        messagesService.sendMessage(commandSender, "clan.error.no_permission");
+                }, () ->
+                        messagesService.sendMessage(commandSender, "clan.command.help.required_arguments"));
 
         return true;
     }

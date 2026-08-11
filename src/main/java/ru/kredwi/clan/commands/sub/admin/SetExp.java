@@ -5,19 +5,21 @@ import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.AdminCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 
 public class SetExp extends AdminCommand {
 
-    public SetExp(ClanService clanService) {
-        super(clanService);
+
+    public SetExp(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
     }
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull CommandSender sender, @NonNull List<String> args) {
         if (args.isEmpty()) {
-            sender.sendMessage("Please provide integer number of balance");
+            messagesService.sendMessage(sender, "clan.error.provide_integer");
             return;
         }
 
@@ -25,14 +27,14 @@ public class SetExp extends AdminCommand {
         try {
             newExp = Integer.parseInt(args.get(0));
         } catch (NumberFormatException e) {
-            sender.sendMessage("Please provide correct int number");
+            messagesService.sendMessage(sender, "clan.error.invalid_integer");
             return;
         }
 
         int initExp = clan.getStats().getExp();
         clan.getStats().setExp(newExp);
         int finExp = clan.getStats().getExp();
-        sender.sendMessage("Experience successfully changed");
+        messagesService.sendMessage(sender, "clan.success.exp_changed");
 
         clanService.onChangeExp(clan, initExp, finExp);
     }

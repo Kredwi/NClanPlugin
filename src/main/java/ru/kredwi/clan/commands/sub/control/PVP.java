@@ -7,18 +7,24 @@ import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 
 public class PVP extends MemberCommand {
-    public PVP(ClanService clanService) {
-        super(clanService);
+    public PVP(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
+    }
+
+    @Override
+    public boolean requiredArguments() {
+        return false;
     }
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
         clan.getSettings().setPvp(!clan.getSettings().isPvp());
-        player.sendMessage("pvp status is changed to " + clan.getSettings().isPvp());
+        messagesService.sendMessage(player, "clan.success.pvp_toggled", clan.getSettings().isPvp());
     }
 
     @Override

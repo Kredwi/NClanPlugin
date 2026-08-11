@@ -6,20 +6,21 @@ import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.Member;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 import java.util.Optional;
 
 public abstract class ChangePlayerRoleAbs extends MemberCommand {
 
-    public ChangePlayerRoleAbs(ClanService clanService) {
-        super(clanService);
+    public ChangePlayerRoleAbs(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
     }
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
         if (args.isEmpty()) {
-            player.sendMessage("Please provide any player");
+            messagesService.sendMessage(player, "clan.error.provide_player_name");
             return;
         }
 
@@ -27,7 +28,7 @@ public abstract class ChangePlayerRoleAbs extends MemberCommand {
                 .filter(member -> member.getDisplayName().equalsIgnoreCase(args.get(0)))
                 .findFirst();
         if (memberClan.isEmpty()) {
-            player.sendMessage("Player with name " + args.get(0) + " is not found");
+            messagesService.sendMessage(player, "clan.error.player_not_found_name", args.get(0));
             return;
         }
 

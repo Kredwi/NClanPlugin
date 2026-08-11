@@ -8,20 +8,21 @@ import ru.kredwi.clan.model.Member;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Remote extends ChangePlayerRoleAbs {
 
-    public Remote(ClanService clanService) {
-        super(clanService);
+    public Remote(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
     }
 
     @Override
     protected void changePlayerRole(@NonNull Player sender, @NonNull Clan clan, @NonNull Member member) {
         if (member.getId().equals(clan.getOwnerId())) {
-            sender.sendMessage("Role of owner cannot be changed");
+            messagesService.sendMessage(sender, "clan.error.cannot_change_owner");
             return;
         }
 
@@ -31,12 +32,13 @@ public class Remote extends ChangePlayerRoleAbs {
                 .toList();
         int index = sortedRoles.indexOf(memberRole);
         if ((index + 1) > sortedRoles.size()) {
-            sender.sendMessage("The player has maximum role");
+            messagesService.sendMessage(sender, "clan.error.max_role");
+
             return;
         }
 
         member.setRole(clan.getRoles().get(index + 1));
-        sender.sendMessage(String.format("Role for player %s successfully remoted", member.getDisplayName()));
+        messagesService.sendMessage(sender, "clan.success.remoted", member.getDisplayName());
     }
 
     @Override

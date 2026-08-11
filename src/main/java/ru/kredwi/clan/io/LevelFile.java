@@ -48,4 +48,9 @@ public class LevelFile extends CommonIOFile<Map<Integer, Level>> {
     protected @Nullable String getDefaultValue() {
         return gson.toJson(List.of(new Level("default", 0, 5, 5)));
     }
+
+    @Override
+    public boolean rewrite() {
+        return false;
+    }
 }

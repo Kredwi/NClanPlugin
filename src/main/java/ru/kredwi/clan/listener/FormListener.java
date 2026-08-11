@@ -14,6 +14,7 @@ import ru.kredwi.clan.gui.RoleManagerForm;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 import ru.kredwi.clan.shop.ClanShop;
 import ru.kredwi.clan.shop.ShopItem;
 
@@ -22,7 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public record FormListener(ClanService clanService, ClanShop clanShop) implements Listener {
+public record FormListener(MessagesService messagesService, ClanService clanService,
+                           ClanShop clanShop) implements Listener {
 
     public static final int OFFSET_TO_ROLES = 6;
     public static final String ALLOW_SYMBOLS = "^[a-zA-Z0-9а-яА-ЯёЁ§]+$";
@@ -58,7 +60,7 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
     private void onRoleCreate(Player player, RoleCreateForm managerForm) {
         var clan = clanService.getClanWithUUID(player.getUniqueId());
         if (clan.isEmpty()) {
-            player.sendMessage("You does not has clan");
+            messagesService.sendMessage(player, "clan.error.no_clan");
             return;
         }
 
@@ -74,7 +76,7 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
         List<Permission> perms = new ArrayList<>();
 
         if (isNameInvalid(name)) {
-            player.sendMessage("Name of role " + name + " cannot access");
+            messagesService.sendMessage(player, "clan.error.role_name_invalid", name);
             return;
         }
 
@@ -82,7 +84,7 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
         try {
             priority = Integer.parseInt(priorityText);
         } catch (NumberFormatException e) {
-            player.sendMessage("Provide correct number");
+            messagesService.sendMessage(player, "clan.error.provide_correct_number");
             return;
         }
 
@@ -93,13 +95,13 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
         var roles = new ArrayList<>(clan.get().getRoles());
         roles.add(new Role(name, priority, perms));
         clan.get().setRoles(roles);
-        player.sendMessage("Role with name " + name + " successfully created");
+        messagesService.sendMessage(player, "clan.success.role_created", name);
     }
 
     private void onRoleManager(Player player, RoleManagerForm managerRoleForm) {
         var clan = clanService.getClanWithUUID(player.getUniqueId());
         if (clan.isEmpty()) {
-            player.sendMessage("You does not has clan");
+            messagesService.sendMessage(player, "clan.error.no_clan");
             return;
         }
 
@@ -112,7 +114,7 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
 
         var player1 = clan.get().getMembers().get(player.getUniqueId());
         if (player1 == null || !player1.getRole().getPermissions().contains(ClanPermissions.PERMISSION_CLAN_CHANGE_ROLE.getPermission())) {
-            player.sendMessage("You dont has permissions");
+            messagesService.sendMessage(player, "clan.error.no_permission_role");
             return;
         }
 
@@ -128,7 +130,7 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
 
             String newName = (String) responses.get(sortedKeys.get(baseInt + 1));
             if (isNameInvalid(newName)) {
-                player.sendMessage("Name of role " + newName + " cannot access");
+                messagesService.sendMessage(player, "clan.error.role_name_invalid", newName);
                 continue;
             }
 
@@ -140,7 +142,8 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
                 if (newPriority < 0)
                     throw new NumberFormatException("Number cannot be negative");
             } catch (NumberFormatException numberException) {
-                player.sendMessage("Please provide correct priority for role " + newName + ". Error " + numberException.getMessage());
+                messagesService.sendMessage(player, "clan.error.priority_invalid", newName, numberException.getMessage());
+
                 continue;
             }
 
@@ -158,13 +161,13 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
             }
             role.setPermissions(permissions);
         }
-        player.sendMessage("All roles successfully updated");
+        messagesService.sendMessage(player, "clan.success.roles_updated");
     }
 
     private void onClanShop(Player player, MarketForm marketForm) {
         var clan = clanService.getClanWithUUID(player.getUniqueId());
         if (clan.isEmpty()) {
-            player.sendMessage("You does not has clan");
+            messagesService.sendMessage(player, "clan.error.no_clan");
             return;
         }
 
@@ -174,12 +177,12 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
 
         Optional<ShopItem> shopItem = clanShop.getItem(clickedButton);
         if (shopItem.isEmpty()) {
-            player.sendMessage("Item not found");
+            messagesService.sendMessage(player, "clan.error.item_not_found");
             return;
         }
 
         if (shopItem.get().getPrise() > clan.get().getStats().getBalance()) {
-            player.sendMessage("You cannot has moneys for the buy");
+            messagesService.sendMessage(player, "clan.error.insufficient_balance");
             return;
         }
 
@@ -188,12 +191,12 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
         buyedItem.setLore(shopItem.get().getLore().toArray(new String[0]));
         buyedItem.setCount(shopItem.get().getCount());
         if (!player.getInventory().canAddItem(buyedItem)) {
-            player.sendMessage("Your inventory does has free slots");
+            messagesService.sendMessage(player, "clan.error.inventory_full");
             return;
         }
         player.getInventory().addItem(buyedItem);
         clan.get().getStats().setBalance(clan.get().getStats().getBalance() - shopItem.get().getPrise());
-        player.sendMessage("You successfully buying item");
+        messagesService.sendMessage(player, "clan.success.item_bought");
     }
 
 }

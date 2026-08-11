@@ -9,6 +9,7 @@ import ru.kredwi.clan.events.RequestEvent;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.RequestData;
 import ru.kredwi.clan.permission.ClanPermissions;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class Invite extends MemberCommand {
 
     private final RequestEvent commandRequestHandler;
 
-    public Invite(RequestEvent commandRequestHandler) {
-        super(commandRequestHandler.getClanService());
+    public Invite(MessagesService messagesService, RequestEvent commandRequestHandler) {
+        super(messagesService, commandRequestHandler.getClanService());
         this.commandRequestHandler = commandRequestHandler;
     }
 
@@ -37,24 +38,24 @@ public class Invite extends MemberCommand {
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player sender, @NonNull List<String> args) {
         if (isClanFull(clan)) {
-            sender.sendMessage("You clan does have spots");
+            messagesService.sendMessage(sender, "clan.error.clan_full");
             return;
         }
 
         if (args.isEmpty()) {
-            sender.sendMessage("Please provide player name for request");
+            messagesService.sendMessage(sender, "clan.error.provide_player_request");
             return;
         }
 
         Player requestedPlayer = Server.getInstance().getPlayer(args.get(0));
         if (requestedPlayer == null) {
-            sender.sendMessage("The player is offline");
+            messagesService.sendMessage(sender, "clan.error.player_offline");
             return;
         }
 
         var requestedPlayerClan = clanService.getClanWithUUID(requestedPlayer.getUniqueId());
         if (requestedPlayerClan.isPresent()) {
-            sender.sendMessage("The player already has clan");
+            messagesService.sendMessage(sender, "clan.error.player_already_in_clan");
             return;
         }
 

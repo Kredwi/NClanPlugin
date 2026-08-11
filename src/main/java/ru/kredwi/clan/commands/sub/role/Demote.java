@@ -8,20 +8,21 @@ import ru.kredwi.clan.model.Member;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Demote extends ChangePlayerRoleAbs {
 
-    public Demote(ClanService clanService) {
-        super(clanService);
+    public Demote(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
     }
 
     @Override
     protected void changePlayerRole(@NonNull Player sender, @NonNull Clan clan, @NonNull Member member) {
         if (member.getId().equals(clan.getOwnerId())) {
-            sender.sendMessage("Role of owner cannot be changed");
+            messagesService.sendMessage(sender, "clan.error.cannot_change_owner");
             return;
         }
 
@@ -31,12 +32,12 @@ public class Demote extends ChangePlayerRoleAbs {
                 .toList();
         int index = sortedRoles.indexOf(memberRole);
         if ((index - 1) < 0) {
-            sender.sendMessage("The player has minimum role");
+            messagesService.sendMessage(sender, "clan.error.min_role");
             return;
         }
 
         member.setRole(clan.getRoles().get(index - 1));
-        sender.sendMessage(String.format("Role for player %s successfully demoted", member.getDisplayName()));
+        messagesService.sendMessage(sender, "clan.success.demoted", member.getDisplayName());
 
     }
 

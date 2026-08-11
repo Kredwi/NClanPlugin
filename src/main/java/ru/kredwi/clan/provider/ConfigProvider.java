@@ -2,13 +2,9 @@ package ru.kredwi.clan.provider;
 
 import cn.nukkit.utils.Config;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import ru.kredwi.clan.service.MessagesService;
 
 @AllArgsConstructor
 public class ConfigProvider {
-    @Getter
-    private final MessagesService messageProvider;
     private final Config config;
 
     public void reload() {

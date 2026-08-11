@@ -10,21 +10,21 @@ import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.Member;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.service.MessagesService;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 public class Chat extends MemberCommand {
-    public Chat(ClanService clanService) {
-        super(clanService);
+
+
+    public Chat(MessagesService messagesService, ClanService clanService) {
+        super(messagesService, clanService);
     }
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
-        String messageTemplate = "§c{2} §6{0} §8=> §f{1}";
-
         if (args.isEmpty()) {
-            player.sendMessage("You cannot be send empty message");
+            messagesService.sendMessage(player, "clan.error.empty_message");
             return;
         }
 
@@ -36,9 +36,11 @@ public class Chat extends MemberCommand {
         clan.getMembers()
                 .forEach((playerId, __) -> Server.getInstance()
                         .getPlayer(playerId)
-                        .ifPresent(pl -> pl.sendMessage(MessageFormat.format(messageTemplate,
-                                player.getName(), messageText,
-                                clanMember.getRole().getName()))));
+                        .ifPresent(pl ->
+                                messagesService.sendMessage(pl,
+                                        "clan.chat.template",
+                                        player.getName(), messageText,
+                                        clanMember.getRole().getName())));
     }
 
     @Override
