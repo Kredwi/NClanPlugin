@@ -2,10 +2,18 @@ package ru.kredwi.clan.commands.sub.owner;
 
 import cn.nukkit.Player;
 import cn.nukkit.permission.Permission;
+import org.checkerframework.checker.units.qual.A;
 import org.jspecify.annotations.NonNull;
+import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.Member;
 import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Demote extends ChangePlayerRoleAbs {
 
@@ -14,16 +22,25 @@ public class Demote extends ChangePlayerRoleAbs {
     }
 
     @Override
-    protected void changePlayerRole(@NonNull Player sender, @NonNull Member member) {
-        // TODO rewrite logic
-        //        DefaultRoles memberRole = member.getRole();
-//        if ((memberRole.ordinal() - 1) < 0) {
-//            sender.sendMessage("The member already has minimum role");
-//            return;
-//        }
-//        var newRole = DefaultRoles.values()[memberRole.ordinal() - 1];
-//        member.setRole(newRole);
-//        sender.sendMessage(String.format("Role succussfully downgraded to %s", newRole.name()));
+    protected void changePlayerRole(@NonNull Player sender, @NonNull Clan clan, @NonNull Member member) {
+        if (member.getId().equals(clan.getOwnerId())) {
+            sender.sendMessage("Role of owner cannot be changed");
+            return;
+        }
+
+        Role memberRole = member.getRole();
+        var sortedRoles = new ArrayList<>(clan.getRoles()).stream()
+                .sorted(Comparator.comparingInt(Role::getPriority))
+                .toList();
+        int index = sortedRoles.indexOf(memberRole);
+        if ((index - 1) < 0) {
+            sender.sendMessage("The player has minimum role");
+            return;
+        }
+
+        member.setRole(clan.getRoles().get(index - 1));
+        sender.sendMessage(String.format("Role for player %s successfully demoted", member.getDisplayName()));
+
     }
 
     @Override

@@ -5,8 +5,10 @@ import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.Member;
+import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,24 +25,16 @@ public abstract class ChangePlayerRoleAbs extends MemberCommand {
             return;
         }
 
-        Optional<Clan> memberClan = clanService.getClanWithName(args.get(0));
+        Optional<Member> memberClan = clan.getMembers().values().stream()
+                .filter(member -> member.getDisplayName().equalsIgnoreCase(args.get(0)))
+                .findFirst();
         if (memberClan.isEmpty()) {
             player.sendMessage("Player with name " + args.get(0) + " is not found");
             return;
         }
 
-        Optional<Member> member = memberClan.get().getMembers()
-                .values().stream()
-                .filter(member1 -> member1.getDisplayName().equalsIgnoreCase(args.get(0)))
-                .findFirst();
-
-        if (member.isEmpty()) {
-            player.sendMessage("Player in the clan not found");
-            return;
-        }
-
-        this.changePlayerRole(player, member.get());
+        this.changePlayerRole(player, clan, memberClan.get());
     }
 
-    protected abstract void changePlayerRole(@NonNull Player sender, @NonNull Member member);
+    protected abstract void changePlayerRole(@NonNull Player sender, @NonNull Clan clan, @NonNull Member member);
 }
