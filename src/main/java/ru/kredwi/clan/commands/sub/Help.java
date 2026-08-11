@@ -4,7 +4,7 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
-import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.permission.ClanPermissions;
 
 import java.util.List;
 
@@ -27,6 +27,6 @@ public class Help implements SubCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.PERMISSION_CLAN_HELP.getPermission();
+        return ClanPermissions.PERMISSION_CLAN_HELP.getPermission();
     }
 }

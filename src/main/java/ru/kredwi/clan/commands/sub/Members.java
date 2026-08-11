@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
 import ru.kredwi.clan.model.Member;
-import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
 
 import java.util.ArrayList;
@@ -45,6 +45,6 @@ public class Members implements SubCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.PERMISSION_CLAN_MEMBERS.getPermission();
+        return ClanPermissions.PERMISSION_CLAN_MEMBERS.getPermission();
     }
 }

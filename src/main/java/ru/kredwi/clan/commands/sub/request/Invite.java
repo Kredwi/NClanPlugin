@@ -2,17 +2,16 @@ package ru.kredwi.clan.commands.sub.request;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
-import cn.nukkit.command.CommandSender;
 import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
-import ru.kredwi.clan.commands.wrapper.OwnerCommand;
+import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.RequestData;
-import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.permission.ClanPermissions;
 
 import java.util.List;
 
-public class Invite extends OwnerCommand {
+public class Invite extends MemberCommand {
 
     private final CommandRequestHandler commandRequestHandler;
 
@@ -30,7 +29,12 @@ public class Invite extends OwnerCommand {
     }
 
     @Override
-    protected void onCommand(@NonNull Clan clan, @NonNull CommandSender sender, @NonNull List<String> args) {
+    public @NonNull Permission getPermission() {
+        return ClanPermissions.PERMISSION_CLAN_INVITE.getPermission();
+    }
+
+    @Override
+    protected void onCommand(@NonNull Clan clan, @NonNull Player sender, @NonNull List<String> args) {
         if (isClanHasSpots(clan)) {
             sender.sendMessage("You clan does have spots");
             return;
@@ -54,13 +58,8 @@ public class Invite extends OwnerCommand {
         }
 
         commandRequestHandler.getRequestService().createRequest(new RequestData(
-                ((Player) sender).getUniqueId(),
+                sender.getUniqueId(),
                 requestedPlayer.getUniqueId()
         ));
-    }
-
-    @Override
-    public @NonNull Permission getPermission() {
-        return Permissions.PERMISSION_CLAN_INVITE.getPermission();
     }
 }

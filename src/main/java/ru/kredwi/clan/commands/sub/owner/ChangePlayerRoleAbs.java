@@ -5,10 +5,8 @@ import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.Member;
-import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

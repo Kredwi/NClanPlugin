@@ -5,7 +5,7 @@ import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
-import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.permission.CommonPermissions;
 import ru.kredwi.clan.service.ClanService;
 
 import java.util.List;
@@ -25,6 +25,6 @@ public class Leave extends MemberCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.PERMISSION_CLAN_LEAVE.getPermission();
+        return CommonPermissions.CLAN_USE_PERMISSION.getPermission();
     }
 }

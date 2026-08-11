@@ -9,7 +9,7 @@ import cn.nukkit.form.window.FormWindow;
 import cn.nukkit.form.window.FormWindowCustom;
 import lombok.Getter;
 import ru.kredwi.clan.model.Clan;
-import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.role.Role;
 
 public class RoleCreateForm extends FormWindowCustom {
@@ -28,7 +28,7 @@ public class RoleCreateForm extends FormWindowCustom {
         addElement(new ElementInput("\npriority", "priority", String.valueOf(r.getPriority())));
         addElement(new ElementDivider());
         addElement(new ElementLabel("\nPermissions"));
-        for (Permissions perm : Permissions.values()) {
+        for (ClanPermissions perm : ClanPermissions.values()) {
             addElement(new ElementToggle(perm.getPermission().getName()));
         }
     }

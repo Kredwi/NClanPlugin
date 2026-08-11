@@ -3,8 +3,6 @@ package ru.kredwi.clan.service;
 import cn.nukkit.IPlayer;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import it.unimi.dsi.fastutil.Pair;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
@@ -14,15 +12,10 @@ import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.role.defaults.Owner;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class ClanService {
-
-    private final Cache<UUID, Clan> clanCache = CacheBuilder.newBuilder()
-            .expireAfterWrite(10, TimeUnit.SECONDS)
-            .build();
 
     private final LevelService levelService;
     private final ClanDB clansDB;
@@ -83,16 +76,11 @@ public class ClanService {
         if (uuid == null)
             return Optional.empty();
 
-        Optional<Clan> clan = Optional.ofNullable(clanCache.getIfPresent(uuid));
-        if (clan.isEmpty()) {
-            clan = clansDB.getClans()
-                    .stream()
-                    .filter(c -> c.getOwnerId().equals(uuid) || c.getMembers()
-                            .containsKey(uuid))
-                    .findFirst();
-            clan.ifPresent(value -> clanCache.put(uuid, value));
-        }
-        return clan;
+        return clansDB.getClans()
+                .stream()
+                .filter(c -> c.getOwnerId().equals(uuid) || c.getMembers()
+                        .containsKey(uuid))
+                .findFirst();
     }
 
     public Optional<Clan> getClanWithName(String name) {

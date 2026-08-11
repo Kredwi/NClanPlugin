@@ -6,7 +6,7 @@ import cn.nukkit.permission.Permission;
 import lombok.AllArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
-import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.permission.CommonPermissions;
 
 import java.util.List;
 
@@ -23,6 +23,7 @@ public class Deny implements SubCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.PERMISSION_CLAN_DENY.getPermission();
+        return CommonPermissions.CLAN_USE_PERMISSION.getPermission();
+
     }
 }

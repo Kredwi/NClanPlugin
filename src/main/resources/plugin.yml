@@ -65,15 +65,24 @@ permissions:
   clan.sethome:
     description: Allows to set clan home
     default: true
+  clan.delhome:
+    description: Allows to delete clan home
+    default: true
   clan.settings:
     description: Allows to change clan settings
     default: true
   clan.invite:
     description: Allows to invite players
     default: true
-  clan.setbalance:
-    description: Admin command to set clan balance
-    default: op
-  clan.setexp:
-    description: Admin command to set clan exp
+  clan.role.change:
+    description: Allows to change member roles
+    default: true
+  clan.role.see:
+    description: Allows to view member roles
+    default: true
+  clan.role.create:
+    description: Allows to create custom roles
+    default: true
+  clan.admin:
+    description: Admin commands
     default: op

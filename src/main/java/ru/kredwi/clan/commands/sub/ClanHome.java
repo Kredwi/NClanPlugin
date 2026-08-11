@@ -5,9 +5,8 @@ import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
-import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
-import ru.kredwi.clan.utils.Location;
 
 import java.util.List;
 
@@ -18,13 +17,16 @@ public class ClanHome extends MemberCommand {
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
-        Location location = clan.getSettings()
-                .getClanHome();
-        player.teleport(new cn.nukkit.level.Location(location.x(), location.y(), location.z(), location.yaw()));
+        clan.getSettings()
+                .getClanHome()
+                .ifPresentOrElse(location ->
+                                player.teleport(new cn.nukkit.level.Location(location.x(), location.y(), location.z(), location.yaw())),
+                        () -> player.sendMessage("Clan home is not set"));
+        ;
     }
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.PERMISSION_CLAN_HOME.getPermission();
+        return ClanPermissions.PERMISSION_CLAN_HOME.getPermission();
     }
 }

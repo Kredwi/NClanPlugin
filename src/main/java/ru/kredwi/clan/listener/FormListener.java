@@ -11,7 +11,7 @@ import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.gui.MarketForm;
 import ru.kredwi.clan.gui.RoleCreateForm;
 import ru.kredwi.clan.gui.RoleManagerForm;
-import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
 import ru.kredwi.clan.shop.ClanShop;
@@ -88,7 +88,7 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
 
         for (int i = 4; i < response.getResponses().size(); i++) {
             if ((Boolean) response.getResponse(i))
-                perms.add(Permissions.values()[i - 4].getPermission());
+                perms.add(ClanPermissions.values()[i - 4].getPermission());
         }
         var roles = new ArrayList<>(clan.get().getRoles());
         roles.add(new Role(name, priority, perms));
@@ -110,7 +110,7 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
             return;
 
         var player1 = clan.get().getMembers().get(player.getUniqueId());
-        if (player1 == null || !player1.getRole().getPermissions().contains(Permissions.PERMISSION_CLAN_CHANGE_ROLE.getPermission())) {
+        if (player1 == null || !player1.getRole().getPermissions().contains(ClanPermissions.PERMISSION_CLAN_CHANGE_ROLE.getPermission())) {
             player.sendMessage("You dont has permissions");
             return;
         }
@@ -119,7 +119,7 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
         Collections.sort(sortedKeys);
 
         List<Role> roles = managerRoleForm.getRoles();
-        int permCount = Permissions.values().length;
+        int permCount = ClanPermissions.values().length;
 
         for (int i = 0; i < roles.size(); i++) {
             Role role = roles.get(i);
@@ -150,7 +150,7 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
             for (int j = 0; j < permCount; j++) {
                 int toggleKey = sortedKeys.get(baseInt + 4 + j);
                 boolean hasPerm = (boolean) responses.get(toggleKey);
-                Permissions perm = Permissions.values()[j];
+                ClanPermissions perm = ClanPermissions.values()[j];
 
                 if (hasPerm)
                     permissions.add(perm.getPermission());

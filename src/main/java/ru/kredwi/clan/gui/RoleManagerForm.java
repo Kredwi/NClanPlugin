@@ -7,7 +7,7 @@ import cn.nukkit.form.window.FormWindowCustom;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.model.Clan;
-import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.role.Role;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class RoleManagerForm extends FormWindowCustom {
             addElement(new ElementInput("\npriority", "priority", String.valueOf(r.getPriority())));
             addElement(new ElementLabel("\n\nPermissions"));
 
-            for (Permissions perm : Permissions.values()) {
+            for (ClanPermissions perm : ClanPermissions.values()) {
                 addElement(new ElementToggle(perm.getPermission().getName(), r.getPermissions().contains(perm.getPermission())));
             }
 

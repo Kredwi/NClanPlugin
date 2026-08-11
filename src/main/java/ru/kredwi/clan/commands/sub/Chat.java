@@ -8,7 +8,7 @@ import ru.kredwi.clan.NClanPlugin;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.Member;
-import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
 
 import java.text.MessageFormat;
@@ -43,6 +43,6 @@ public class Chat extends MemberCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.PERMISSION_CLAN_CHAT.getPermission();
+        return ClanPermissions.PERMISSION_CLAN_CHAT.getPermission();
     }
 }

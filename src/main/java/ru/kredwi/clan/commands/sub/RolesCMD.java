@@ -6,7 +6,7 @@ import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.gui.RoleViewerForm;
 import ru.kredwi.clan.model.Clan;
-import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
 
@@ -44,6 +44,6 @@ public class RolesCMD extends MemberCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.PERMISSION_CLAN_SEE_ROLE.getPermission();
+        return ClanPermissions.PERMISSION_CLAN_SEE_ROLE.getPermission();
     }
 }

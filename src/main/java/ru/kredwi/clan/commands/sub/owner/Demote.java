@@ -2,18 +2,15 @@ package ru.kredwi.clan.commands.sub.owner;
 
 import cn.nukkit.Player;
 import cn.nukkit.permission.Permission;
-import org.checkerframework.checker.units.qual.A;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.Member;
-import ru.kredwi.clan.permission.Permissions;
+import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 public class Demote extends ChangePlayerRoleAbs {
 
@@ -45,6 +42,6 @@ public class Demote extends ChangePlayerRoleAbs {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.PERMISSION_CLAN_DEMOTE.getPermission();
+        return ClanPermissions.PERMISSION_CLAN_DEMOTE.getPermission();
     }
 }

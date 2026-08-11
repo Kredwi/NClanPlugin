@@ -6,13 +6,13 @@ import lombok.AllArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
 import ru.kredwi.clan.model.Clan;
+import ru.kredwi.clan.permission.CommonPermissions;
 import ru.kredwi.clan.service.ClanService;
 
 import java.util.List;
 
 @AllArgsConstructor
 public abstract class AdminCommand implements SubCommand {
-    public static final Permission ADMIN_PERMISSION = new Permission("clan.admin");
     protected final ClanService clanService;
 
     protected abstract void onCommand(@NonNull Clan clan, @NonNull CommandSender sender, @NonNull List<String> args);
@@ -35,6 +35,6 @@ public abstract class AdminCommand implements SubCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return ADMIN_PERMISSION;
+        return CommonPermissions.CLAN_ADMIN_PERMISSION.getPermission();
     }
 }

@@ -9,6 +9,7 @@ import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.service.ClanService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public abstract class MemberCommand implements SubCommand {
@@ -31,13 +32,12 @@ public abstract class MemberCommand implements SubCommand {
             return;
         }
 
-        var member = clan.get().getMembers().get(player.getUniqueId());
-
-        if (member != null && !member.getRole().getPermissions().contains(this.getPermission())) {
-            sender.sendMessage("You cannot has permissions for use the command");
-            return;
-        }
-
-        this.onCommand(clan.get(), player, args);
+        var memberOptional = Optional.ofNullable(clan.get().getMembers().get(player.getUniqueId()));
+        memberOptional.ifPresent(member -> {
+            if (member.getRole().getPermissions().contains(this.getPermission()))
+                this.onCommand(clan.get(), player, args);
+            else
+                sender.sendMessage("You cannot has permissions for use the command");
+        });
     }
 }
