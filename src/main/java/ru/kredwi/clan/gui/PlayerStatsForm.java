@@ -32,10 +32,17 @@ public class PlayerStatsForm extends Form {
                 messagesService.getMessage("clan.info.stats_body",
                         member.getDisplayName(),
                         stats.getKills(),
-                        messagesService.translateBoolean("boolean.online", player.isOnline()), // TODO override to "disable" "enable" or "yes" "no"
+                        messagesService.translateBoolean("boolean.online", player.isOnline()),
                         member.getRole().getName(),
-                        player.getLastPlayed()));
+                        player.getLastPlayed(),
+                        stats.getDeath(),
+                        getKD(stats.getKills(), stats.getDeath())));
 
+    }
+
+    private String getKD(int kills, int deaths) {
+        double kd = deaths == 0 ? kills : Math.round((kills / (double) deaths) * 100.0) / 100.0;
+        return String.format("%.2f", kd);
     }
 
     @Override
