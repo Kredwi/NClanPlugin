@@ -74,6 +74,9 @@ permissions:
   clan.invite:
     description: Allows to invite players
     default: true
+  clan.pvp:
+    description: Allows to toggle pvp mode
+    default: true
   clan.role.change:
     description: Allows to change member roles
     default: true

@@ -1,4 +1,4 @@
-package ru.kredwi.clan.commands.sub;
+package ru.kredwi.clan.commands.sub.control;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;

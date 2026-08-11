@@ -1,4 +1,4 @@
-package ru.kredwi.clan.commands.sub.owner;
+package ru.kredwi.clan.commands.sub.role;
 
 import cn.nukkit.Player;
 import org.jspecify.annotations.NonNull;

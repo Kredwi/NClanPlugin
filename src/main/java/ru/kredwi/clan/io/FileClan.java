@@ -2,34 +2,30 @@ package ru.kredwi.clan.io;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import ru.kredwi.clan.NClanPlugin;
+import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import ru.kredwi.clan.adapter.ClanAdapter;
 import ru.kredwi.clan.model.Clan;
 
-import java.io.*;
-import java.nio.file.Files;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public record FileClan(File datafolder) {
+@RequiredArgsConstructor
+public class FileClan extends CommonIOFile<Collection<Clan>> {
 
     public static final String CLAN_FILE = "clan.json";
+    private final File datafolder;
 
-    public void write(Collection<Clan> clans) {
-        if (!datafolder.exists())
-            datafolder.getParentFile().mkdirs();
-
-        String json = ClanAdapter.GSON.toJson(clans);
-        writeFile(json);
+    @Override
+    protected File getFile() {
+        return new File(datafolder, CLAN_FILE);
     }
 
-    public Collection<Clan> read() {
-        if (!datafolder.exists())
-            datafolder.getParentFile().mkdirs();
-
-
-        String json = readFile();
+    @Override
+    protected @NonNull Collection<Clan> deserilize(@NonNull String json) {
         JsonArray clansRaw = ClanAdapter.GSON
                 .fromJson(json, JsonArray.class);
 
@@ -44,39 +40,13 @@ public record FileClan(File datafolder) {
         return clans;
     }
 
-    private String readFile() {
-        File dbFile = new File(datafolder, FileClan.CLAN_FILE);
-        var json = new StringBuilder();
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(dbFile)))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                json.append(line);
-            }
-        } catch (FileNotFoundException e) {
-            NClanPlugin.log.debug("File not found " + e.getMessage() + " creating...");
-        } catch (IOException e) {
-            NClanPlugin.log.error("Error of reading clan file", e);
-        }
-        return json.toString();
+    @Override
+    protected String seserilize(@NonNull Collection<Clan> t) {
+        return ClanAdapter.GSON.toJson(t);
     }
 
-    private void writeFile(String fileContent) {
-        File dbFile = new File(datafolder, FileClan.CLAN_FILE);
-
-        try {
-            Files.delete(dbFile.toPath());
-        } catch (IOException e) {
-            NClanPlugin.log.error("Error of delete file clan file", e);
-        }
-
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dbFile)))) {
-            writer.write(fileContent);
-
-        } catch (FileNotFoundException e) {
-            NClanPlugin.log.debug("File not found " + e.getMessage() + " creating...");
-        } catch (IOException e) {
-            NClanPlugin.log.error("Error of writing clan file", e);
-        }
+    @Override
+    protected @Nullable String getDefaultValue() {
+        return "[]"; // empty array
     }
-
 }

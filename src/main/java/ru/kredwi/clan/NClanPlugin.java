@@ -17,7 +17,6 @@ import ru.kredwi.clan.service.LevelService;
 import ru.kredwi.clan.service.RequestService;
 import ru.kredwi.clan.shop.ClanShop;
 
-// TODO reorganize permissions (for any action custom permission)
 public class NClanPlugin extends PluginBase {
 
     public static Logger log;

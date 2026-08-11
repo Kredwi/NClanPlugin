@@ -1,31 +1,28 @@
-package ru.kredwi.clan.commands.sub.owner;
+package ru.kredwi.clan.commands.sub.role;
 
 import cn.nukkit.Player;
 import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
+import ru.kredwi.clan.gui.RoleManagerForm;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
-import ru.kredwi.clan.utils.Location;
 
 import java.util.List;
 
-public class SetHome extends MemberCommand {
-    public SetHome(ClanService clanService) {
+public class RoleCMD extends MemberCommand {
+    public RoleCMD(ClanService clanService) {
         super(clanService);
     }
 
     @Override
     public @NonNull Permission getPermission() {
-        return ClanPermissions.PERMISSION_CLAN_SETHOME.getPermission();
+        return ClanPermissions.PERMISSION_CLAN_CHANGE_ROLE.getPermission();
     }
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
-        cn.nukkit.level.Location ploc = player.getLocation();
-        Location location = new Location(ploc.getX(), ploc.getY(), ploc.getZ(), ploc.yaw);
-        clan.getSettings().setClanHome(location);
-        player.sendMessage("Clan home successfully set");
+        new RoleManagerForm(clan).showForm(player);
     }
 }

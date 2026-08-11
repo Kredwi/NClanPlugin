@@ -20,7 +20,8 @@ public class Moder extends Role {
                 ClanPermissions.PERMISSION_CLAN_KICK.getPermission(),
                 ClanPermissions.PERMISSION_CLAN_DEMOTE.getPermission(),
                 ClanPermissions.PERMISSION_CLAN_REMOTE.getPermission(),
-                ClanPermissions.PERMISSION_CLAN_INVITE.getPermission()
+                ClanPermissions.PERMISSION_CLAN_INVITE.getPermission(),
+                ClanPermissions.PERMISSION_CLAN_PVP.getPermission()
         ));
     }
 }

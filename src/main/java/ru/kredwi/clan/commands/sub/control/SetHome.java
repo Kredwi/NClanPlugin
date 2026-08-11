@@ -1,4 +1,4 @@
-package ru.kredwi.clan.commands.sub.owner;
+package ru.kredwi.clan.commands.sub.control;
 
 import cn.nukkit.Player;
 import cn.nukkit.permission.Permission;
@@ -7,25 +7,25 @@ import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.utils.Location;
 
 import java.util.List;
 
-public class Disband extends MemberCommand {
-    public Disband(ClanService clanService) {
+public class SetHome extends MemberCommand {
+    public SetHome(ClanService clanService) {
         super(clanService);
     }
 
-
     @Override
     public @NonNull Permission getPermission() {
-        return ClanPermissions.PERMISSION_CLAN_DISBAND.getPermission();
+        return ClanPermissions.PERMISSION_CLAN_SETHOME.getPermission();
     }
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
-        if (clan.getOwnerId().equals((player).getUniqueId())) {
-            clanService.remove(clan.getId());
-            player.sendMessage("Clan successfully disbanded");
-        }
+        cn.nukkit.level.Location ploc = player.getLocation();
+        Location location = new Location(ploc.getX(), ploc.getY(), ploc.getZ(), ploc.yaw);
+        clan.getSettings().setClanHome(location);
+        player.sendMessage("Clan home successfully set");
     }
 }

@@ -1,4 +1,4 @@
-package ru.kredwi.clan.commands.sub;
+package ru.kredwi.clan.commands.sub.info;
 
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.permission.Permission;

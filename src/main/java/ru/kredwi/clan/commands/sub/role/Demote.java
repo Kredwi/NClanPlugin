@@ -1,4 +1,4 @@
-package ru.kredwi.clan.commands.sub.owner;
+package ru.kredwi.clan.commands.sub.role;
 
 import cn.nukkit.Player;
 import cn.nukkit.permission.Permission;
@@ -12,9 +12,9 @@ import ru.kredwi.clan.service.ClanService;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Remote extends ChangePlayerRoleAbs {
+public class Demote extends ChangePlayerRoleAbs {
 
-    public Remote(ClanService clanService) {
+    public Demote(ClanService clanService) {
         super(clanService);
     }
 
@@ -30,17 +30,18 @@ public class Remote extends ChangePlayerRoleAbs {
                 .sorted(Comparator.comparingInt(Role::getPriority))
                 .toList();
         int index = sortedRoles.indexOf(memberRole);
-        if ((index + 1) > sortedRoles.size()) {
-            sender.sendMessage("The player has maximum role");
+        if ((index - 1) < 0) {
+            sender.sendMessage("The player has minimum role");
             return;
         }
 
-        member.setRole(clan.getRoles().get(index + 1));
-        sender.sendMessage(String.format("Role for player %s successfully remoted", member.getDisplayName()));
+        member.setRole(clan.getRoles().get(index - 1));
+        sender.sendMessage(String.format("Role for player %s successfully demoted", member.getDisplayName()));
+
     }
 
     @Override
     public @NonNull Permission getPermission() {
-        return ClanPermissions.PERMISSION_CLAN_REMOTE.getPermission();
+        return ClanPermissions.PERMISSION_CLAN_DEMOTE.getPermission();
     }
 }

@@ -5,14 +5,19 @@ import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
 import com.google.common.collect.Lists;
 import ru.kredwi.clan.api.command.SubCommand;
-import ru.kredwi.clan.commands.sub.*;
 import ru.kredwi.clan.commands.sub.admin.SetBalance;
 import ru.kredwi.clan.commands.sub.admin.SetExp;
-import ru.kredwi.clan.commands.sub.owner.*;
+import ru.kredwi.clan.commands.sub.control.*;
+import ru.kredwi.clan.commands.sub.info.*;
+import ru.kredwi.clan.commands.sub.members.*;
 import ru.kredwi.clan.commands.sub.request.Accept;
 import ru.kredwi.clan.commands.sub.request.CommandRequestHandler;
 import ru.kredwi.clan.commands.sub.request.Deny;
 import ru.kredwi.clan.commands.sub.request.Invite;
+import ru.kredwi.clan.commands.sub.role.AddRole;
+import ru.kredwi.clan.commands.sub.role.Demote;
+import ru.kredwi.clan.commands.sub.role.Remote;
+import ru.kredwi.clan.commands.sub.role.RoleCMD;
 import ru.kredwi.clan.service.ClanService;
 import ru.kredwi.clan.service.RequestService;
 import ru.kredwi.clan.shop.ClanShop;
@@ -50,6 +55,7 @@ public class MainCommand implements CommandExecutor {
         subCommands.put("demote", new Demote(clanService));
         subCommands.put("remote", new Remote(clanService));
         subCommands.put("market", new Market(clanShop, clanService));
+        subCommands.put("pvp", new PVP(clanService));
 
         CommandRequestHandler crh = new CommandRequestHandler(clanService, requestService);
 

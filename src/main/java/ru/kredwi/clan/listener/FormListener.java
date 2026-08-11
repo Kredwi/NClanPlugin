@@ -93,6 +93,7 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
         var roles = new ArrayList<>(clan.get().getRoles());
         roles.add(new Role(name, priority, perms));
         clan.get().setRoles(roles);
+        player.sendMessage("Role with name " + name + " successfully created");
     }
 
     private void onRoleManager(Player player, RoleManagerForm managerRoleForm) {
@@ -156,8 +157,8 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
                     permissions.add(perm.getPermission());
             }
             role.setPermissions(permissions);
-
         }
+        player.sendMessage("All roles successfully updated");
     }
 
     private void onClanShop(Player player, MarketForm marketForm) {
@@ -170,15 +171,18 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
         int clickedButton = marketForm.getResponse().getClickedButtonId();
         if (clickedButton > clanShop.getItems().size())
             return;
+
         Optional<ShopItem> shopItem = clanShop.getItem(clickedButton);
         if (shopItem.isEmpty()) {
             player.sendMessage("Item not found");
             return;
         }
+
         if (shopItem.get().getPrise() > clan.get().getStats().getBalance()) {
             player.sendMessage("You cannot has moneys for the buy");
             return;
         }
+
         Item buyedItem = new Item(shopItem.get().getItemId());
         buyedItem.setCustomName(shopItem.get().getName());
         buyedItem.setLore(shopItem.get().getLore().toArray(new String[0]));

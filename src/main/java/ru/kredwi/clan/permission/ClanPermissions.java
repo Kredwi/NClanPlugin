@@ -26,6 +26,7 @@ public enum ClanPermissions {
     PERMISSION_CLAN_DELHOME(new Permission("clan.delhome")),
     PERMISSION_CLAN_INVITE(new Permission("clan.invite")),
     PERMISSION_CLAN_CREATE(new Permission("clan.create")),
+    PERMISSION_CLAN_PVP(new Permission("clan.pvp")),
 
     PERMISSION_CLAN_CHANGE_ROLE(new Permission("clan.role.change")),
     PERMISSION_CLAN_SEE_ROLE(new Permission("clan.role.see")),

@@ -1,4 +1,4 @@
-package ru.kredwi.clan.commands.sub.owner;
+package ru.kredwi.clan.commands.sub.members;
 
 import cn.nukkit.IPlayer;
 import cn.nukkit.Player;
