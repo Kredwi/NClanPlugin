@@ -16,14 +16,14 @@ public abstract class CommonIOFile<T> {
 
     public T read() {
         String json = readFile();
-        return deserilize(json);
+        return deserialize(json);
     }
 
     public void write(T t) {
         if (getFile().exists() && !rewrite())
             return;
 
-        String json = seserilize(t);
+        String json = serialize(t);
         writeFile(json);
     }
 
@@ -97,9 +97,9 @@ public abstract class CommonIOFile<T> {
 
     protected abstract File getFile();
 
-    protected abstract @NonNull T deserilize(@NonNull String json);
+    protected abstract @NonNull T deserialize(@NonNull String json);
 
-    protected abstract String seserilize(@NonNull T t);
+    protected abstract String serialize(@NonNull T t);
 
     protected @Nullable String getDefaultValue() {
         return null;

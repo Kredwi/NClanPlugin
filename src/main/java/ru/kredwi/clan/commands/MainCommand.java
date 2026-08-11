@@ -5,6 +5,7 @@ import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
 import com.google.common.collect.Lists;
 import ru.kredwi.clan.api.command.SubCommand;
+import ru.kredwi.clan.commands.sub.PluginReload;
 import ru.kredwi.clan.commands.sub.admin.SetBalance;
 import ru.kredwi.clan.commands.sub.admin.SetExp;
 import ru.kredwi.clan.commands.sub.control.*;
@@ -18,12 +19,8 @@ import ru.kredwi.clan.commands.sub.role.Demote;
 import ru.kredwi.clan.commands.sub.role.Remote;
 import ru.kredwi.clan.commands.sub.role.RoleCMD;
 import ru.kredwi.clan.events.RequestEvent;
-import ru.kredwi.clan.provider.ConfigProvider;
-import ru.kredwi.clan.provider.economy.PluginEconomyProvider;
-import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.model.Services;
 import ru.kredwi.clan.service.MessagesService;
-import ru.kredwi.clan.service.RequestService;
-import ru.kredwi.clan.shop.ClanShop;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,24 +31,20 @@ public class MainCommand implements CommandExecutor {
     private final MessagesService messagesService;
     private final Map<String, SubCommand> subCommands;
 
-    public MainCommand(
-            PluginEconomyProvider economyProvider,
-            MessagesService messagesService,
-            ClanService clanService,
-            RequestService requestService,
-            ClanShop clanShop,
-            ConfigProvider config) {
-        this.messagesService = messagesService;
+    public MainCommand(Services services) {
+        this.messagesService = services.messagesService();
         this.subCommands = new HashMap<>();
+        var clanService = services.clanService();
         subCommands.put("help", new Help(messagesService));
-        subCommands.put("info", new Info(messagesService, clanService));
-        subCommands.put("create", new Create(economyProvider, messagesService, config, clanService));
-        subCommands.put("members", new Members(messagesService, clanService));
-        subCommands.put("kick", new Kick(messagesService, clanService));
-        subCommands.put("leave", new Leave(messagesService, clanService));
-        subCommands.put("list", new List(messagesService, clanService));
-        subCommands.put("stats", new Stats(messagesService, clanService));
-        subCommands.put("top", new Top(messagesService, clanService));
+        subCommands.put("info", new Info(messagesService, services.clanService()));
+        subCommands.put("create", new Create(services.economyProvider(), messagesService, services.configProvider(), services.clanService()));
+        subCommands.put("members", new Members(messagesService, services.clanService()));
+        subCommands.put("kick", new Kick(messagesService, services.clanService()));
+        subCommands.put("leave", new Leave(messagesService, services.clanService()));
+        subCommands.put("list", new List(messagesService, services.clanService()));
+        subCommands.put("stats", new Stats(messagesService, services.clanService()));
+        subCommands.put("top", new Top(messagesService, services.clanService()));
+        subCommands.put("reload", new PluginReload(services));
 
         subCommands.put("disband", new Disband(messagesService, clanService));
         subCommands.put("sethome", new SetHome(messagesService, clanService));
@@ -66,10 +59,10 @@ public class MainCommand implements CommandExecutor {
         subCommands.put("chat", new Chat(messagesService, clanService));
         subCommands.put("demote", new Demote(messagesService, clanService));
         subCommands.put("remote", new Remote(messagesService, clanService));
-        subCommands.put("market", new Market(messagesService, clanService, clanShop));
+        subCommands.put("market", new Market(messagesService, clanService, services.clanShop()));
         subCommands.put("pvp", new PVP(messagesService, clanService));
 
-        RequestEvent crh = new RequestEvent(clanService, requestService, messagesService);
+        RequestEvent crh = new RequestEvent(clanService, services.requestService(), messagesService);
 
         subCommands.put("accept", new Accept(crh));
         subCommands.put("deny", new Deny(crh));

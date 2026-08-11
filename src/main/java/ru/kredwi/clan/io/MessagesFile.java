@@ -28,14 +28,14 @@ public class MessagesFile extends CommonIOFile<Map<String, List<String>>> {
     }
 
     @Override
-    protected @NonNull Map<String, List<String>> deserilize(@NonNull String json) {
+    protected @NonNull Map<String, List<String>> deserialize(@NonNull String json) {
         Type type = new TypeToken<Map<String, List<String>>>() {
         }.getType();
         return gson.fromJson(json, type);
     }
 
     @Override
-    protected String seserilize(@NonNull Map<String, List<String>> stringListMap) {
+    protected String serialize(@NonNull Map<String, List<String>> stringListMap) {
         return gson.toJson(stringListMap);
     }
 }

@@ -24,7 +24,7 @@ public class ClanShopFile extends CommonIOFile<ArrayList<ShopItem>> {
     }
 
     @Override
-    protected @NonNull ArrayList<ShopItem> deserilize(@NonNull String json) {
+    protected @NonNull ArrayList<ShopItem> deserialize(@NonNull String json) {
         var levels = new ArrayList<ShopItem>();
 
         JsonArray object = gson.fromJson(json.toString(), JsonArray.class);
@@ -37,7 +37,7 @@ public class ClanShopFile extends CommonIOFile<ArrayList<ShopItem>> {
     }
 
     @Override
-    protected String seserilize(@NonNull ArrayList<ShopItem> shopItems) {
+    protected String serialize(@NonNull ArrayList<ShopItem> shopItems) {
         throw new UnsupportedOperationException("The file cannot be support write");
     }
 

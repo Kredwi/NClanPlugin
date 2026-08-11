@@ -18,6 +18,8 @@ import ru.kredwi.clan.listener.FormListener;
 import ru.kredwi.clan.listener.PlayerDamageEvent;
 import ru.kredwi.clan.listener.PlayerKillPlayer;
 import ru.kredwi.clan.listener.PlayerQuitEvent;
+import ru.kredwi.clan.model.PluginFiles;
+import ru.kredwi.clan.model.Services;
 import ru.kredwi.clan.provider.ConfigProvider;
 import ru.kredwi.clan.provider.MessagesProvider;
 import ru.kredwi.clan.provider.economy.EconomyAPI;
@@ -98,7 +100,13 @@ public class NClanPlugin extends PluginBase {
         this.clanShop.setItems(shopItems);
         log.debug(shopItems.size() + " shop items successfully loaded");
 
-        MainCommand command = new MainCommand(this.pluginEconomyProvider, messagesService, clanService, requestService, clanShop, configProvider);
+        MainCommand command = new MainCommand(
+                new Services(configProvider, pluginEconomyProvider,
+                        messagesService, clanService,
+                        requestService, levelService, clanShop,
+                        new PluginFiles(this.clanFile, this.levelFile,
+                                this.clanShopFile, this.db))
+        );
         ((PluginCommand<?>) getCommand("clan")).setExecutor(command);
         log.debug("Command successfully registered");
 

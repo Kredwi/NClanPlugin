@@ -27,7 +27,7 @@ public class LevelFile extends CommonIOFile<Map<Integer, Level>> {
     }
 
     @Override
-    protected @NonNull Map<Integer, Level> deserilize(@NonNull String json) {
+    protected @NonNull Map<Integer, Level> deserialize(@NonNull String json) {
         var levels = new HashMap<Integer, Level>();
 
         JsonArray object = gson.fromJson(json.toString(), JsonArray.class);
@@ -40,7 +40,7 @@ public class LevelFile extends CommonIOFile<Map<Integer, Level>> {
     }
 
     @Override
-    protected String seserilize(@NonNull Map<Integer, Level> t) {
+    protected String serialize(@NonNull Map<Integer, Level> t) {
         throw new UnsupportedOperationException("The file cannot be support write");
     }
 

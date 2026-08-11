@@ -2,6 +2,9 @@
   "clan.chat.template": [
     "§c{2} §6{0} §8=> §f{1}"
   ],
+  "clan.command.reload.success": [
+    "§aFile configuration successfully reloaded"
+  ],
   "clan.command.top.template": [
     "§f{0} §6{1} "
   ],

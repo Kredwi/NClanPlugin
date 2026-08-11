@@ -1,6 +1,7 @@
 package ru.kredwi.clan.provider;
 
 import lombok.Getter;
+import ru.kredwi.clan.NClanPlugin;
 import ru.kredwi.clan.io.MessagesFile;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class MessagesProvider {
 
     public void reload() {
         this.messages = this.messagesFile.read();
+        NClanPlugin.log.debug("Messages reloaded");
     }
 
 }

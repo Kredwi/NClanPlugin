@@ -25,7 +25,7 @@ public class FileClan extends CommonIOFile<Collection<Clan>> {
     }
 
     @Override
-    protected @NonNull Collection<Clan> deserilize(@NonNull String json) {
+    protected @NonNull Collection<Clan> deserialize(@NonNull String json) {
         JsonArray clansRaw = ClanAdapter.GSON
                 .fromJson(json, JsonArray.class);
 
@@ -41,7 +41,7 @@ public class FileClan extends CommonIOFile<Collection<Clan>> {
     }
 
     @Override
-    protected String seserilize(@NonNull Collection<Clan> t) {
+    protected String serialize(@NonNull Collection<Clan> t) {
         return ClanAdapter.GSON.toJson(t);
     }
 

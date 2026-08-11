@@ -16,19 +16,19 @@ import static java.text.MessageFormat.format;
 public class MessagesService {
 
     private final ConfigProvider configProvider;
-    private final MessagesProvider messagesFile;
+    private final MessagesProvider messagesProvider;
     private Map<String, List<String>> messages;
 
     public MessagesService(ConfigProvider configProvider, MessagesProvider messagesFile) {
         this.configProvider = configProvider;
-        this.messagesFile = messagesFile;
+        this.messagesProvider = messagesFile;
 
         this.messages = messagesFile.getMessages();
     }
 
     public void reload() {
-        messagesFile.reload();
-        this.messages = messagesFile.getMessages();
+        messagesProvider.reload();
+        this.messages = messagesProvider.getMessages();
     }
 
     public String getPrefix() {
