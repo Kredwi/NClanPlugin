@@ -8,16 +8,15 @@ import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
+import ru.kredwi.clan.provider.ConfigProvider;
 import ru.kredwi.clan.service.ClanService;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 public class Create implements SubCommand {
 
-    private final Pattern allowedName = Pattern.compile("[a-zA-Z]+");
+    private final ConfigProvider configProvider;
     private final ClanService clanService;
 
     @Override
@@ -42,9 +41,18 @@ public class Create implements SubCommand {
         }
 
         String clanName = args.get(0);
-        Matcher matcher = allowedName.matcher(clanName);
-        if (!matcher.matches()) {
+        if (!clanName.matches(configProvider.getClanNameAllowedPattern())) {
             sender.sendMessage("Your clan name cannot allowed");
+            return;
+        }
+
+        if (clanName.length() > configProvider.getClanNameMaxLength()) {
+            sender.sendMessage("You clan name over bounds (please delete symbols)");
+            return;
+        }
+
+        if (clanName.length() < configProvider.getClanNameMinLength()) {
+            sender.sendMessage("You clan name over bounds (please add more symbols)");
             return;
         }
 

@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import ru.kredwi.clan.model.Level;
+import ru.kredwi.clan.provider.ConfigProvider;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,12 +19,12 @@ public class LevelService {
     @Setter
     private Map<Integer, Level> levels = new HashMap<>();
 
-    public LevelService() {
+    public LevelService(ConfigProvider config) {
         // default (override in config file)
         levels.put(DEFAULT_EXP_COUNT, new Level("default", DEFAULT_EXP_COUNT, 10, 5));
     }
 
-    public LevelService(@NonNull Map<Integer, Level> levels) {
+    public LevelService(ConfigProvider config, @NonNull Map<Integer, Level> levels) {
         this.levels = levels;
     }
 

@@ -5,6 +5,7 @@ import cn.nukkit.Server;
 import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
+import ru.kredwi.clan.events.RequestEvent;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.RequestData;
 import ru.kredwi.clan.permission.ClanPermissions;
@@ -13,9 +14,9 @@ import java.util.List;
 
 public class Invite extends MemberCommand {
 
-    private final CommandRequestHandler commandRequestHandler;
+    private final RequestEvent commandRequestHandler;
 
-    public Invite(CommandRequestHandler commandRequestHandler) {
+    public Invite(RequestEvent commandRequestHandler) {
         super(commandRequestHandler.getClanService());
         this.commandRequestHandler = commandRequestHandler;
     }

@@ -34,9 +34,20 @@
             <id>opencollab-repo-snapshot</id>
             <url>https://repo.opencollab.dev/maven-snapshots</url>
         </repository>
+        <!--        <repository>-->
+        <!--            <id>nukkitx-repo</id>-->
+        <!--            <url>https://repo.nukkitx.com/snapshot</url>-->
+        <!--        </repository>-->
     </repositories>
 
     <dependencies>
+        <!--        <dependency>-->
+        <!--        <groupId>me.onebone</groupId>-->
+        <!--        <artifactId>economyapi</artifactId>-->
+        <!--        <version>2.0.2</version>-->
+        <!--        <scope>provided</scope>-->
+        <!--        </dependency>-->
+
         <dependency>
             <groupId>cn.nukkit</groupId>
             <artifactId>nukkit</artifactId>

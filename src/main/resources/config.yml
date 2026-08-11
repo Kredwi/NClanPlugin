@@ -1,4 +1,20 @@
 version: 1
 
+request-expire-minutes: 5
+
 clan:
-  prise: 0
+  create-price: 50000.0
+  name-min-length: 3
+  name-max-length: 16
+  name-allowed-pattern: "^[a-zA-Z0-9_]+$"
+  pvp-default: false
+
+exp:
+  per-kill: 1
+  per-death: 1
+
+default-clan-exp: 0
+default-clan-balance: 0.0
+
+shop-currency-symbol: "$"
+message-prefix: "§6[Clan] §r"

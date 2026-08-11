@@ -2,21 +2,22 @@ package ru.kredwi.clan.service;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import lombok.AllArgsConstructor;
 import ru.kredwi.clan.model.RequestData;
+import ru.kredwi.clan.provider.ConfigProvider;
 
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-@AllArgsConstructor
 public class RequestService {
 
-    private final Cache<UUID, RequestData> requests = CacheBuilder.newBuilder()
-            .expireAfterWrite(5, TimeUnit.MINUTES)
-            .build();
+    private final Cache<UUID, RequestData> requests;
 
-    private final ClanService clanService;
+    public RequestService(ConfigProvider config) {
+        this.requests = CacheBuilder.newBuilder()
+                .expireAfterWrite(config.getRequestExpireMinutes(), TimeUnit.MINUTES)
+                .build();
+    }
 
     public void createRequest(RequestData requestData) {
         this.requests.put(requestData.requested(), requestData);

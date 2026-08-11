@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.db.ClanDB;
 import ru.kredwi.clan.model.*;
+import ru.kredwi.clan.provider.ConfigProvider;
 import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.role.defaults.Owner;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ClanService {
 
+    private final ConfigProvider config;
     private final LevelService levelService;
     private final ClanDB clansDB;
 
@@ -27,12 +29,15 @@ public class ClanService {
     @NonNull
     public Clan create(UUID ownerId, String name) {
         Clan clan = this.clansDB.create(ownerId, name);
-
         Role role;
         if (clan.getRoles().isEmpty()) {
             role = new Owner();
             clan.setRoles(List.of(role));
         } else role = clan.getRoles().get(clan.getRoles().size() - 1);
+
+        clan.getSettings().setPvp(config.isClanPvpDefault());
+        clan.getStats().setExp(config.getDefaultClanExp());
+        clan.getStats().setBalance(config.getDefaultClanBalance());
 
         Member member = new Member(
                 // member name
@@ -49,7 +54,6 @@ public class ClanService {
                 // initial member stats,
                 new MemberStats()
         );
-
         clan.getMembers()
                 .put(ownerId, member);
         return clan;
@@ -99,30 +103,6 @@ public class ClanService {
                         .collect(Collectors.toSet()));
     }
 
-    public void onPlayerKill(UUID killer, UUID victim) {
-        var damagerClan = getClanWithUUID(killer);
-        var victimClan = getClanWithUUID(victim);
-
-        damagerClan.ifPresent((c) -> damagerHandle(killer, c));
-
-        victimClan.ifPresent((c) -> victimHandle(victim, c));
-
-
-    }
-
-    private void damagerHandle(UUID damagerId, Clan damagerClan) {
-        int initialClanExp = damagerClan.getStats().getExp();
-
-        var stats = damagerClan.getStats();
-        stats.setExp(stats.getExp() + 1);
-
-        var damagerMemberStats = damagerClan.getMembers()
-                .get(damagerId).getMemberStats();
-        damagerMemberStats.setKills(damagerMemberStats.getKills() + 1);
-
-        int finallyClanExp = damagerClan.getStats().getExp();
-        onChangeExp(damagerClan, initialClanExp, finallyClanExp);
-    }
 
     public void onChangeExp(Clan clan, int initExp, int newExp) {
         Level initLevel = getLevel(initExp);
@@ -135,18 +115,5 @@ public class ClanService {
                             Server.getInstance().getPlayer(memberId)
                                     .ifPresent(p -> p.sendMessage(message)));
         }
-    }
-
-    private void victimHandle(UUID victimId, Clan victimClan) {
-        int initialClanExp = victimClan.getStats().getExp();
-
-        var stats = victimClan.getStats();
-        stats.setExp(stats.getExp() - 1);
-
-        var victimMemberStats = victimClan.getMembers()
-                .get(victimId).getMemberStats();
-        victimMemberStats.setDeath(victimMemberStats.getDeath() + 1);
-        int finallyClanExp = victimClan.getStats().getExp();
-        onChangeExp(victimClan, initialClanExp, finallyClanExp);
     }
 }

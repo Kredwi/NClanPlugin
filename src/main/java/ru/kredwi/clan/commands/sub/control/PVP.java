@@ -17,7 +17,7 @@ public class PVP extends MemberCommand {
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
-        clan.getSettings().setPvp(clan.getSettings().isPvp());
+        clan.getSettings().setPvp(!clan.getSettings().isPvp());
         player.sendMessage("pvp status is changed to " + clan.getSettings().isPvp());
     }
 

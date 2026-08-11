@@ -6,14 +6,14 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.player.PlayerDeathEvent;
 import lombok.RequiredArgsConstructor;
-import ru.kredwi.clan.service.ClanService;
+import ru.kredwi.clan.events.DamageEvent;
 
 import java.util.UUID;
 
 @RequiredArgsConstructor
 public class PlayerKillPlayer implements Listener {
 
-    private final ClanService clanService;
+    private final DamageEvent damageEvent;
 
     @EventHandler
     public void onKill(PlayerDeathEvent e) {
@@ -23,7 +23,7 @@ public class PlayerKillPlayer implements Listener {
             UUID damagerId = damagerPlayer.getUniqueId();
             UUID victimId = player.getUniqueId();
 
-            clanService.onPlayerKill(damagerId, victimId);
+            damageEvent.onPlayerKill(damagerId, victimId);
         }
     }
 

@@ -6,6 +6,7 @@ import cn.nukkit.permission.Permission;
 import lombok.AllArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
+import ru.kredwi.clan.events.RequestEvent;
 import ru.kredwi.clan.permission.CommonPermissions;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Accept implements SubCommand {
 
-    private CommandRequestHandler commandRequestHandler;
+    private RequestEvent commandRequestHandler;
 
     @Override
     public void onCommand(@NonNull CommandSender sender, @NonNull List<String> args) {

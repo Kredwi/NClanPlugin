@@ -1,4 +1,4 @@
-package ru.kredwi.clan.commands.sub.request;
+package ru.kredwi.clan.events;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-public class CommandRequestHandler {
+public class RequestEvent {
 
     private final Server server = Server.getInstance();
 
@@ -63,6 +63,7 @@ public class CommandRequestHandler {
                 .getMembers()
                 .put(requested, member);
         sendAcceptMessages(requestorPlayerInstance.get(), requestedPlayerInstance.get());
+        requestService.remove(reqData.get().requestor());
     }
 
     private void sendAcceptMessages(Player requestor, Player requested) {

@@ -187,6 +187,10 @@ public record FormListener(ClanService clanService, ClanShop clanShop) implement
         buyedItem.setCustomName(shopItem.get().getName());
         buyedItem.setLore(shopItem.get().getLore().toArray(new String[0]));
         buyedItem.setCount(shopItem.get().getCount());
+        if (!player.getInventory().canAddItem(buyedItem)) {
+            player.sendMessage("Your inventory does has free slots");
+            return;
+        }
         player.getInventory().addItem(buyedItem);
         clan.get().getStats().setBalance(clan.get().getStats().getBalance() - shopItem.get().getPrise());
         player.sendMessage("You successfully buying item");
