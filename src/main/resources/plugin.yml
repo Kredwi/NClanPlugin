@@ -1,7 +1,9 @@
 name: ${project.name}
 version: ${project.version}
-api: "1.1.0"
+description: "The best plugin for Clans"
+website: https://github.com/Kredwi/NClanPlugin
 author: Kredwi
+api: "1.1.0"
 main: ${plugin.main-class}
 softdepend:
   - EconomyAPI # >= 2.0.7

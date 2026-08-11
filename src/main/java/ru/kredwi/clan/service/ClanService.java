@@ -98,7 +98,7 @@ public class ClanService {
 
     public Optional<Clan> getClanWithName(String name) {
         return clansDB.getClans().stream()
-                .filter(clan -> clan.getName().equalsIgnoreCase("name"))
+                .filter(clan -> clan.getName().equalsIgnoreCase(name))
                 .findFirst();
     }
 

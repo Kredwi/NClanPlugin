@@ -23,14 +23,13 @@ public class Top implements SubCommand {
     @Override
     public void onCommand(@NonNull CommandSender sender, @NonNull List<String> args) {
         var clans = new ArrayList<>(clanService.getClans())
-                .subList(0, Math.min(clanService.getClans().size(), 10))
                 .stream()
                 .sorted(Comparator.comparingInt(e -> e.getStats().getExp()))
                 .map(clan ->
                         messagesService.getMessage("clan.command.top.template", clan.getStats().getExp(), clan.getName()))
-                .collect(Collectors.joining("\n"));
+                        .toList().subList(0, Math.min(clanService.getClans().size(), 10));
         // next time fix [Clan] [Clan]
-        messagesService.sendMessage(sender, "clan.command.top.lines", clans);
+        messagesService.sendMessage(sender, "clan.command.top.lines", String.join("\n", clans));
     }
 
     @Override
