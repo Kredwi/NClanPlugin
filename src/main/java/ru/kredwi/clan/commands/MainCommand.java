@@ -30,7 +30,6 @@ public class MainCommand implements CommandExecutor {
         subCommands.put("help", new Help());
         subCommands.put("info", new Info(clanService));
         subCommands.put("create", new Create(clanService));
-        subCommands.put("remove", new Remove(clanService));
         subCommands.put("members", new Members(clanService));
         subCommands.put("kick", new Kick(clanService));
         subCommands.put("leave", new Leave(clanService));

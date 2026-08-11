@@ -20,12 +20,12 @@ public class Invite extends MemberCommand {
         this.commandRequestHandler = commandRequestHandler;
     }
 
-    private boolean isClanHasSpots(Clan clan) {
+    private boolean isClanFull(Clan clan) {
         int allowedPlayers = commandRequestHandler.getClanService()
                 .getLevel(clan.getStats().getExp()).getMembers();
         int clanMembers = clan.getMembers().size();
 
-        return allowedPlayers < (clanMembers + 1);
+        return clanMembers >= allowedPlayers;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class Invite extends MemberCommand {
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player sender, @NonNull List<String> args) {
-        if (isClanHasSpots(clan)) {
+        if (isClanFull(clan)) {
             sender.sendMessage("You clan does have spots");
             return;
         }

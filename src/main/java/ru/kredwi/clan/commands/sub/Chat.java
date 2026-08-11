@@ -37,7 +37,7 @@ public class Chat extends MemberCommand {
                 .forEach((playerId, __) -> Server.getInstance()
                         .getPlayer(playerId)
                         .ifPresent(pl -> pl.sendMessage(MessageFormat.format(messageTemplate,
-                                pl.getName(), messageText,
+                                player.getName(), messageText,
                                 clanMember.getRole().getName()))));
     }
 

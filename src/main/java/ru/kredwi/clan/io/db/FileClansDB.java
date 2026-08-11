@@ -8,24 +8,21 @@ import java.util.*;
 
 public class FileClansDB implements ClanDB {
 
-    private final Map<Integer, Clan> clans = new HashMap<>();
+    private final Map<UUID, Clan> clans = new HashMap<>();
 
     public @NonNull Clan create(@NonNull UUID ownerId, @NonNull String name) {
-        int id = clans.size();
-        if (clans.get(id) != null) {
-            id = clans.size() * 23;
-        }
+        UUID id = UUID.randomUUID();
         Clan clan = Clan.of(id, ownerId, name);
         clans.put(id, clan);
         return clan;
     }
 
     @Override
-    public void remove(int clanId) {
+    public void remove(UUID clanId) {
         this.clans.remove(clanId);
     }
 
-    public @NonNull Optional<Clan> get(int id) {
+    public @NonNull Optional<Clan> get(UUID id) {
         return Optional.ofNullable(clans.get(id));
     }
 

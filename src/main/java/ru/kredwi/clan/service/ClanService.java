@@ -59,15 +59,15 @@ public class ClanService {
         return Collections.unmodifiableCollection(clansDB.getClans());
     }
 
-    public void remove(int clanId) {
+    public void remove(UUID clanId) {
         this.clansDB.remove(clanId);
     }
 
-    public Optional<Clan> get(int id) {
+    public Optional<Clan> get(UUID id) {
         return this.clansDB.get(id);
     }
 
-    public Optional<ClanStats> getClanStats(int id) {
+    public Optional<ClanStats> getClanStats(UUID id) {
         return this.clansDB.get(id)
                 .map(Clan::getStats);
     }
@@ -91,7 +91,7 @@ public class ClanService {
         return this.getClanWithUUID(player.getUniqueId());
     }
 
-    public Optional<Set<Pair<UUID, Member>>> getMembers(int id) {
+    public Optional<Set<Pair<UUID, Member>>> getMembers(UUID id) {
         return this.clansDB.get(id)
                 .map(Clan::getMembers)
                 .map(e -> e.entrySet().stream()

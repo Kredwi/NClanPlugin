@@ -24,7 +24,6 @@ public enum ClanPermissions {
     PERMISSION_CLAN_DISBAND(new Permission("clan.disband")),
     PERMISSION_CLAN_SETHOME(new Permission("clan.sethome")),
     PERMISSION_CLAN_DELHOME(new Permission("clan.delhome")),
-    PERMISSION_CLAN_REMOVE(new Permission("clan.remove")),
     PERMISSION_CLAN_INVITE(new Permission("clan.invite")),
     PERMISSION_CLAN_CREATE(new Permission("clan.create")),
 

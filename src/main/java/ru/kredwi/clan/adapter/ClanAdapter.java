@@ -25,7 +25,7 @@ public class ClanAdapter implements JsonDeserializer<Clan>, JsonSerializer<Clan>
     @Override
     public Clan deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext ctx) throws JsonParseException {
         JsonObject obj = jsonElement.getAsJsonObject();
-        int id = obj.get("id").getAsInt();
+        UUID id = UUID.fromString(obj.get("id").getAsString());
         UUID ownerId = UUID.fromString(obj.get("ownerId").getAsString());
         String name = obj.get("name").getAsString();
 
@@ -44,7 +44,7 @@ public class ClanAdapter implements JsonDeserializer<Clan>, JsonSerializer<Clan>
     @Override
     public JsonElement serialize(Clan clan, Type type, JsonSerializationContext obj) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", clan.getId());
+        jsonObject.addProperty("id", clan.getId().toString());
         jsonObject.addProperty("ownerId", clan.getOwnerId().toString());
         jsonObject.addProperty("name", clan.getName());
         jsonObject.add("settings", obj.serialize(clan.getSettings()));

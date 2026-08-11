@@ -16,10 +16,10 @@ public interface ClanDB {
     @NonNull
     Clan create(@NonNull UUID ownerId, @NonNull String name);
 
-    void remove(int clanId);
+    void remove(UUID clanId);
 
     @NonNull
-    Optional<Clan> get(int id);
+    Optional<Clan> get(UUID id);
 
     @NonNull
     Collection<Clan> getClans();

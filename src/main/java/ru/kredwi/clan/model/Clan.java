@@ -15,7 +15,7 @@ import java.util.UUID;
 @Data
 public class Clan {
 
-    private final int id;
+    private final UUID id;
     private final UUID ownerId;
     private final String name;
 
@@ -31,7 +31,7 @@ public class Clan {
     private List<Role> roles;
 
     @NonNull
-    public static Clan of(int id, UUID ownerId, String name) {
+    public static Clan of(UUID id, UUID ownerId, String name) {
         return new Clan(id, ownerId, name, new ClanStats(), new ClanSettings(), new HashMap<>(), List.of(
                 new ru.kredwi.clan.role.defaults.Member(),
                 new ru.kredwi.clan.role.defaults.Moder(),
@@ -40,7 +40,7 @@ public class Clan {
     }
 
     @NonNull
-    public static Clan of(int id, UUID ownerId, String name, ClanStats clanStats, ClanSettings settings, Map<UUID, Member> members, List<ru.kredwi.clan.role.Role> roles) {
+    public static Clan of(UUID id, UUID ownerId, String name, ClanStats clanStats, ClanSettings settings, Map<UUID, Member> members, List<ru.kredwi.clan.role.Role> roles) {
         return new Clan(id, ownerId, name, clanStats, settings, members, roles);
     }
 }
