@@ -9,6 +9,7 @@ import ru.kredwi.clan.api.command.SubCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.provider.ConfigProvider;
+import ru.kredwi.clan.provider.economy.PluginEconomyProvider;
 import ru.kredwi.clan.service.ClanService;
 import ru.kredwi.clan.service.MessagesService;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Create implements SubCommand {
 
+    private final PluginEconomyProvider economyProvider;
     private final MessagesService messagesService;
     private final ConfigProvider configProvider;
     private final ClanService clanService;
@@ -45,23 +47,26 @@ public class Create implements SubCommand {
         String clanName = args.get(0);
         if (!clanName.matches(configProvider.getClanNameAllowedPattern())) {
             ms.sendMessage(sender, "clan.error.name_not_allowed");
-
             return;
         }
 
         if (clanName.length() > configProvider.getClanNameMaxLength()) {
             ms.sendMessage(sender, "clan.error.name_too_long");
-
             return;
         }
 
         if (clanName.length() < configProvider.getClanNameMinLength()) {
             ms.sendMessage(sender, "clan.error.name_too_short");
-
             return;
         }
 
-        // TODO write prise for create clan
+        if (economyProvider.isEnabled()) {
+            if (!(economyProvider.myMoney(player.getUniqueId()) > configProvider.getClanCreatePrice())) {
+                messagesService.sendMessage(sender, "clan.error.not_enough_money_create", configProvider.getClanCreatePrice());
+                return;
+            } else
+                economyProvider.reduceMoney(player.getUniqueId(), configProvider.getClanCreatePrice());
+        }
 
         Clan instanceOfClan = clanService.create(player.getUniqueId(), clanName);
         ms.sendMessage(sender, "clan.success.clan_created", instanceOfClan.getName());

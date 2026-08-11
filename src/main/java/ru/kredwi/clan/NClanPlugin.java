@@ -1,7 +1,9 @@
 package ru.kredwi.clan;
 
+import cn.nukkit.Server;
 import cn.nukkit.command.PluginCommand;
 import cn.nukkit.event.Listener;
+import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Logger;
 import lombok.Getter;
@@ -18,6 +20,10 @@ import ru.kredwi.clan.listener.PlayerKillPlayer;
 import ru.kredwi.clan.listener.PlayerQuitEvent;
 import ru.kredwi.clan.provider.ConfigProvider;
 import ru.kredwi.clan.provider.MessagesProvider;
+import ru.kredwi.clan.provider.economy.EconomyAPI;
+import ru.kredwi.clan.provider.economy.EmptyEconomy;
+import ru.kredwi.clan.provider.economy.PluginEconomy;
+import ru.kredwi.clan.provider.economy.PluginEconomyProvider;
 import ru.kredwi.clan.service.ClanService;
 import ru.kredwi.clan.service.LevelService;
 import ru.kredwi.clan.service.MessagesService;
@@ -41,6 +47,7 @@ public class NClanPlugin extends PluginBase {
     private ClanShop clanShop;
     private ConfigProvider configProvider;
     private MessagesService messagesService;
+    private PluginEconomyProvider pluginEconomyProvider;
 
     @Override
     public void onLoad() {
@@ -66,6 +73,15 @@ public class NClanPlugin extends PluginBase {
     @Override
     public void onEnable() {
 
+        Plugin economyAPIPlugin = Server.getInstance().getPluginManager()
+                .getPlugin("EconomyAPI");
+
+        EconomyAPI economyAPI = (economyAPIPlugin != null && economyAPIPlugin.isEnabled())
+                ? new PluginEconomy()
+                : EmptyEconomy.getInstance();
+        this.pluginEconomyProvider = new PluginEconomyProvider(economyAPI);
+        NClanPlugin.log.debug(economyAPI.getClass().getName() + " loaded");
+
         var levels = this.levelFile.read();
         levelService.setLevels(levels);
         log.debug(levelService.getLevels().size() + " levels successfully loaded");
@@ -82,7 +98,7 @@ public class NClanPlugin extends PluginBase {
         this.clanShop.setItems(shopItems);
         log.debug(shopItems.size() + " shop items successfully loaded");
 
-        MainCommand command = new MainCommand(messagesService, clanService, requestService, clanShop, configProvider);
+        MainCommand command = new MainCommand(this.pluginEconomyProvider, messagesService, clanService, requestService, clanShop, configProvider);
         ((PluginCommand<?>) getCommand("clan")).setExecutor(command);
         log.debug("Command successfully registered");
 

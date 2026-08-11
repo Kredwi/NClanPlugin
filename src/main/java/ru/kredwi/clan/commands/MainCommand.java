@@ -19,6 +19,7 @@ import ru.kredwi.clan.commands.sub.role.Remote;
 import ru.kredwi.clan.commands.sub.role.RoleCMD;
 import ru.kredwi.clan.events.RequestEvent;
 import ru.kredwi.clan.provider.ConfigProvider;
+import ru.kredwi.clan.provider.economy.PluginEconomyProvider;
 import ru.kredwi.clan.service.ClanService;
 import ru.kredwi.clan.service.MessagesService;
 import ru.kredwi.clan.service.RequestService;
@@ -34,6 +35,7 @@ public class MainCommand implements CommandExecutor {
     private final Map<String, SubCommand> subCommands;
 
     public MainCommand(
+            PluginEconomyProvider economyProvider,
             MessagesService messagesService,
             ClanService clanService,
             RequestService requestService,
@@ -43,7 +45,7 @@ public class MainCommand implements CommandExecutor {
         this.subCommands = new HashMap<>();
         subCommands.put("help", new Help(messagesService));
         subCommands.put("info", new Info(messagesService, clanService));
-        subCommands.put("create", new Create(messagesService, config, clanService));
+        subCommands.put("create", new Create(economyProvider, messagesService, config, clanService));
         subCommands.put("members", new Members(messagesService, clanService));
         subCommands.put("kick", new Kick(messagesService, clanService));
         subCommands.put("leave", new Leave(messagesService, clanService));

@@ -3,8 +3,8 @@ version: ${project.version}
 api: "1.1.0"
 author: Kredwi
 main: ${plugin.main-class}
-#depend:
-#  - EconomyAPI
+softdepend:
+  - EconomyAPI
 commands:
   clan:
     description: clan command

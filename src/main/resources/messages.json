@@ -127,6 +127,9 @@
   "clan.error.inventory_full": [
     "§cYour inventory is full"
   ],
+  "clan.error.not_enough_money_create": [
+    "§cNot enough money. Required: §6{0}"
+  ],
   "clan.success.clan_created": [
     "§aClan successfully created with name §6{0}"
   ],
