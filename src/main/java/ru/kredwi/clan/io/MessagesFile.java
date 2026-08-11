@@ -1,0 +1,38 @@
+package ru.kredwi.clan.io;
+
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
+
+import java.io.File;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RequiredArgsConstructor
+public class MessagesFile extends CommonIOFile<Map<String, List<String>>> {
+
+    public static final Gson gson = new Gson();
+
+    private final File dataFolder;
+
+    @Override
+    protected File getFile() {
+        return new File(dataFolder, "messages.json");
+    }
+
+    @Override
+    protected @NonNull Map<String, List<String>> deserilize(@NonNull String json) {
+        Type type = new TypeToken<Map<String, List<String>>>(){}.getType();
+        return gson.fromJson(json, type);
+    }
+
+    @Override
+    protected String seserilize(@NonNull Map<String, List<String>> stringListMap) {
+        throw new UnsupportedOperationException("The file cannot be support write");
+    }
+}

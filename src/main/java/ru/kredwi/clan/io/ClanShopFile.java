@@ -38,6 +38,6 @@ public class ClanShopFile extends CommonIOFile<ArrayList<ShopItem>> {
 
     @Override
     protected String seserilize(@NonNull ArrayList<ShopItem> shopItems) {
-        return ""; // not need
+        throw new UnsupportedOperationException("The file cannot be support write");
     }
 }

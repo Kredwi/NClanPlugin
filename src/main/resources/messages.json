@@ -1,1 +1,249 @@
-{}
+{
+  "clan.command.help.header": [
+    "======= NClanPlugin ======="
+  ],
+  "clan.command.help.lines": [
+    "/clan help",
+    "/clan leave",
+    "/clan create <clan_name>",
+    "/clan remove",
+    "/clan members",
+    "/clan stats <player_name>",
+    "/clan kick <player_name>",
+    "/clan invite <player_name>",
+    "/clan accept",
+    "==========================="
+  ],
+  "clan.command.help.unknown": [
+    "Sub command not found use /help"
+  ],
+
+  "clan.error.only_player": [
+    "Command only for a player"
+  ],
+  "clan.error.already_in_clan": [
+    "You already has clan"
+  ],
+  "clan.error.no_clan": [
+    "You cannot be has any clan"
+  ],
+  "clan.error.no_permission": [
+    "You cannot be has permissions"
+  ],
+  "clan.error.no_permission_command": [
+    "You cannot has permissions for use the command"
+  ],
+  "clan.error.more_arguments": [
+    "Please provide more arguments. /clan help"
+  ],
+  "clan.error.clan_name_empty": [
+    "Clan name cannot be empty. Usage /clan help"
+  ],
+  "clan.error.name_not_allowed": [
+    "Your clan name cannot allowed"
+  ],
+  "clan.error.name_too_long": [
+    "You clan name over bounds (please delete symbols)"
+  ],
+  "clan.error.name_too_short": [
+    "You clan name over bounds (please add more symbols)"
+  ],
+  "clan.error.clan_not_found": [
+    "Clan with name {0} is not found"
+  ],
+  "clan.error.clan_not_found_id": [
+    "Clan not found"
+  ],
+  "clan.error.player_not_found": [
+    "Player cannot be found"
+  ],
+  "clan.error.player_not_found_name": [
+    "Player with {0} name is not found"
+  ],
+  "clan.error.provide_player_name": [
+    "Please provide player name"
+  ],
+  "clan.error.cannot_kick_owner": [
+    "Owner cannot be kicked from a clan"
+  ],
+  "clan.error.cannot_kick_self": [
+    "You cannot be kick yourself"
+  ],
+  "clan.error.provide_player_request": [
+    "Please provide player name for request"
+  ],
+  "clan.error.player_offline": [
+    "The player is offline"
+  ],
+  "clan.error.player_already_in_clan": [
+    "The player already has clan"
+  ],
+  "clan.error.clan_full": [
+    "You clan does have spots"
+  ],
+  "clan.error.empty_message": [
+    "You cannot be send empty message"
+  ],
+  "clan.error.home_not_set": [
+    "Clan home is not set"
+  ],
+  "clan.error.role_not_found": [
+    "Role with name {0} is not found"
+  ],
+  "clan.error.role_name_invalid": [
+    "Name of role {0} cannot access"
+  ],
+  "clan.error.provide_correct_number": [
+    "Provide correct number"
+  ],
+  "clan.error.priority_invalid": [
+    "Please provide correct priority for role {0}. Error {1}"
+  ],
+  "clan.error.no_permission_role": [
+    "You dont has permissions"
+  ],
+  "clan.error.item_not_found": [
+    "Item not found"
+  ],
+  "clan.error.insufficient_balance": [
+    "You cannot has moneys for the buy"
+  ],
+  "clan.error.inventory_full": [
+    "Your inventory does has free slots"
+  ],
+
+  "clan.success.clan_created": [
+    "Clan successfully created with id {0}"
+  ],
+  "clan.success.home_deleted": [
+    "Clan home successfully deleted"
+  ],
+  "clan.success.disbanded": [
+    "Clan successfully disbanded"
+  ],
+  "clan.success.pvp_toggled": [
+    "pvp status is changed to {0}"
+  ],
+  "clan.success.home_set": [
+    "Clan home successfully set"
+  ],
+  "clan.success.balance_set": [
+    "Balance successfully set"
+  ],
+  "clan.success.exp_changed": [
+    "Experience successfully changed"
+  ],
+  "clan.success.player_kicked": [
+    "Player successfully kicked"
+  ],
+  "clan.success.leave": [
+    "You successfully leave from clan"
+  ],
+  "clan.success.role_created": [
+    "Role with name {0} successfully created"
+  ],
+  "clan.success.roles_updated": [
+    "All roles successfully updated"
+  ],
+  "clan.success.item_bought": [
+    "You successfully buying item"
+  ],
+
+  "clan.info.clan_list": [
+    "All clans in the server",
+    "{0}"
+  ],
+  "clan.info.member_list_header": [
+    "Member of clan {0}"
+  ],
+  "clan.info.member_list_body": [
+    "{0}"
+  ],
+  "clan.info.roles_header": [
+    "Clan roles: ",
+    "{0}"
+  ],
+  "clan.info.stats_header": [
+    "Information of member {0}"
+  ],
+  "clan.info.stats_body": [
+    "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬",
+    "Name: {0}",
+    "Kills: {1}",
+    "Online: {2}",
+    "Group: {3}",
+    "Last played: {4}",
+    "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
+  ],
+  "clan.info.level_up": [
+    "Clan level upgrade"
+  ],
+  "clan.info.level_down": [
+    "Clan level downgraded"
+  ],
+
+  "clan.request.accept_success_sender": [
+    "Player with name {0} successfully accept your request"
+  ],
+  "clan.request.accept_success_target": [
+    "You successfully accept request to clan join"
+  ],
+  "clan.request.deny_success": [
+    "You successfully deny request"
+  ],
+  "clan.request.deny_target": [
+    "Player deny your request"
+  ],
+  "clan.request.author_left": [
+    "Request author is leave from game"
+  ],
+
+  "clan.form.error.title": [
+    "§cError"
+  ],
+  "clan.form.error.stats_not_found": [
+    "§cStats for the member is not found"
+  ],
+  "clan.form.error.player_not_found": [
+    "§cPlayer with UUID is not found"
+  ],
+
+  "clan.form.info.title": [
+    "§6§lInformation of clan: §e§l{0}"
+  ],
+  "clan.form.info.body": [
+    "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬",
+    "Name: {0}",
+    "PvP mode: {1}",
+    "Balance: {2}",
+    "Exp: {3}",
+    "Members: {4}/{5}",
+    "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
+  ],
+  "clan.form.market.title": [
+    "Clan shop"
+  ],
+  "clan.form.market.balance": [
+    "Clan balance {0}"
+  ],
+  "clan.form.role.viewer.title": [
+    "Info of role {0}"
+  ],
+  "clan.form.role.viewer.body": [
+    "Priority {0}",
+    "Name {1}",
+    "Permissions: {2}"
+  ],
+  "clan.form.role.creator.title": [
+    "Role creator"
+  ],
+  "clan.form.role.creator.name": [
+    "name"
+  ],
+  "clan.form.role.creator.priority": [
+    "priority"
+  ],
+  "clan.form.role.manager.title": [
+    "Role Manager"
+  ]
+}
