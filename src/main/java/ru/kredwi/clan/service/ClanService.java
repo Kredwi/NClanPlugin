@@ -8,9 +8,10 @@ import com.google.common.cache.CacheBuilder;
 import it.unimi.dsi.fastutil.Pair;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
-import ru.kredwi.clan.DefaultRoles;
 import ru.kredwi.clan.api.db.ClanDB;
 import ru.kredwi.clan.model.*;
+import ru.kredwi.clan.role.Role;
+import ru.kredwi.clan.role.defaults.Owner;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -34,6 +35,12 @@ public class ClanService {
     public Clan create(UUID ownerId, String name) {
         Clan clan = this.clansDB.create(ownerId, name);
 
+        Role role;
+        if (clan.getRoles().isEmpty()) {
+            role = new Owner();
+            clan.setRoles(List.of(role));
+        } else role = clan.getRoles().get(clan.getRoles().size() - 1);
+
         Member member = new Member(
                 // member name
                 Server.getInstance()
@@ -43,7 +50,7 @@ public class ClanService {
                 // member id
                 ownerId,
                 // member role
-                DefaultRoles.OWNER,
+                role,
                 // member join time
                 System.currentTimeMillis(),
                 // initial member stats,

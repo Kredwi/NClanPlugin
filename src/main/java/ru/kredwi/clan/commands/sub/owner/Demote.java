@@ -3,7 +3,6 @@ package ru.kredwi.clan.commands.sub.owner;
 import cn.nukkit.Player;
 import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
-import ru.kredwi.clan.DefaultRoles;
 import ru.kredwi.clan.model.Member;
 import ru.kredwi.clan.permission.Permissions;
 import ru.kredwi.clan.service.ClanService;

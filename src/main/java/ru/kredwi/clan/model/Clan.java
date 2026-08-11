@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.jspecify.annotations.NonNull;
-import ru.kredwi.clan.DefaultRoles;
 import ru.kredwi.clan.role.Role;
 
 import java.util.HashMap;
@@ -34,10 +33,9 @@ public class Clan {
     @NonNull
     public static Clan of(int id, UUID ownerId, String name) {
         return new Clan(id, ownerId, name, new ClanStats(), new ClanSettings(), new HashMap<>(), List.of(
-                new Role(DefaultRoles.DEFAULT),
-                new Role(DefaultRoles.MEMBER),
-                new Role(DefaultRoles.MODER),
-                new Role(DefaultRoles.OWNER)
+                new ru.kredwi.clan.role.defaults.Member(),
+                new ru.kredwi.clan.role.defaults.Moder(),
+                new ru.kredwi.clan.role.defaults.Owner()
         ));
     }
 

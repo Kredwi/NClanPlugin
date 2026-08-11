@@ -21,7 +21,7 @@ public record FileClan(File datafolder) {
             datafolder.getParentFile().mkdirs();
 
         String json = ClanAdapter.GSON.toJson(clans);
-        writeFile(CLAN_FILE, json);
+        writeFile(json);
     }
 
     public Collection<Clan> read() {
@@ -29,7 +29,7 @@ public record FileClan(File datafolder) {
             datafolder.getParentFile().mkdirs();
 
 
-        String json = readFile(CLAN_FILE);
+        String json = readFile();
         JsonArray clansRaw = ClanAdapter.GSON
                 .fromJson(json, JsonArray.class);
 
@@ -44,22 +44,24 @@ public record FileClan(File datafolder) {
         return clans;
     }
 
-    private String readFile(String fileName) {
-        File dbFile = new File(datafolder, fileName);
+    private String readFile() {
+        File dbFile = new File(datafolder, FileClan.CLAN_FILE);
         var json = new StringBuilder();
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(dbFile)))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 json.append(line);
             }
+        } catch (FileNotFoundException e) {
+            NClanPlugin.log.debug("File not found " + e.getMessage() + " creating...");
         } catch (IOException e) {
             NClanPlugin.log.error("Error of reading clan file", e);
         }
         return json.toString();
     }
 
-    private void writeFile(String fileName, String fileContent) {
-        File dbFile = new File(datafolder, fileName);
+    private void writeFile(String fileContent) {
+        File dbFile = new File(datafolder, FileClan.CLAN_FILE);
 
         try {
             Files.delete(dbFile.toPath());
@@ -70,6 +72,8 @@ public record FileClan(File datafolder) {
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dbFile)))) {
             writer.write(fileContent);
 
+        } catch (FileNotFoundException e) {
+            NClanPlugin.log.debug("File not found " + e.getMessage() + " creating...");
         } catch (IOException e) {
             NClanPlugin.log.error("Error of writing clan file", e);
         }

@@ -35,7 +35,8 @@ public class ClanAdapter implements JsonDeserializer<Clan>, JsonSerializer<Clan>
                 new TypeToken<Map<UUID, Member>>() {
                 }.getType());
 
-        List<Role> roles = ctx.deserialize(obj.get("roles"), new TypeToken<List<Role>>(){}.getType());
+        List<Role> roles = ctx.deserialize(obj.get("roles"), new TypeToken<List<Role>>() {
+        }.getType());
 
         return Clan.of(id, ownerId, name, clanStats, settings, members, roles);
     }

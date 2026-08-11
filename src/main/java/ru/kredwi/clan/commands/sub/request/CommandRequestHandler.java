@@ -4,12 +4,13 @@ import cn.nukkit.Player;
 import cn.nukkit.Server;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import ru.kredwi.clan.DefaultRoles;
 import ru.kredwi.clan.model.Member;
 import ru.kredwi.clan.model.MemberStats;
+import ru.kredwi.clan.role.Role;
 import ru.kredwi.clan.service.ClanService;
 import ru.kredwi.clan.service.RequestService;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,15 +38,23 @@ public class CommandRequestHandler {
         var requestedPlayerInstance = server.getPlayer(reqData.get().requested());
         var requestorPlayerInstance = server.getPlayer(reqData.get().requestor());
 
-        if (requestedPlayerInstance.isEmpty() || requestorPlayerInstance.isEmpty()) {
+        if (requestedPlayerInstance.isEmpty())
+            return;
+
+        if (requestorPlayerInstance.isEmpty()) {
             requestedPlayerInstance.get().sendMessage("Request author is leave from game");
             return;
         }
+        Role role;
+        if (clanForRequestor.get().getRoles().isEmpty()) {
+            role = new ru.kredwi.clan.role.defaults.Member();
+            clanForRequestor.get().setRoles(List.of(role));
+        } else role = clanForRequestor.get().getRoles().get(0);
 
         Member member = new Member(
                 requestedPlayerInstance.get().getName(),
                 requestedPlayerInstance.get().getUniqueId(),
-                DefaultRoles.MEMBER,
+                role,
                 System.currentTimeMillis(),
                 new MemberStats()
         );

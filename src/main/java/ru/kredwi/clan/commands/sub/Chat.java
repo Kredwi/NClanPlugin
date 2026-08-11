@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
+import ru.kredwi.clan.NClanPlugin;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.Member;
@@ -28,6 +29,8 @@ public class Chat extends MemberCommand {
         }
 
         Member clanMember = clan.getMembers().get(player.getUniqueId());
+
+        NClanPlugin.log.debug(clanMember.getRole().toString());
 
         String messageText = String.join(" ", args);
         clan.getMembers()

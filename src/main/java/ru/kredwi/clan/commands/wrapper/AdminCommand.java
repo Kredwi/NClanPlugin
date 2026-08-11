@@ -1,6 +1,7 @@
 package ru.kredwi.clan.commands.wrapper;
 
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.permission.Permission;
 import lombok.AllArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public abstract class AdminCommand implements SubCommand {
+    public static final Permission ADMIN_PERMISSION = new Permission("clan.admin");
     protected final ClanService clanService;
 
     protected abstract void onCommand(@NonNull Clan clan, @NonNull CommandSender sender, @NonNull List<String> args);
@@ -29,5 +31,10 @@ public abstract class AdminCommand implements SubCommand {
         }
 
         this.onCommand(clan.get(), sender, args.subList(1, args.size()));
+    }
+
+    @Override
+    public @NonNull Permission getPermission() {
+        return ADMIN_PERMISSION;
     }
 }

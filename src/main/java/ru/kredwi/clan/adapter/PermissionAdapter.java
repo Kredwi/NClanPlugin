@@ -2,7 +2,6 @@ package ru.kredwi.clan.adapter;
 
 import cn.nukkit.permission.Permission;
 import com.google.gson.*;
-import ru.kredwi.clan.model.Clan;
 
 import java.lang.reflect.Type;
 

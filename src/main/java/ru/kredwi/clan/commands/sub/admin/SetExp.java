@@ -1,11 +1,9 @@
 package ru.kredwi.clan.commands.sub.admin;
 
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.AdminCommand;
 import ru.kredwi.clan.model.Clan;
-import ru.kredwi.clan.permission.Permissions;
 import ru.kredwi.clan.service.ClanService;
 
 import java.util.List;
@@ -37,10 +35,5 @@ public class SetExp extends AdminCommand {
         sender.sendMessage("Experience successfully changed");
 
         clanService.onChangeExp(clan, initExp, finExp);
-    }
-
-    @Override
-    public @NonNull Permission getPermission() {
-        return Permissions.PERMISSION_CLAN_SETEXP.getPermission();
     }
 }

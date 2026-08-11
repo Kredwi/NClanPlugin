@@ -24,6 +24,6 @@ public class RoleCMD extends OwnerCommand {
 
     @Override
     public @NonNull Permission getPermission() {
-        return Permissions.PERMISSION_CLAN_DENY.getPermission();
+        return Permissions.PERMISSION_CLAN_CHANGE_ROLE.getPermission();
     }
 }

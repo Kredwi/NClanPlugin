@@ -1,7 +1,9 @@
 package ru.kredwi.clan.permission;
 
 import cn.nukkit.permission.Permission;
+import lombok.Getter;
 
+@Getter
 public enum Permissions {
 
     PERMISSION_CLAN_HELP(new Permission("clan.help")),
@@ -26,11 +28,11 @@ public enum Permissions {
     PERMISSION_CLAN_SETTINGS(new Permission("clan.settings")),
     PERMISSION_CLAN_REMOVE(new Permission("clan.remove")),
     PERMISSION_CLAN_INVITE(new Permission("clan.invite")),
+    PERMISSION_CLAN_CREATE(new Permission("clan.create")),
 
-    PERMISSION_CLAN_SETBALANCE(new Permission("clan.setbalance")),
-    PERMISSION_CLAN_SETEXP(new Permission("clan.setexp")),
-
-    PERMISSION_CLAN_CREATE(new Permission("clan.create"));
+    PERMISSION_CLAN_CHANGE_ROLE(new Permission("clan.role.change")),
+    PERMISSION_CLAN_SEE_ROLE(new Permission("clan.role.see")),
+    PERMISSION_CLAN_CREATE_ROLE(new Permission("clan.role.create"));
 
     private final Permission permission;
 
@@ -38,7 +40,4 @@ public enum Permissions {
         this.permission = permission;
     }
 
-    public Permission getPermission() {
-        return permission;
-    }
 }
