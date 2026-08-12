@@ -33,6 +33,7 @@ import ru.kredwi.clan.service.RequestService;
 import ru.kredwi.clan.shop.ClanShop;
 
 import java.util.List;
+import java.util.TreeMap;
 
 @Getter
 public class NClanPlugin extends PluginBase {
@@ -66,7 +67,7 @@ public class NClanPlugin extends PluginBase {
         this.clanShopFile = new ClanShopFile(getDataFolder());
         this.db = new FileClansDB();
 
-        this.levelService = new LevelService(configProvider);
+        this.levelService = new LevelService();
         this.clanService = new ClanService(messagesService, configProvider, levelService, db);
         this.requestService = new RequestService(configProvider);
         this.clanShop = new ClanShop();
@@ -85,7 +86,7 @@ public class NClanPlugin extends PluginBase {
         NClanPlugin.log.debug(economyAPI.getClass().getName() + " loaded");
 
         var levels = this.levelFile.read();
-        levelService.setLevels(levels);
+        levelService.setLevels(new TreeMap<>(levels)); // maybe the not good ideas
         log.debug(levelService.getLevels().size() + " levels successfully loaded");
 
         var clans = this.clanFile.read();

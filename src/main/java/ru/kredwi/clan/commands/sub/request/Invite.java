@@ -63,5 +63,9 @@ public class Invite extends MemberCommand {
                 sender.getUniqueId(),
                 requestedPlayer.getUniqueId()
         ));
+        // to target
+        messagesService.sendMessage(requestedPlayer, "clan.success.you_requested", clan.getName());
+        // to requestor
+        messagesService.sendMessage(sender, "clan.success.player_requested", requestedPlayer.getName());
     }
 }

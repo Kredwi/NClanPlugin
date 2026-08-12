@@ -1,5 +1,6 @@
 package ru.kredwi.clan.service;
 
+import com.sun.source.tree.Tree;
 import lombok.Getter;
 import lombok.Setter;
 import org.jspecify.annotations.NonNull;
@@ -9,6 +10,7 @@ import ru.kredwi.clan.provider.ConfigProvider;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Getter
 public class LevelService {
@@ -17,24 +19,15 @@ public class LevelService {
 
     @NonNull
     @Setter
-    private Map<Integer, Level> levels = new HashMap<>();
+    private TreeMap<Integer, Level> levels = new TreeMap<>();
 
-    public LevelService(ConfigProvider config) {
+    public LevelService() {
         // default (override in config file)
         levels.put(DEFAULT_EXP_COUNT, new Level("default", DEFAULT_EXP_COUNT, 10, 5));
     }
 
-    public LevelService(ConfigProvider config, @NonNull Map<Integer, Level> levels) {
+    public LevelService(@NonNull TreeMap<Integer, Level> levels) {
         this.levels = levels;
-    }
-
-
-    public void addLevel(Level level) {
-        levels.put(level.getExp(), level);
-    }
-
-    public void removeLevel(int exp) {
-        levels.remove(exp);
     }
 
     @Nullable
@@ -42,16 +35,11 @@ public class LevelService {
         if (levels.isEmpty())
             return null;
 
-        int candidate = Integer.MIN_VALUE;
-        for (Integer exp : levels.keySet()) {
-            if (exp <= clanExp && exp > candidate)
-                candidate = exp;
-        }
+        Integer key = levels.floorKey(clanExp);
+        if (key == null)
+            key = levels.firstKey();
 
-        if (candidate == Integer.MIN_VALUE)
-            candidate = levels.keySet().stream().min(Integer::compareTo).orElse(DEFAULT_EXP_COUNT);
-
-        return levels.get(candidate);
+        return levels.get(key);
     }
 
 }

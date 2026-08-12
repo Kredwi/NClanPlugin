@@ -31,7 +31,13 @@ public class MessagesFile extends CommonIOFile<Map<String, List<String>>> {
     protected @NonNull Map<String, List<String>> deserialize(@NonNull String json) {
         Type type = new TypeToken<Map<String, List<String>>>() {
         }.getType();
-        return gson.fromJson(json, type);
+
+        Map<String, List<String>> json1 = gson.fromJson(json, type);
+
+        if (json1 == null)
+            throw new NullPointerException(getFile().getName() + " is invalid. json1 returned null value");
+
+        return json1;
     }
 
     @Override

@@ -6,7 +6,6 @@ import ru.kredwi.clan.provider.ConfigProvider;
 import ru.kredwi.clan.provider.MessagesProvider;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

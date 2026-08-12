@@ -8,7 +8,6 @@ import ru.kredwi.clan.model.ClanSettings;
 import ru.kredwi.clan.model.ClanStats;
 import ru.kredwi.clan.model.Level;
 import ru.kredwi.clan.service.ClanService;
-import ru.kredwi.clan.service.LevelService;
 import ru.kredwi.clan.service.MessagesService;
 
 public class InfoForm extends Form {

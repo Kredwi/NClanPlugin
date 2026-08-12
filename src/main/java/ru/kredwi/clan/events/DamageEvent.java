@@ -46,7 +46,10 @@ public class DamageEvent {
         int initialClanExp = victimClan.getStats().getExp();
 
         var stats = victimClan.getStats();
-        stats.setExp(stats.getExp() - this.provider.getExpPerDeath());
+        int newExp = stats.getExp() - this.provider.getExpPerDeath();
+        if (newExp < 0)
+            newExp = 0;
+        stats.setExp(newExp);
 
         var victimMemberStats = victimClan.getMembers()
                 .get(victimId).getMemberStats();

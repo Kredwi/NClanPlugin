@@ -24,6 +24,11 @@ public class Leave extends MemberCommand {
 
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
+        if (player.getUniqueId().equals(clan.getOwnerId())) {
+            messagesService.sendMessage(player, "clan.error.leave.owner");
+            return;
+        }
+
         clan.getMembers()
                 .remove(player.getUniqueId());
         messagesService.sendMessage(player, "clan.success.leave");

@@ -5,7 +5,6 @@
   "boolean.status.false": [
     "§c✘ disable"
   ],
-
   "boolean.online.true": [
     "§a✔ online"
   ],
@@ -18,7 +17,6 @@
   "boolean.none.false": [
     "§c✘ none"
   ],
-
   "clan.chat.template": [
     "§c{2} §6{0} §8=> §f{1}"
   ],
@@ -116,6 +114,14 @@
   "clan.error.cannot_kick_self": [
     "§cYou cannot kick yourself"
   ],
+  "clan.success.you_requested": [
+    "§fYou invited to clan §6{0}",
+    "§6/clan accept §fto accept the request",
+    "§6/clan deny §fto deny the request"
+  ],
+  "clan.success.player_requested": [
+    "§fPlayer with name §6{0} §fsuccessfully requested to your clan"
+  ],
   "clan.error.provide_player_request": [
     "§cPlease specify a player to invite"
   ],
@@ -190,6 +196,9 @@
   ],
   "clan.success.leave": [
     "§aYou have left the clan"
+  ],
+  "clan.error.leave.owner": [
+    "§cOwner cannot be leave from clan"
   ],
   "clan.success.role_created": [
     "§aRole §6{0} §acreated"

@@ -10,6 +10,7 @@ import ru.kredwi.clan.model.Services;
 import ru.kredwi.clan.permission.CommonPermissions;
 
 import java.util.List;
+import java.util.TreeMap;
 
 @AllArgsConstructor
 public class PluginReload implements SubCommand {
@@ -24,7 +25,7 @@ public class PluginReload implements SubCommand {
         NClanPlugin.log.debug("Config reloaded");
         services.clanShop().setItems(services.files().clanShopFile().read());
         NClanPlugin.log.debug("Clan shop reloaded");
-        services.levelService().setLevels(services.files().levelFile().read());
+        services.levelService().setLevels(new TreeMap<>(services.files().levelFile().read()));
         NClanPlugin.log.debug("Levels reloaded");
         services.messagesService().sendMessage(sender, "clan.command.reload.success");
     }

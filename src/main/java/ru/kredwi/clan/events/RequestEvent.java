@@ -61,12 +61,11 @@ public class RequestEvent {
                 System.currentTimeMillis(),
                 new MemberStats()
         );
-
         clanForRequestor.get()
                 .getMembers()
                 .put(requested, member);
         sendAcceptMessages(requestorPlayerInstance.get(), requestedPlayerInstance.get());
-        requestService.remove(reqData.get().requestor());
+        requestService.remove(reqData.get().requested());
     }
 
     private void sendAcceptMessages(Player requestor, Player requested) {

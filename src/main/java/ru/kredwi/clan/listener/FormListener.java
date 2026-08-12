@@ -113,7 +113,9 @@ public record FormListener(MessagesService messagesService, ClanService clanServ
             return;
 
         var player1 = clan.get().getMembers().get(player.getUniqueId());
-        if (player1 == null || !player1.getRole().getPermissions().contains(ClanPermissions.PERMISSION_CLAN_CHANGE_ROLE.getPermission())) {
+        if (player1 == null || !player1.getRole().getPermissions().stream()
+                .map(Permission::getName).toList()
+                .contains(ClanPermissions.PERMISSION_CLAN_CHANGE_ROLE.getPermission().getName())) {
             messagesService.sendMessage(player, "clan.error.no_permission_role");
             return;
         }
@@ -172,7 +174,7 @@ public record FormListener(MessagesService messagesService, ClanService clanServ
         }
 
         int clickedButton = marketForm.getResponse().getClickedButtonId();
-        if (clickedButton > clanShop.getItems().size())
+        if (clickedButton >= clanShop.getItems().size())
             return;
 
         Optional<ShopItem> shopItem = clanShop.getItem(clickedButton);
