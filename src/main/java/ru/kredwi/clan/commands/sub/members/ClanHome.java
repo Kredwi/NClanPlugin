@@ -2,7 +2,6 @@ package ru.kredwi.clan.commands.sub.members;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
-import cn.nukkit.level.Level;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;

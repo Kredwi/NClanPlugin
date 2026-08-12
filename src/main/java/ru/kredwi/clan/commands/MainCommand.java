@@ -37,7 +37,7 @@ public class MainCommand implements CommandExecutor {
         var clanService = services.clanService();
         subCommands.put("help", new Help(messagesService));
         subCommands.put("info", new Info(messagesService, services.clanService()));
-        subCommands.put("create", new Create(services.economyProvider(), messagesService, services.configProvider(), services.clanService()));
+        subCommands.put("create", new Create(services.economyAPI(), messagesService, services.configProvider(), services.clanService()));
         subCommands.put("members", new Members(messagesService, services.clanService()));
         subCommands.put("kick", new Kick(messagesService, services.clanService()));
         subCommands.put("leave", new Leave(messagesService, services.clanService()));

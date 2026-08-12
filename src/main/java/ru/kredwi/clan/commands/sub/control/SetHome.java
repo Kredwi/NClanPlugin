@@ -1,7 +1,6 @@
 package ru.kredwi.clan.commands.sub.control;
 
 import cn.nukkit.Player;
-import org.apache.logging.log4j.Level;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;

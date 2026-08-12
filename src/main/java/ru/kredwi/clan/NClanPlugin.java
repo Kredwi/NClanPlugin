@@ -1,9 +1,7 @@
 package ru.kredwi.clan;
 
-import cn.nukkit.Server;
 import cn.nukkit.command.PluginCommand;
 import cn.nukkit.event.Listener;
-import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Logger;
 import lombok.Getter;
@@ -25,12 +23,15 @@ import ru.kredwi.clan.provider.MessagesProvider;
 import ru.kredwi.clan.provider.economy.EconomyAPI;
 import ru.kredwi.clan.provider.economy.EmptyEconomy;
 import ru.kredwi.clan.provider.economy.PluginEconomy;
-import ru.kredwi.clan.provider.economy.PluginEconomyProvider;
+import ru.kredwi.clan.provider.papi.EmptyPAPI;
+import ru.kredwi.clan.provider.papi.PAPI;
+import ru.kredwi.clan.provider.papi.PluginPAPI;
 import ru.kredwi.clan.service.ClanService;
 import ru.kredwi.clan.service.LevelService;
 import ru.kredwi.clan.service.MessagesService;
 import ru.kredwi.clan.service.RequestService;
 import ru.kredwi.clan.shop.ClanShop;
+import ru.kredwi.clan.utils.DependenciesLoader;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -50,7 +51,10 @@ public class NClanPlugin extends PluginBase {
     private ClanShop clanShop;
     private ConfigProvider configProvider;
     private MessagesService messagesService;
-    private PluginEconomyProvider pluginEconomyProvider;
+
+    // depends
+    private EconomyAPI economyAPI;
+    private PAPI papi;
 
     @Override
     public void onLoad() {
@@ -73,15 +77,10 @@ public class NClanPlugin extends PluginBase {
 
     @Override
     public void onEnable() {
-
-        Plugin economyAPIPlugin = Server.getInstance().getPluginManager()
-                .getPlugin("EconomyAPI");
-
-        EconomyAPI economyAPI = (economyAPIPlugin != null && economyAPIPlugin.isEnabled())
-                ? new PluginEconomy()
-                : EmptyEconomy.getInstance();
-        this.pluginEconomyProvider = new PluginEconomyProvider(economyAPI);
-        NClanPlugin.log.debug(economyAPI.getClass().getName() + " loaded");
+        this.economyAPI = new DependenciesLoader<EconomyAPI>()
+                .loadDepend("EconomyAPI", PluginEconomy::new, EmptyEconomy.getInstance());
+//        this.papi = new DependenciesLoader<PAPI>()
+//                .loadDepend("PlaceholderAPI", PluginPAPI::new, EmptyPAPI.getInstance());
 
         var levels = this.levelFile.read();
         levelService.setLevels(new TreeMap<>(levels)); // maybe the not good ideas
@@ -94,7 +93,7 @@ public class NClanPlugin extends PluginBase {
         log.debug(shopItems.size() + " shop items successfully loaded");
 
         MainCommand command = new MainCommand(
-                new Services(configProvider, pluginEconomyProvider,
+                new Services(configProvider, economyAPI,
                         messagesService, clanService,
                         requestService, levelService, clanShop,
                         new PluginFiles(this.clanFile, this.levelFile,

@@ -8,7 +8,7 @@ import ru.kredwi.clan.api.command.SubCommand;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.provider.ConfigProvider;
-import ru.kredwi.clan.provider.economy.PluginEconomyProvider;
+import ru.kredwi.clan.provider.economy.EconomyAPI;
 import ru.kredwi.clan.service.ClanService;
 import ru.kredwi.clan.service.MessagesService;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Create implements SubCommand {
 
-    private final PluginEconomyProvider economyProvider;
+    private final EconomyAPI economyProvider;
     private final MessagesService messagesService;
     private final ConfigProvider configProvider;
     private final ClanService clanService;
