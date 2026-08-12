@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface ClanDB {
 
-    void enable(@NonNull Collection<Clan> clans);
+    void enable();
 
     void disable();
 

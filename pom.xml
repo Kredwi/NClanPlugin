@@ -42,12 +42,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.51.3.0</version>
+        </dependency>
+        <dependency>
             <groupId>me.onebone</groupId>
             <artifactId>economyapi</artifactId>
             <version>2.0.2</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>cn.nukkit</groupId>
             <artifactId>nukkit</artifactId>
@@ -111,9 +115,9 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <relocations>
                                 <relocation>
-                                    <pattern>org.bstats</pattern>
-                                    <shadedPattern>ru.kredwi.clan.libs.bstats</shadedPattern>
-                                </relocation>
+                                <pattern>org.xerial</pattern>
+                                <shadedPattern>ru.kredwi.clan.libs.sqlite</shadedPattern>
+                            </relocation>
                             </relocations>
                         </configuration>
                     </execution>

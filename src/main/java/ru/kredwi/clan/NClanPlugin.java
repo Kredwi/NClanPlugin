@@ -65,10 +65,8 @@ public class NClanPlugin extends PluginBase {
         this.clanFile = new FileClan(getDataFolder());
         this.levelFile = new LevelFile(getDataFolder());
         this.clanShopFile = new ClanShopFile(getDataFolder());
-        this.db = new FileClansDB();
 
         this.levelService = new LevelService();
-        this.clanService = new ClanService(messagesService, configProvider, levelService, db);
         this.requestService = new RequestService(configProvider);
         this.clanShop = new ClanShop();
     }
@@ -89,13 +87,7 @@ public class NClanPlugin extends PluginBase {
         levelService.setLevels(new TreeMap<>(levels)); // maybe the not good ideas
         log.debug(levelService.getLevels().size() + " levels successfully loaded");
 
-        var clans = this.clanFile.read();
-        if (clans.isEmpty())
-            log.debug("Clans not loaded. Clans is empty");
-        log.debug(clans.size() + " clans successfully loaded");
-
-        this.db.enable(clans);
-        log.debug("File database successfully loaded");
+        this.clanService = loadFileClans();
 
         var shopItems = clanShopFile.read();
         this.clanShop.setItems(shopItems);
@@ -113,6 +105,21 @@ public class NClanPlugin extends PluginBase {
 
         registerEvents();
 
+    }
+
+    private ClanService loadFileClans() {
+        var clans = this.clanFile.read();
+        if (clans.isEmpty())
+            log.debug("Clans not loaded. Clans is empty");
+
+        this.db = new FileClansDB(clans);
+        var clanService = new ClanService(messagesService, configProvider, levelService, db);
+
+        log.debug(clans.size() + " clans successfully loaded");
+
+        this.db.enable();
+        log.debug("File database successfully loaded");
+        return clanService;
     }
 
     private void registerEvents() {
