@@ -87,6 +87,9 @@
   "clan.error.name_not_allowed": [
     "§cClan name contains invalid characters"
   ],
+  "clan.error.name_blocked": [
+    "§cThe clan name is blocked"
+  ],
   "clan.error.name_too_long": [
     "§cClan name is too long (max 16 characters)"
   ],

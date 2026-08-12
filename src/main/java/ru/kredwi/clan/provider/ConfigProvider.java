@@ -3,6 +3,8 @@ package ru.kredwi.clan.provider;
 import cn.nukkit.utils.Config;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 public class ConfigProvider {
     private final Config config;
@@ -41,6 +43,10 @@ public class ConfigProvider {
 
     public String getClanNameAllowedPattern() {
         return config.getString("clan.name-allowed-pattern", "^[a-zA-Z0-9_]+$");
+    }
+
+    public List<String> getClanBlockedNames() {
+        return config.getStringList("clan.blocked-name");
     }
 
     public boolean isClanPvpDefault() {

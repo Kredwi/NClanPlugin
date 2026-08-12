@@ -50,6 +50,11 @@ public class Create implements SubCommand {
             return;
         }
 
+        if (configProvider.getClanBlockedNames().contains(clanName.toLowerCase())) {
+            ms.sendMessage(sender, "clan.error.name_blocked");
+            return;
+        }
+
         if (clanName.length() > configProvider.getClanNameMaxLength()) {
             ms.sendMessage(sender, "clan.error.name_too_long");
             return;
