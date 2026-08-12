@@ -1,6 +1,8 @@
 package ru.kredwi.clan.commands.sub.members;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.level.Level;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
@@ -26,7 +28,7 @@ public class ClanHome extends MemberCommand {
         clan.getSettings()
                 .getClanHome()
                 .ifPresentOrElse(location ->
-                                player.teleport(new cn.nukkit.level.Location(location.x(), location.y(), location.z(), location.yaw())),
+                                player.teleport(new cn.nukkit.level.Location(location.x(), location.y(), location.z(), location.yaw(), 0.0, Server.getInstance().getLevelByName(location.worldName()))),
                         () -> messagesService.sendMessage(player, "clan.error.home_not_set"));
     }
 

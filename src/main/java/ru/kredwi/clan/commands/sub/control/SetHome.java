@@ -1,6 +1,7 @@
 package ru.kredwi.clan.commands.sub.control;
 
 import cn.nukkit.Player;
+import org.apache.logging.log4j.Level;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
@@ -29,7 +30,7 @@ public class SetHome extends MemberCommand {
     @Override
     protected void onCommand(@NonNull Clan clan, @NonNull Player player, @NonNull List<String> args) {
         cn.nukkit.level.Location ploc = player.getLocation();
-        Location location = new Location(ploc.getX(), ploc.getY(), ploc.getZ(), ploc.yaw);
+        Location location = new Location(ploc.getLevel().getName(), ploc.getX(), ploc.getY(), ploc.getZ(), ploc.yaw);
         clan.getSettings().setClanHome(location);
         messagesService.sendMessage(player, "clan.success.home_set");
     }
