@@ -1,7 +1,6 @@
 package ru.kredwi.clan.commands.sub.info;
 
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.permission.Permission;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
@@ -33,7 +32,7 @@ public class Top implements SubCommand {
     }
 
     @Override
-    public @NonNull Permission getPermission() {
+    public @NonNull String getPermission() {
         return CommonPermissions.CLAN_USE_PERMISSION.getPermission();
     }
 }

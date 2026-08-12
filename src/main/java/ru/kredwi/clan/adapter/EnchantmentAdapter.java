@@ -3,11 +3,10 @@ package ru.kredwi.clan.adapter;
 import cn.nukkit.item.enchantment.Enchantment;
 import com.google.gson.*;
 import ru.kredwi.clan.NClanPlugin;
-import ru.kredwi.clan.model.Clan;
 
 import java.lang.reflect.Type;
 
-public class EnchantmentAdapter  implements JsonDeserializer<Enchantment>, JsonSerializer<Enchantment> {
+public class EnchantmentAdapter implements JsonDeserializer<Enchantment>, JsonSerializer<Enchantment> {
 
     @Override
     public Enchantment deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {

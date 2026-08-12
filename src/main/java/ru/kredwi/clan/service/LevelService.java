@@ -1,15 +1,11 @@
 package ru.kredwi.clan.service;
 
-import com.sun.source.tree.Tree;
 import lombok.Getter;
 import lombok.Setter;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import ru.kredwi.clan.model.Level;
-import ru.kredwi.clan.provider.ConfigProvider;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeMap;
 
 @Getter

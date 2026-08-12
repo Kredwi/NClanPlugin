@@ -7,8 +7,6 @@ import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.window.FormWindow;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.enchantment.Enchantment;
-import cn.nukkit.item.enchantment.EnchantmentType;
-import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.gui.MarketForm;
 import ru.kredwi.clan.gui.RoleCreateForm;
@@ -75,7 +73,7 @@ public record FormListener(MessagesService messagesService, ClanService clanServ
 
         String name = (String) response.getResponse(0); // name input
         String priorityText = (String) response.getResponse(1); // priority input
-        List<Permission> perms = new ArrayList<>();
+        List<String> perms = new ArrayList<>();
 
         if (isNameInvalid(name)) {
             messagesService.sendMessage(player, "clan.error.role_name_invalid", name);
@@ -115,9 +113,8 @@ public record FormListener(MessagesService messagesService, ClanService clanServ
             return;
 
         var player1 = clan.get().getMembers().get(player.getUniqueId());
-        if (player1 == null || !player1.getRole().getPermissions().stream()
-                .map(Permission::getName).toList()
-                .contains(ClanPermissions.PERMISSION_CLAN_CHANGE_ROLE.getPermission().getName())) {
+        if (player1 == null || !player1.getRole().getPermissions()
+                .contains(ClanPermissions.PERMISSION_CLAN_CHANGE_ROLE.getPermission())) {
             messagesService.sendMessage(player, "clan.error.no_permission_role");
             return;
         }
@@ -154,7 +151,7 @@ public record FormListener(MessagesService messagesService, ClanService clanServ
             role.setName(newName);
             role.setPriority(newPriority);
 
-            List<Permission> permissions = new ArrayList<>();
+            List<String> permissions = new ArrayList<>();
             for (int j = 0; j < permCount; j++) {
                 int toggleKey = sortedKeys.get(baseInt + 4 + j);
                 boolean hasPerm = (boolean) responses.get(toggleKey);

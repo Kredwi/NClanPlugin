@@ -1,7 +1,6 @@
 package ru.kredwi.clan.commands.sub;
 
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.permission.Permission;
 import lombok.AllArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.NClanPlugin;
@@ -31,7 +30,7 @@ public class PluginReload implements SubCommand {
     }
 
     @Override
-    public @NonNull Permission getPermission() {
+    public @NonNull String getPermission() {
         return CommonPermissions.CLAN_ADMIN_PERMISSION.getPermission();
     }
 }

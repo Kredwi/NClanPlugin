@@ -2,7 +2,6 @@ package ru.kredwi.clan.commands.wrapper;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.permission.Permission;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
@@ -41,12 +40,7 @@ public abstract class MemberCommand implements SubCommand {
 
         var memberOptional = Optional.ofNullable(clan.get().getMembers().get(player.getUniqueId()));
         memberOptional.ifPresent(member -> {
-            if (member.getRole().getPermissions()
-                    .stream().map(Permission::getName)
-                    .anyMatch(e -> this.getPermission().getName().equalsIgnoreCase(e)))
-                // why the fucking developers not override equals method
-                // after time im change permission object to string
-                // in start time use permission instance for permission is bad idea
+            if (member.getRole().getPermissions().contains(getPermission()))
                 this.onCommand(clan.get(), player, args);
             else
                 messagesService.sendMessage(sender, "clan.error.no_permission_command");

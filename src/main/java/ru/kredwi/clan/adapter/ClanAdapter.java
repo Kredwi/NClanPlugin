@@ -6,7 +6,6 @@ import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.ClanSettings;
 import ru.kredwi.clan.model.ClanStats;
 import ru.kredwi.clan.model.Member;
-import ru.kredwi.clan.permission.ClanPermissions;
 import ru.kredwi.clan.role.Role;
 
 import java.lang.reflect.Type;
@@ -17,7 +16,6 @@ import java.util.UUID;
 public class ClanAdapter implements JsonDeserializer<Clan>, JsonSerializer<Clan> {
     public static final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(Clan.class, new ClanAdapter())
-            .registerTypeAdapter(ClanPermissions.class, new PermissionAdapter())
             .setPrettyPrinting()
             .serializeNulls()
             .create();

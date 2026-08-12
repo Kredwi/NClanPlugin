@@ -1,7 +1,6 @@
 package ru.kredwi.clan.commands.sub.role;
 
 import cn.nukkit.Player;
-import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.gui.RoleManagerForm;
@@ -24,7 +23,7 @@ public class RoleCMD extends MemberCommand {
     }
 
     @Override
-    public @NonNull Permission getPermission() {
+    public @NonNull String getPermission() {
         return ClanPermissions.PERMISSION_CLAN_CHANGE_ROLE.getPermission();
     }
 

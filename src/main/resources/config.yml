@@ -8,7 +8,7 @@ clan:
   name-max-length: 16
   name-allowed-pattern: "^[a-zA-Z0-9_]+$"
   pvp-default: false
-  blocked-name: ["writeanyname"] # names in lowercase
+  blocked-name: [ "writeanyname" ] # names in lowercase
 
 exp:
   per-kill: 1

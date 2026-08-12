@@ -1,7 +1,6 @@
 package ru.kredwi.clan.gui;
 
 import cn.nukkit.Player;
-import cn.nukkit.form.element.Element;
 import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.element.ElementLabel;
 import cn.nukkit.form.window.FormWindow;
@@ -16,13 +15,6 @@ import java.text.MessageFormat;
 import java.util.List;
 
 public class MarketForm extends FormWindowSimple {
-
-    @AllArgsConstructor
-    @Data
-    class Elements {
-        private final ElementLabel label;
-        private final ElementButton button;
-    }
 
     public MarketForm(MessagesService messagesService, List<ShopItem> items, double balance) {
         super(messagesService.getMessage("clan.form.market.title"),
@@ -53,5 +45,12 @@ public class MarketForm extends FormWindowSimple {
     public void showForm(Player player) {
         player.closeFormWindows();
         player.showFormWindow(getForm());
+    }
+
+    @AllArgsConstructor
+    @Data
+    class Elements {
+        private final ElementLabel label;
+        private final ElementButton button;
     }
 }

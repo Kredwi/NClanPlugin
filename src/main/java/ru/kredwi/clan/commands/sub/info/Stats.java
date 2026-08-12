@@ -3,7 +3,6 @@ package ru.kredwi.clan.commands.sub.info;
 import cn.nukkit.IPlayer;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
-import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.gui.PlayerStatsForm;
@@ -24,7 +23,7 @@ public class Stats extends MemberCommand {
     }
 
     @Override
-    public @NonNull Permission getPermission() {
+    public @NonNull String getPermission() {
         return ClanPermissions.PERMISSION_CLAN_STATS.getPermission();
     }
 

@@ -2,7 +2,6 @@ package ru.kredwi.clan.commands.sub.info;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.permission.Permission;
 import lombok.AllArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.api.command.SubCommand;
@@ -45,7 +44,7 @@ public class Members implements SubCommand {
     }
 
     @Override
-    public @NonNull Permission getPermission() {
+    public @NonNull String getPermission() {
         return ClanPermissions.PERMISSION_CLAN_MEMBERS.getPermission();
     }
 }

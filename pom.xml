@@ -115,9 +115,9 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <relocations>
                                 <relocation>
-                                <pattern>org.xerial</pattern>
-                                <shadedPattern>ru.kredwi.clan.libs.sqlite</shadedPattern>
-                            </relocation>
+                                    <pattern>org.xerial</pattern>
+                                    <shadedPattern>ru.kredwi.clan.libs.sqlite</shadedPattern>
+                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>

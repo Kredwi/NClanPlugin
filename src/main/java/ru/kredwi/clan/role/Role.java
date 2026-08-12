@@ -1,6 +1,5 @@
 package ru.kredwi.clan.role;
 
-import cn.nukkit.permission.Permission;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,7 @@ public class Role {
     private String name;
     private int priority;
 
-    private List<Permission> permissions;
+    private List<String> permissions;
 
     public Role(Role role) {
         this.name = role.getName();

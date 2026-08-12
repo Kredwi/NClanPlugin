@@ -1,7 +1,6 @@
 package ru.kredwi.clan.commands.sub.role;
 
 import cn.nukkit.Player;
-import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.model.Clan;
 import ru.kredwi.clan.model.Member;
@@ -42,7 +41,7 @@ public class Demote extends ChangePlayerRoleAbs {
     }
 
     @Override
-    public @NonNull Permission getPermission() {
+    public @NonNull String getPermission() {
         return ClanPermissions.PERMISSION_CLAN_DEMOTE.getPermission();
     }
 }

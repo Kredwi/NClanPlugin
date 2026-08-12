@@ -1,7 +1,6 @@
 package ru.kredwi.clan.commands.sub.members;
 
 import cn.nukkit.Player;
-import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.commands.wrapper.MemberCommand;
 import ru.kredwi.clan.model.Clan;
@@ -32,7 +31,7 @@ public class ClanHome extends MemberCommand {
     }
 
     @Override
-    public @NonNull Permission getPermission() {
+    public @NonNull String getPermission() {
         return ClanPermissions.PERMISSION_CLAN_HOME.getPermission();
     }
 }

@@ -32,7 +32,7 @@ public class RoleCreateForm extends FormWindowCustom {
         addElement(new ElementDivider());
         addElement(new ElementLabel(messagesService.getMessage("clan.form.role.creator.permissions")));
         for (ClanPermissions perm : ClanPermissions.values()) {
-            addElement(new ElementToggle(perm.getPermission().getName()));
+            addElement(new ElementToggle(perm.getPermission()));
         }
     }
 
