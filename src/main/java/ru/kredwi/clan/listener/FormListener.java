@@ -6,6 +6,8 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.window.FormWindow;
 import cn.nukkit.item.Item;
+import cn.nukkit.item.enchantment.Enchantment;
+import cn.nukkit.item.enchantment.EnchantmentType;
 import cn.nukkit.permission.Permission;
 import org.jspecify.annotations.NonNull;
 import ru.kredwi.clan.gui.MarketForm;
@@ -189,6 +191,7 @@ public record FormListener(MessagesService messagesService, ClanService clanServ
         }
 
         Item buyedItem = new Item(shopItem.get().getItemId());
+        buyedItem.addEnchantment(shopItem.get().getEnchantments().toArray(new Enchantment[0]));
         buyedItem.setCustomName(shopItem.get().getName());
         buyedItem.setLore(shopItem.get().getLore().toArray(new String[0]));
         buyedItem.setCount(shopItem.get().getCount());

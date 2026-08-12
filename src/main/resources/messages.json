@@ -288,6 +288,9 @@
   "clan.form.market.title": [
     "§6Clan Shop"
   ],
+  "clan.form.market.meta_data": [
+    "§fPrice §6{0} §fCount §6{1}"
+  ],
   "clan.form.market.balance": [
     "§7Balance: §f{0}"
   ],

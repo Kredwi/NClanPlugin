@@ -1,9 +1,12 @@
 package ru.kredwi.clan.io;
 
+import cn.nukkit.item.enchantment.Enchantment;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
+import ru.kredwi.clan.adapter.EnchantmentAdapter;
 import ru.kredwi.clan.shop.ShopItem;
 
 import java.io.File;
@@ -13,7 +16,9 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class ClanShopFile extends CommonIOFile<ArrayList<ShopItem>> {
 
-    public static final Gson gson = new Gson();
+    public static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Enchantment.class, new EnchantmentAdapter())
+            .create();
     public static final String CLAN_SHOP_FILE_NAME = "clan_shop.json";
 
     private final File dataFolder;
@@ -27,7 +32,7 @@ public class ClanShopFile extends CommonIOFile<ArrayList<ShopItem>> {
     protected @NonNull ArrayList<ShopItem> deserialize(@NonNull String json) {
         var levels = new ArrayList<ShopItem>();
 
-        JsonArray object = gson.fromJson(json.toString(), JsonArray.class);
+        JsonArray object = gson.fromJson(json, JsonArray.class);
         object.forEach(e -> {
             ShopItem shopFile = gson.fromJson(e, ShopItem.class);
             levels.add(shopFile);

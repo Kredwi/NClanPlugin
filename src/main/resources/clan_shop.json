@@ -1,13 +1,15 @@
 [
   {
     "type": "ITEM",
-    "name": "diamond Sword",
+    "name": "The best sword",
     "lore": [
-      "",
-      ""
+      "The diamond"
     ],
     "itemId": 276,
     "count": 1,
-    "prise": 23
+    "prise": 23,
+    "enchantments": [
+      "9:5"
+    ]
   }
 ]
