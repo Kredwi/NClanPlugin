@@ -40,7 +40,7 @@ public class PlayerStatsForm extends Form {
 
     }
 
-    private static String getKD(int kills, int deaths) {
+    private String getKD(int kills, int deaths) {
         double kd = deaths == 0 ? kills : Math.round((kills / (double) deaths) * 100.0) / 100.0;
         return String.format("%.2f", kd);
     }
