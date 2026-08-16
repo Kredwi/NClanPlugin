@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.kredwi</groupId>
     <artifactId>NClanPlugin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
 
     <properties>
         <!--        Project && Maven settings-->
@@ -14,6 +14,7 @@
 
         <!--        Version of dependency-->
         <lombok.version>1.18.46</lombok.version>
+        <kotlin.version>1.6.0</kotlin.version>
     </properties>
 
     <contributors>
@@ -74,6 +75,13 @@
             <groupId>com.creeperface.nukkit.placeholderapi</groupId>
             <artifactId>PlaceholderAPI</artifactId>
             <version>1.4-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- ONLY FOR PlaceholderAPI -->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>${kotlin.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -1,4 +1,7 @@
 {
+  "placeholder.clan.stats.line": [
+    "{0} name {1} exp {2} balance {3} members {4} roles count"
+  ],
   "boolean.status.true": [
     "§a✔ enable"
   ],

@@ -39,6 +39,7 @@ import java.util.TreeMap;
 @Getter
 public class NClanPlugin extends PluginBase {
 
+    private static NClanPlugin INSTANCE;
     public static Logger log;
 
     private LevelFile levelFile;
@@ -58,6 +59,7 @@ public class NClanPlugin extends PluginBase {
 
     @Override
     public void onLoad() {
+        INSTANCE = this;
         log = getLogger(); // override to plugin logger
 
         saveDefaultConfig();
@@ -77,11 +79,6 @@ public class NClanPlugin extends PluginBase {
 
     @Override
     public void onEnable() {
-        this.economyAPI = new DependenciesLoader<EconomyAPI>()
-                .loadDepend("EconomyAPI", PluginEconomy::new, EmptyEconomy.getInstance());
-//        this.papi = new DependenciesLoader<PAPI>()
-//                .loadDepend("PlaceholderAPI", PluginPAPI::new, EmptyPAPI.getInstance());
-
         var levels = this.levelFile.read();
         levelService.setLevels(new TreeMap<>(levels)); // maybe the not good ideas
         log.debug(levelService.getLevels().size() + " levels successfully loaded");
@@ -91,6 +88,11 @@ public class NClanPlugin extends PluginBase {
         var shopItems = clanShopFile.read();
         this.clanShop.setItems(shopItems);
         log.debug(shopItems.size() + " shop items successfully loaded");
+
+        this.economyAPI = new DependenciesLoader<EconomyAPI>()
+                .loadDepend("EconomyAPI", PluginEconomy::new, EmptyEconomy.getInstance());
+        this.papi = new DependenciesLoader<PAPI>()
+                .loadDepend("PlaceholderAPI", PluginPAPI::new, EmptyPAPI.getInstance());
 
         MainCommand command = new MainCommand(
                 new Services(configProvider, economyAPI,
@@ -138,5 +140,11 @@ public class NClanPlugin extends PluginBase {
         this.clanFile.write(db.getClans());
         this.requestService.clear();
         this.db.disable();
+    }
+
+    public static NClanPlugin getInstance() {
+        if (INSTANCE == null)
+            throw new IllegalStateException("Plugin currently cannot be initialize");
+        return INSTANCE;
     }
 }
