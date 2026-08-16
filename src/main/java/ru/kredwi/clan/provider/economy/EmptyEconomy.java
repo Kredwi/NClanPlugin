@@ -9,8 +9,6 @@ public class EmptyEconomy implements EconomyAPI {
     private static EconomyAPI INSTANCE;
 
     private EmptyEconomy() {
-        NClanPlugin.log.warning("Plugin with name EconomyAPI is not present");
-        NClanPlugin.log.warning("Loaded default empty economy. (Clan creating is free)");
     }
 
     public static EconomyAPI getInstance() {

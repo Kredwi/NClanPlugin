@@ -1,6 +1,8 @@
 package ru.kredwi.clan.provider.papi;
 
 import cn.nukkit.Player;
+import ru.kredwi.clan.provider.economy.EconomyAPI;
+import ru.kredwi.clan.provider.economy.EmptyEconomy;
 
 public class EmptyPAPI implements PAPI {
     public static final PAPI instance = new EmptyPAPI();

@@ -23,7 +23,7 @@ public class DependenciesLoader<T> {
     }
 
     private void log(String dependName, String message) {
-        NClanPlugin.log.debug("[DEPEND ][" + dependName + "] " + message);
+        NClanPlugin.log.debug("[DEPEND] [" + dependName + "] " + message);
     }
 
 }

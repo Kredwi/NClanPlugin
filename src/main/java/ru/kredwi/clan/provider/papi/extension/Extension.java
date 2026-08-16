@@ -10,12 +10,4 @@ public abstract class Extension {
                 .updateInterval(1000)
                 .processParameters(true);
     }
-
-    public  <T> PlaceholderAPI.Builder<T> getPlayerBuilder(String name, Class<T> type) {
-        return PlaceholderAPI.getInstance().builder(name, type)
-                .autoUpdate(true)
-                .updateInterval(1000)
-                .processParameters(true);
-    }
-
 }
